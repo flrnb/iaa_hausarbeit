@@ -1,5 +1,5 @@
-**Hausarbeit Internet-Anwendungsarchitekturen**
-===============================================
+Hausarbeit Internet-Anwendungsarchitekturen
+===========================================
 
 Was ihr braucht:
 
@@ -23,3 +23,10 @@ Wenn alles geklappt hat, solltet ihr euch lokal in den Projekt-Ordner stellen, w
 `mvn jetty:run`
 
 starten können.
+
+
+**Hinweis**:
+Als Ausgangspunkt des Projektes wurde folgender Maven-Archetyp verwendet:
+*http://code.google.com/p/spring-archetypes/*
+Die Konfigurationen und Abhängigkeiten für Spring-MVC wurden entfernt.
+Übrig bleiben die Konfiguration für Maven, Hibernate, Spring und log4j sowie einige nützliche Test-Klassen.
