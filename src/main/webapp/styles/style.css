@@ -1,0 +1,10 @@
+@CHARSET "UTF-8";
+
+.menu td {
+	margin: 0px;
+	padding: 5px 10px;
+	border: 1px solid gray;
+}
+.menu td.left {
+	border-bottom-left-radius: 10px;
+}

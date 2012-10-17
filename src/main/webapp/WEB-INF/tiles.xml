@@ -5,14 +5,12 @@
 		"http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 
 <tiles-definitions>
-	<definition name="mainLayout" template="/template/mainTemplate.jsp">
-		<put-attribute name="title" value="Room Management"/>
-		<put-attribute name="header" value="/screen/header.jsp"/>
+	<definition name="mainLayout" template="/templates/main.jsp">
+		<put-attribute name="title" value="NoDaBa"/>
+		<put-attribute name="header" value="/parts/header.jsp"/>
 	</definition>
-	<definition name="roomList" extends="mainLayout">
-		<put-attribute name="content" value="/screen/roomList.jsp"/>
-	</definition>
-	<definition name="roomForm" extends="mainLayout">
-		<put-attribute name="content" value="/screen/roomForm.jsp"/>
+	<definition name="mainMenu" extends="mainLayout">
+		<put-attribute name="title" value="NoDaBa - Hauptmenü"></put-attribute>
+		<put-attribute name="content" value="/parts/mainMenu.jsp"/>
 	</definition>
 </tiles-definitions>

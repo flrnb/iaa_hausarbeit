@@ -4,8 +4,8 @@
 
 <html>
 <head>
-<title><tiles:insertAttribute name="title" /></title>
-<s:head />
+	<title><tiles:insertAttribute name="title" /></title>
+	<link rel="stylesheet" href="/styles/style.css" />
 </head>
 
 <body>
