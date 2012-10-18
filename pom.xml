@@ -107,19 +107,24 @@
     	<version>2.3.4.1</version>
     </dependency>
     <dependency>
-    	<groupId>org.freemarker</groupId>
-    	<artifactId>freemarker</artifactId>
-    	<version>2.3.19</version>
+    	<groupId>org.apache.struts</groupId>
+    	<artifactId>struts2-tiles-plugin</artifactId>
+    	<version>2.3.4.1</version>
     </dependency>
     <dependency>
     	<groupId>org.apache.struts</groupId>
     	<artifactId>struts2-core</artifactId>
-    	<version>2.2.3.1</version>
+    	<version>2.3.4.1</version>
     </dependency>
     <dependency>
-    	<groupId>org.apache.struts</groupId>
-    	<artifactId>struts2-tiles-plugin</artifactId>
-    	<version>2.3.4.1</version>
+    	<groupId>com.opensymphony</groupId>
+    	<artifactId>webwork</artifactId>
+    	<version>2.2.6</version>
+    </dependency>
+    <dependency>
+    	<groupId>opensymphony</groupId>
+    	<artifactId>xwork</artifactId>
+    	<version>1.2.3</version>
     </dependency>
   </dependencies>
   <build>
