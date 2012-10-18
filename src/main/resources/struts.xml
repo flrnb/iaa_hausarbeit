@@ -5,13 +5,31 @@
 		"http://struts.apache.org/dtds/struts-2.1.dtd">
 
 <struts>
-	<package name="default" extends="tiles-default">
-		<result-types>
-			<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
-		</result-types>
 
+
+	<package name="default" extends="tiles-default">
 		<action name="ShowMainMenu" class="de.nak.iaa.web.view.action.ShowMainMenuAction">
 			<result type="tiles">mainMenu</result>
+		</action>
+		
+		<action name="ShowHeaderMenuAction" class="de.nak.iaa.web.view.action.HeaderMenuAction">
+			<result>/parts/headerMenu.jsp</result>
+		</action>
+	</package>
+
+	<package name="OralExams" extends="tiles-default">
+		<action name="show" class="de.nak.iaa.web.view.action.OralExamsAction"
+			method="show">
+			<result name="success" type="tiles">showOralResults</result>
+		</action>
+		<action name="save" class="de.nak.iaa.web.view.action.OralExamsAction"
+			method="save">
+			<result name="success" type="tiles">saveOralResults</result>
+			<result name="input" type="tiles">showOralResults</result>
+			<!-- <result name="input" type="redirectAction">
+				<param name="actionName">show</param>
+				<param name="namespace">/OralExams</param>
+			</result> -->
 		</action>
 	</package>
 </struts>

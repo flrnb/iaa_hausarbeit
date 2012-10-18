@@ -1,7 +1,11 @@
 package de.nak.iaa.web.view.action;
 
-import com.opensymphony.xwork2.ActionSupport;
-
 @SuppressWarnings("serial")
-public class ShowMainMenuAction extends ActionSupport {
+public class ShowMainMenuAction extends BaseMenuAction {
+
+	@Override
+	public String execute() throws Exception {
+		return super.execute();
+	}
+
 }

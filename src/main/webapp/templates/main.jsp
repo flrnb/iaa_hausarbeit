@@ -4,12 +4,15 @@
 
 <html>
 <head>
-	<title><tiles:insertAttribute name="title" /></title>
-	<link rel="stylesheet" href="/styles/style.css" />
+<title><tiles:insertAttribute name="title" /></title>
+<link rel="stylesheet" href="/styles/style.css" />
+<s:head />
 </head>
 
 <body>
+
 	<tiles:insertAttribute name="header" />
+	<s:action name="ShowHeaderMenuAction" executeResult="true" flush="true" ignoreContextParams="true"></s:action>
 	<hr />
 	<tiles:insertAttribute name="content" />
 </body>

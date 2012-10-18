@@ -2,5 +2,4 @@
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-
-<h1>Notendatenbank</h1>
+Save

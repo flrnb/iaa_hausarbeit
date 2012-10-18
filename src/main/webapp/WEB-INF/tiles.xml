@@ -13,4 +13,15 @@
 		<put-attribute name="title" value="NoDaBa - Hauptmenü"></put-attribute>
 		<put-attribute name="content" value="/parts/mainMenu.jsp"/>
 	</definition>
+	
+	
+	<definition name="saveOralResults" extends="mainLayout">
+		<put-attribute name="title" value="NoDaBa - Mündliche Prüfungen speichern"></put-attribute>
+		<put-attribute name="content" value="/parts/saveOralResults.jsp"/>
+	</definition>
+	<definition name="showOralResults" extends="mainLayout">
+		<put-attribute name="title" value="NoDaBa - Mündliche Prüfungen eintragen"></put-attribute>
+		<put-attribute name="content" value="/parts/showOralResults.jsp"/>
+	</definition>
+	
 </tiles-definitions>
