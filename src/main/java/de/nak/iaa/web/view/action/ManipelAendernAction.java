@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.ActionSupport;
@@ -14,16 +15,21 @@ public class ManipelAendernAction extends ActionSupport implements SessionAware 
 	private List<String> manipel;
 	private Map<String, Object> session;
 	private String selectedManipel;
+	private static String refererUrl;
 
 	public ManipelAendernAction() {
-		// manipel = new ArrayList<String>();
-		// manipel.add("i09");
-		// manipel.add("w09");
-		// manipel.add("b09");
 		setManipel(new ArrayList<String>());
 		getManipel().add("i09");
 		getManipel().add("w09");
 		getManipel().add("b09");
+	}
+
+	@Override
+	public void validate() {
+		if (selectedManipel != null)
+			if (selectedManipel.equals("-1"))
+				addFieldError("selectedManipel",
+						"Sie müssen einen Manipel auswählen");
 	}
 
 	@Override
@@ -32,7 +38,13 @@ public class ManipelAendernAction extends ActionSupport implements SessionAware 
 	}
 
 	public String show() {
-		System.out.println(getSession().get("selectedManipel"));
+		if (ServletActionContext.getRequest().getHeader("referer") == null) {
+			setRefererUrl("show");
+		} else {
+			setRefererUrl(ServletActionContext.getRequest()
+					.getHeader("referer"));
+		}
+		System.out.println(getRefererUrl());
 		if (getSession().containsKey("selectedManipel")
 				&& getSession().get("selectedManipel") != null)
 			selectedManipel = getSession().get("selectedManipel").toString();
@@ -41,6 +53,14 @@ public class ManipelAendernAction extends ActionSupport implements SessionAware 
 
 	public String save() {
 		getSession().put("selectedManipel", selectedManipel);
+		return "success";
+	}
+
+	public String error() {
+		if (ServletActionContext.getRequest().getParameter("target") != null) {
+			setRefererUrl(ServletActionContext.getRequest()
+					.getParameter("target").toString());
+		}
 		return "success";
 	}
 
@@ -67,5 +87,13 @@ public class ManipelAendernAction extends ActionSupport implements SessionAware 
 
 	public void setManipel(List<String> manipel) {
 		this.manipel = manipel;
+	}
+
+	public String getRefererUrl() {
+		return refererUrl;
+	}
+
+	public void setRefererUrl(String refererUrl) {
+		ManipelAendernAction.refererUrl = refererUrl;
 	}
 }

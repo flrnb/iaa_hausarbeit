@@ -6,4 +6,4 @@
 <h1>Notendatenbank</h1>
 <s:a action="ShowMainMenu" namespace="/">Zum Hauptmenü</s:a>
 |
-<s:a action="show" namespace="manipel">Manipel ändern</s:a>
+<s:a action="show" namespace="/manipel">Manipel ändern</s:a>
