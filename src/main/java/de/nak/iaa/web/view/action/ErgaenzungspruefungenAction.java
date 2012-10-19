@@ -1,5 +1,6 @@
 package de.nak.iaa.web.view.action;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.struts2.ServletActionContext;
@@ -15,16 +16,20 @@ public class ErgaenzungspruefungenAction extends ActionSupport implements
 
 	private Map<String, ErgaenzungspruefungsBean> exams;
 
+	public ErgaenzungspruefungenAction() {
+		exams = new HashMap<String, ErgaenzungspruefungsBean>();
+		exams.put("1", new ErgaenzungspruefungsBean("1", "123", "cb", "80"));
+	}
+
 	@Override
 	public void validate() {
 		if (exams != null) {
 			for (Map.Entry<String, ErgaenzungspruefungsBean> entry : exams
 					.entrySet()) {
-				if (!entry
-						.getValue()
-						.getResultPercent()
-						.matches(
-								"[123][.][037]|[0.7]|[4.0]|[5.0]|[6.0]|[123456]")) {
+				// TODO use correct regex
+				if (entry.getValue().getResultPercent() != null
+						&& !entry.getValue().getResultPercent()
+								.matches("[0123456789]*")) {
 					System.out.println(entry.getValue().getResultPercent());
 					addFieldError("exams[" + entry.getKey() + "].text",
 							"Falsche Eingabe");
@@ -42,6 +47,8 @@ public class ErgaenzungspruefungenAction extends ActionSupport implements
 	}
 
 	public String show() throws Exception {
+		System.out.println(exams.size());
+
 		if (!getSession().containsKey("selectedManipel")
 				|| getSession().get("selectedManipel") == null
 				|| getSession().get("selectedManipel").equals("")) {
