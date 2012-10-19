@@ -9,8 +9,8 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "jahrgang",
-		"studienrichtung" }))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "JAHRGANG",
+		"STUDIENRICHTUNG" }))
 public class Manipel {
 
 	private int jahrgang;
@@ -52,6 +52,32 @@ public class Manipel {
 
 	public void setStudienrichtung(Studienrichtung studienrichtung) {
 		this.studienrichtung = studienrichtung;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + jahrgang;
+		result = prime * result
+				+ ((studienrichtung == null) ? 0 : studienrichtung.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Manipel other = (Manipel) obj;
+		if (jahrgang != other.jahrgang)
+			return false;
+		if (studienrichtung != other.studienrichtung)
+			return false;
+		return true;
 	}
 
 }

@@ -3,7 +3,6 @@ package de.nak.iaa.server.entity;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNull.notNullValue;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 import javax.annotation.Resource;
@@ -29,7 +28,7 @@ public class ManipelPersistenceTest extends ApplicationContextAwareTest {
 		manipelDAO.makePersistent(manipel);
 
 		int countAfter = manipelDAO.findAll().size();
-		assertEquals(countBefore + 1, countAfter);
+		assertThat(countBefore + 1, is(equalTo(countAfter)));
 		manipel = manipelDAO.findByExample(manipel, new String[] {}).get(0);
 		assertThat(manipel.getId(), is(notNullValue()));
 		assertThat(manipel.getStudienrichtung(), is(equalTo(studienrichtung)));
