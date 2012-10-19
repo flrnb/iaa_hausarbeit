@@ -7,21 +7,39 @@
 <tiles-definitions>
 	<definition name="mainLayout" template="/templates/main.jsp">
 		<put-attribute name="title" value="NoDaBa"/>
-		<put-attribute name="header" value="/parts/header.jsp"/>
+		<put-attribute name="header" value="/pages/header.jsp"/>
 	</definition>
 	<definition name="mainMenu" extends="mainLayout">
 		<put-attribute name="title" value="NoDaBa - Hauptmenü"></put-attribute>
-		<put-attribute name="content" value="/parts/mainMenu.jsp"/>
+		<put-attribute name="content" value="/pages/hauptmenue.jsp"/>
 	</definition>
 	
 	
-	<definition name="saveOralResults" extends="mainLayout">
+	<definition name="saveOralExams" extends="mainLayout">
 		<put-attribute name="title" value="NoDaBa - Mündliche Prüfungen speichern"></put-attribute>
-		<put-attribute name="content" value="/parts/saveOralResults.jsp"/>
+		<put-attribute name="content" value="/oralExams/pages/save.jsp"/>
 	</definition>
-	<definition name="showOralResults" extends="mainLayout">
+	<definition name="showOralExams" extends="mainLayout">
 		<put-attribute name="title" value="NoDaBa - Mündliche Prüfungen eintragen"></put-attribute>
-		<put-attribute name="content" value="/parts/showOralResults.jsp"/>
+		<put-attribute name="content" value="/oralExams/pages/show.jsp"/>
+	</definition>
+	
+	<definition name="saveWrittenExams" extends="mainLayout">
+		<put-attribute name="title" value="NoDaBa - Schriftliche Prüfungen speichern"></put-attribute>
+		<put-attribute name="content" value="/writtenExams/pages/save.jsp"/>
+	</definition>
+	<definition name="showWrittenExams" extends="mainLayout">
+		<put-attribute name="title" value="NoDaBa - Schriftliche Prüfungen eintragen"></put-attribute>
+		<put-attribute name="content" value="/writtenExams/pages/show.jsp"/>
+	</definition>
+	
+	<definition name="saveEditExams" extends="mainLayout">
+		<put-attribute name="title" value="NoDaBa - Schriftliche Prüfungen speichern"></put-attribute>
+		<put-attribute name="content" value="/editExams/pages/save.jsp"/>
+	</definition>
+	<definition name="showEditExams" extends="mainLayout">
+		<put-attribute name="title" value="NoDaBa - Schriftliche Prüfungen ändern"></put-attribute>
+		<put-attribute name="content" value="/editExams/pages/show.jsp"/>
 	</definition>
 	
 </tiles-definitions>

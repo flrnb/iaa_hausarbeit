@@ -12,7 +12,7 @@
 <body>
 
 	<tiles:insertAttribute name="header" />
-	<s:action name="ShowHeaderMenuAction" executeResult="true" flush="true" ignoreContextParams="true"></s:action>
+	<%-- <s:action name="ShowHeaderMenuAction" namespace="/" executeResult="true"></s:action> --%>
 	<hr />
 	<tiles:insertAttribute name="content" />
 </body>

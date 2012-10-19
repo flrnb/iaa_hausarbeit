@@ -14,7 +14,8 @@ public class NavigationConfigLoader {
 
 	private final InputSource inputSource;
 
-	public NavigationConfigLoader(File xmlInputStream) throws FileNotFoundException {
+	public NavigationConfigLoader(File xmlInputStream)
+			throws FileNotFoundException {
 		inputSource = new InputSource(new FileInputStream(xmlInputStream));
 	}
 
