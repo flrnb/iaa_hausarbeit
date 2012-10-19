@@ -12,12 +12,12 @@ Show
 			<th>Name</th>
 			<th>Prozent</th>
 		</tr>
-		<s:iterator value="exams" var="exam">
+		<s:iterator value="exams" var="row">
 			<tr>
-				<td><s:property value="%{#exam.examId}" /></td>
-				<td><s:property value="%{#exam.matrikelNummer}" /></td>
+				<td><s:property value="#row.examId" /></td>
+				<td><s:property value="exams[#row.index].matrikelNummer" /></td>
 				<td><s:property value="%{#exam.name}" /></td>
-				<td><s:textfield name="%{#exam.resultPercent}"
+				<td><s:textfield name="resultPercent"
 						value="%{#exams.resultPercent}" /></td>
 			</tr>
 		</s:iterator>

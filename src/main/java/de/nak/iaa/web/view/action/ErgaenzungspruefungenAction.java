@@ -30,7 +30,6 @@ public class ErgaenzungspruefungenAction extends ActionSupport implements
 				if (entry.getValue().getResultPercent() != null
 						&& !entry.getValue().getResultPercent()
 								.matches("[0123456789]*")) {
-					System.out.println(entry.getValue().getResultPercent());
 					addFieldError("exams[" + entry.getKey() + "].text",
 							"Falsche Eingabe");
 				}
