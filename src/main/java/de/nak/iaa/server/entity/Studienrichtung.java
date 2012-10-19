@@ -1,15 +1,15 @@
 package de.nak.iaa.server.entity;
 
 public enum Studienrichtung {
-	BWL("B"), WInf("I"), WIng("W");
+	BWL('B'), WInf('I'), WIng('W');
 
-	private String kuerzel;
+	private Character kuerzel;
 
-	Studienrichtung(String kuerzel) {
+	Studienrichtung(Character kuerzel) {
 		this.kuerzel = kuerzel;
 	}
 
-	public String getKuerzel() {
+	public Character getKuerzel() {
 		return kuerzel;
 	}
 
