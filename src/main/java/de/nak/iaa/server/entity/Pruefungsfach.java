@@ -1,6 +1,7 @@
 package de.nak.iaa.server.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,7 +17,7 @@ public class Pruefungsfach {
 	private String titel;
 	private String beschreibung;
 
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "MANIPEL_ID")
 	private Manipel manipel;
 
