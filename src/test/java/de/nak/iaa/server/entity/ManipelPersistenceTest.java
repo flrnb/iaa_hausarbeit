@@ -12,6 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 
 import de.nak.iaa.ApplicationContextAwareTest;
 import de.nak.iaa.server.dao.ManipelDAO;
+import de.nak.iaa.server.fachwert.Studienrichtung;
 
 public class ManipelPersistenceTest extends ApplicationContextAwareTest {
 

@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import de.nak.iaa.server.fachwert.Studienrichtung;
+
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "JAHRGANG",
 		"STUDIENRICHTUNG" }))

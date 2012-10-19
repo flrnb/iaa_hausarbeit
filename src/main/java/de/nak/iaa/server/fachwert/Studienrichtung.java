@@ -1,4 +1,4 @@
-package de.nak.iaa.server.entity;
+package de.nak.iaa.server.fachwert;
 
 public enum Studienrichtung {
 	BWL('B'), WInf('I'), WIng('W');
