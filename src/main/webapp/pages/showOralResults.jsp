@@ -4,7 +4,7 @@
 
 Show
 
-<s:form action="OralExams/save">
+<s:form action="save">
 
 <s:textfield  name="exams[0].text"></s:textfield>
 <s:textfield name="exams[1].text"></s:textfield>

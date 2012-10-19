@@ -7,7 +7,7 @@
 <struts>
 
 
-	<package name="default" extends="tiles-default">
+	<package name="default" extends="tiles-default" namespace="/">
 		<action name="ShowMainMenu" class="de.nak.iaa.web.view.action.ShowMainMenuAction">
 			<result type="tiles">mainMenu</result>
 		</action>
@@ -17,7 +17,7 @@
 		</action>
 	</package>
 
-	<package name="OralExams" extends="tiles-default">
+	<package name="OralExams" extends="tiles-default" namespace="/OralExams">
 		<action name="show" class="de.nak.iaa.web.view.action.OralExamsAction"
 			method="show">
 			<result name="success" type="tiles">showOralResults</result>
