@@ -2,23 +2,26 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
-Show
+<h3>Ergänzungsprüfungen erfassen</h3>
+<p>
+	Hier können Sie die erreichten Prozentanteile an den mündlichen Ergänzungsprüfungen eintragen.
+</p>
 
 <s:form action="save">
-	<table>
+	<table class="notenTabelle" border="1">
 		<tr>
 			<th>ID</th>
 			<th>Matrikelnummer</th>
 			<th>Name</th>
 			<th>Prozent</th>
 		</tr>
-		<s:iterator value="exams" var="row">
+		<s:iterator value="exams" var="exam">
 			<tr>
-				<td><s:property value="#row.examId" /></td>
-				<td><s:property value="exams[#row.index].matrikelNummer" /></td>
-				<td><s:property value="%{#exam.name}" /></td>
-				<td><s:textfield name="resultPercent"
-						value="%{#exams.resultPercent}" /></td>
+				<td><s:property value="#exam.value.examId" /></td>
+				<td><s:property value="#exam.value.matrikelNummer" /></td>
+				<td><s:property value="#exam.value.name" /></td>
+				<td><s:textfield name="resultPercent" 
+					value="%{#exam.value.resultPercent}" theme="simple" cssClass="notenInputField"/></td>
 			</tr>
 		</s:iterator>
 	</table>

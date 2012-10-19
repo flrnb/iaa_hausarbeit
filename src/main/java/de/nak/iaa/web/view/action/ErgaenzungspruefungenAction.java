@@ -29,7 +29,7 @@ public class ErgaenzungspruefungenAction extends ActionSupport implements
 				// TODO use correct regex
 				if (entry.getValue().getResultPercent() != null
 						&& !entry.getValue().getResultPercent()
-								.matches("[0123456789]*")) {
+								.matches("[0-9]{1,2}|100")) {
 					addFieldError("exams[" + entry.getKey() + "].text",
 							"Falsche Eingabe");
 				}
@@ -40,14 +40,11 @@ public class ErgaenzungspruefungenAction extends ActionSupport implements
 	public String save() throws Exception {
 		for (Map.Entry<String, ErgaenzungspruefungsBean> entry : exams
 				.entrySet()) {
-			System.out.println(entry.getValue().getResultPercent());
 		}
 		return "success";
 	}
 
 	public String show() throws Exception {
-		System.out.println(exams.size());
-
 		if (!getSession().containsKey("selectedManipel")
 				|| getSession().get("selectedManipel") == null
 				|| getSession().get("selectedManipel").equals("")) {
