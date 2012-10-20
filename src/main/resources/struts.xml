@@ -12,16 +12,16 @@
 	</package>
 
 	<package name="manipel" extends="tiles-default" namespace="/manipel">
-		<action name="show" class="de.nak.iaa.web.view.action.ManipelAendernAction"
+		<action name="show" class="manipelAendernAction"
 			method="show">
 			<result type="tiles">showChangeManipel</result>
 		</action>
-		<action name="save" class="de.nak.iaa.web.view.action.ManipelAendernAction"
+		<action name="save" class="manipelAendernAction"
 			method="save">
 			<result name="success" type="redirect">${refererUrl}</result>
 			<result name="input" type="tiles">showChangeManipel</result>
 		</action>
-		<action name="noSelectedError" class="de.nak.iaa.web.view.action.ManipelAendernAction"
+		<action name="noSelectedError" class="manipelAendernAction"
 			method="error">
 			<result name="success" type="tiles">noManipelSelectedError</result>
 		</action>

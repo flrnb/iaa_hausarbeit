@@ -1,5 +1,6 @@
 package de.nak.iaa.web.view.action;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -9,11 +10,14 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-import de.nak.iaa.server.business.impl.StudentServiceImpl;
+import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.entity.Manipel;
+import de.nak.iaa.server.fachwert.Studienrichtung;
 
 @SuppressWarnings("serial")
 public class ManipelAendernAction extends ActionSupport implements SessionAware {
+
+	private StudentService studentService;
 
 	private List<Manipel> manipel;
 	private Map<String, Object> session;
@@ -21,11 +25,13 @@ public class ManipelAendernAction extends ActionSupport implements SessionAware 
 	private static String refererUrl;
 
 	public ManipelAendernAction() {
-		setManipel((new StudentServiceImpl()).getAllManipel());
-		// setManipel(new ArrayList<String>());
-		// getManipel().add("i09");
-		// getManipel().add("w09");
-		// getManipel().add("b09");
+
+		// setManipel(studentService.getAllManipel());
+		// setManipel(getWebApplicationContext());
+		setManipel(new ArrayList<Manipel>());
+		getManipel().add(new Manipel(9, Studienrichtung.WInf));
+		getManipel().add(new Manipel(9, Studienrichtung.BWL));
+		getManipel().add(new Manipel(9, Studienrichtung.WIng));
 	}
 
 	@Override
@@ -99,5 +105,13 @@ public class ManipelAendernAction extends ActionSupport implements SessionAware 
 
 	public void setRefererUrl(String refererUrl) {
 		ManipelAendernAction.refererUrl = refererUrl;
+	}
+
+	public StudentService getStudentService() {
+		return studentService;
+	}
+
+	public void setStudentService(StudentService studentService) {
+		this.studentService = studentService;
 	}
 }

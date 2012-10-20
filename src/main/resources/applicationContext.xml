@@ -51,4 +51,14 @@
         </property>
     </bean>
 
+	<!-- Service Beans -->
+	<bean name="studentServiceBean" class="de.nak.iaa.server.business.impl.StudentServiceImpl">
+		<property name="manipelDAO" ref="manipelDAOImpl"></property>
+	</bean>
+
+	<!-- Action Beans -->
+	<bean id="manipelAendernAction" class="de.nak.iaa.web.view.action.ManipelAendernAction">
+		<property name="studentService" ref="studentServiceBean"></property>
+	</bean>
+
 </beans>
