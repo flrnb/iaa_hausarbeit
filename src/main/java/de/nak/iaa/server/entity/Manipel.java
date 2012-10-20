@@ -1,6 +1,7 @@
 package de.nak.iaa.server.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +22,7 @@ public class Manipel {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Enumerated
+	@Enumerated(EnumType.STRING)
 	private Studienrichtung studienrichtung;
 
 	public Manipel() {
