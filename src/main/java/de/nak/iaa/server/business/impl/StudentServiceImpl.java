@@ -4,10 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.common.collect.ImmutableList;
+
 import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.entity.Manipel;
 
+/**
+ * Implementierung von {@link StudentService}
+ * 
+ * @author flrnb
+ */
 public class StudentServiceImpl implements StudentService {
 
 	@Autowired
@@ -15,7 +22,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public List<Manipel> getAllManipel() {
-		return manipelDAO.findAll();
+		return ImmutableList.copyOf(manipelDAO.findAll());
 	}
 
 	public void setManipelDAO(ManipelDAO manipelDAO) {
