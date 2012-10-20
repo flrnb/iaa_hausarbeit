@@ -8,6 +8,16 @@ public class PruefungsleistungsBean {
 	private String alteNoten;
 	private String note;
 
+	public PruefungsleistungsBean(String examId, String matrikelNummer,
+			String name, String alteNoten, String note) {
+		super();
+		this.examId = examId;
+		this.matrikelNummer = matrikelNummer;
+		this.name = name;
+		this.alteNoten = alteNoten;
+		this.note = note;
+	}
+
 	public String getMatrikelNummer() {
 		return matrikelNummer;
 	}

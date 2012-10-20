@@ -14,6 +14,10 @@
 		<put-attribute name="content" value="/pages/hauptmenue.jsp" />
 	</definition>
 
+	<definition name="showSelectModul" extends="mainLayout">
+		<put-attribute name="content" value="/modulSelection/parts/selection.jsp"></put-attribute>
+	</definition>
+
 	<definition name="showChangeManipel" extends="mainLayout">
 		<put-attribute name="title" value="NoDaBa - Manipel ändern"></put-attribute>
 		<put-attribute name="content" value="/manipel/pages/show.jsp" />

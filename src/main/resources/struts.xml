@@ -60,6 +60,11 @@
 			<result name="success" type="tiles">saveWrittenExams</result>
 			<result name="input" type="tiles">showWrittenExams</result>
 		</action>
+		<action name="modulSelection"
+			class="de.nak.iaa.web.view.action.PruefungsleistungenEintragenAction"
+			method="showSelectModul">
+			<result name="success" type="tiles">showSelectModul</result>
+		</action>
 	</package>
 
 	<package name="editExams" extends="tiles-default" namespace="/editExams">

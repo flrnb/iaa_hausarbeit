@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.ParameterAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.Action;
@@ -13,13 +14,18 @@ import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.entity.Manipel;
 
 @SuppressWarnings("serial")
-public class ManipelAendernAction extends ActionSupport implements SessionAware {
+public class ManipelAendernAction extends ActionSupport implements
+		SessionAware, ParameterAware {
 
 	private StudentService studentService;
-
 	private Map<String, Object> session;
+	private Map<String, String[]> parameters;
 	private String selectedManipel;
 	private static String refererUrl;
+
+	public Map<String, String[]> getParameters() {
+		return parameters;
+	}
 
 	@Override
 	public void validate() {
@@ -54,9 +60,8 @@ public class ManipelAendernAction extends ActionSupport implements SessionAware 
 	}
 
 	public String error() {
-		if (ServletActionContext.getRequest().getParameter("target") != null) {
-			setRefererUrl(ServletActionContext.getRequest()
-					.getParameter("target").toString());
+		if (getParameters().containsKey("target")) {
+			setRefererUrl(getParameters().get("target").toString());
 		}
 		return Action.SUCCESS;
 	}
@@ -96,5 +101,10 @@ public class ManipelAendernAction extends ActionSupport implements SessionAware 
 
 	public void setStudentService(StudentService studentService) {
 		this.studentService = studentService;
+	}
+
+	@Override
+	public void setParameters(Map<String, String[]> parameters) {
+		this.parameters = parameters;
 	}
 }
