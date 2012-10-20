@@ -7,6 +7,8 @@ import com.google.common.collect.ImmutableList;
 import de.nak.iaa.server.business.PruefungService;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
 import de.nak.iaa.server.entity.Pruefungsfach;
+import de.nak.iaa.server.entity.Pruefungsleistung;
+import de.nak.iaa.server.fachwert.Note;
 
 /**
  * Implementierung von {@link PruefungService}
@@ -24,6 +26,12 @@ public class PruefungServiceImpl implements PruefungService {
 
 	public void setPruefungsfachDAO(PruefungsfachDAO pruefungsfachDAO) {
 		this.pruefungsfachDAO = pruefungsfachDAO;
+	}
+
+	@Override
+	public void updatePruefungsleistung(Pruefungsleistung leistung, Note note) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

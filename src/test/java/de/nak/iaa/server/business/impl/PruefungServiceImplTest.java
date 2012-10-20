@@ -3,6 +3,8 @@ package de.nak.iaa.server.business.impl;
 import static org.junit.Assert.assertThat;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
+import java.util.Date;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,7 +13,10 @@ import de.nak.iaa.server.dao.DAOMockBuilder;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
 import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Pruefungsfach;
+import de.nak.iaa.server.entity.Pruefungsleistung;
+import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.server.fachwert.Studienrichtung;
+import de.nak.iaa.server.fachwert.Versuch;
 
 /**
  * JUnit-Test für Implementierung von {@link PruefungService}
@@ -42,6 +47,13 @@ public class PruefungServiceImplTest {
 	@Test
 	public void testGetAllPruefungsfaecher() {
 		assertThat(service.getAllPruefungsfaecher(), hasItems(fach1, fach2, fach3));
+	}
+
+	@Test
+	public void testUpdatePruefungsleistung() {
+		Pruefungsleistung leistung = new Pruefungsleistung(Versuch.Eins, new Date());
+		service.updatePruefungsleistung(leistung, Note.EinsDrei);
+		// assertThat Note is geupdatet
 	}
 
 }
