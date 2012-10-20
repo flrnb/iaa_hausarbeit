@@ -1,27 +1,31 @@
 package de.nak.iaa.web.view.action;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 
+import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
+
+import de.nak.iaa.server.business.impl.StudentServiceImpl;
+import de.nak.iaa.server.entity.Manipel;
 
 @SuppressWarnings("serial")
 public class ManipelAendernAction extends ActionSupport implements SessionAware {
 
-	private List<String> manipel;
+	private List<Manipel> manipel;
 	private Map<String, Object> session;
 	private String selectedManipel;
 	private static String refererUrl;
 
 	public ManipelAendernAction() {
-		setManipel(new ArrayList<String>());
-		getManipel().add("i09");
-		getManipel().add("w09");
-		getManipel().add("b09");
+		setManipel((new StudentServiceImpl()).getAllManipel());
+		// setManipel(new ArrayList<String>());
+		// getManipel().add("i09");
+		// getManipel().add("w09");
+		// getManipel().add("b09");
 	}
 
 	@Override
@@ -48,12 +52,12 @@ public class ManipelAendernAction extends ActionSupport implements SessionAware 
 		if (getSession().containsKey("selectedManipel")
 				&& getSession().get("selectedManipel") != null)
 			selectedManipel = getSession().get("selectedManipel").toString();
-		return "success";
+		return Action.SUCCESS;
 	}
 
 	public String save() {
 		getSession().put("selectedManipel", selectedManipel);
-		return "success";
+		return Action.SUCCESS;
 	}
 
 	public String error() {
@@ -61,7 +65,7 @@ public class ManipelAendernAction extends ActionSupport implements SessionAware 
 			setRefererUrl(ServletActionContext.getRequest()
 					.getParameter("target").toString());
 		}
-		return "success";
+		return Action.SUCCESS;
 	}
 
 	public Map<String, Object> getSession() {
@@ -81,12 +85,12 @@ public class ManipelAendernAction extends ActionSupport implements SessionAware 
 		this.selectedManipel = selectedManipel;
 	}
 
-	public List<String> getManipel() {
+	public List<Manipel> getManipel() {
 		return manipel;
 	}
 
-	public void setManipel(List<String> manipel) {
-		this.manipel = manipel;
+	public void setManipel(List<Manipel> list) {
+		this.manipel = list;
 	}
 
 	public String getRefererUrl() {
