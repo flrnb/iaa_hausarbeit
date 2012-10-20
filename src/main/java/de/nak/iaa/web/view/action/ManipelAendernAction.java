@@ -9,24 +9,17 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-import de.nak.iaa.server.business.impl.StudentServiceImpl;
+import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.entity.Manipel;
 
 @SuppressWarnings("serial")
 public class ManipelAendernAction extends ActionSupport implements SessionAware {
 
-	private List<Manipel> manipel;
+	private StudentService studentService;
+
 	private Map<String, Object> session;
 	private String selectedManipel;
 	private static String refererUrl;
-
-	public ManipelAendernAction() {
-		setManipel((new StudentServiceImpl()).getAllManipel());
-		// setManipel(new ArrayList<String>());
-		// getManipel().add("i09");
-		// getManipel().add("w09");
-		// getManipel().add("b09");
-	}
 
 	@Override
 	public void validate() {
@@ -86,11 +79,7 @@ public class ManipelAendernAction extends ActionSupport implements SessionAware 
 	}
 
 	public List<Manipel> getManipel() {
-		return manipel;
-	}
-
-	public void setManipel(List<Manipel> list) {
-		this.manipel = list;
+		return studentService.getAllManipel();
 	}
 
 	public String getRefererUrl() {
@@ -99,5 +88,13 @@ public class ManipelAendernAction extends ActionSupport implements SessionAware 
 
 	public void setRefererUrl(String refererUrl) {
 		ManipelAendernAction.refererUrl = refererUrl;
+	}
+
+	public StudentService getStudentService() {
+		return studentService;
+	}
+
+	public void setStudentService(StudentService studentService) {
+		this.studentService = studentService;
 	}
 }
