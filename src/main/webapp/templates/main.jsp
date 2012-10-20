@@ -5,11 +5,14 @@
 <html>
 <head>
 <title><tiles:insertAttribute name="title" /></title>
+<link rel="stylesheet" href="/styles/style.css" />
 <s:head />
 </head>
 
 <body>
+
 	<tiles:insertAttribute name="header" />
+	<%-- <s:action name="ShowHeaderMenuAction" namespace="/" executeResult="true"></s:action> --%>
 	<hr />
 	<tiles:insertAttribute name="content" />
 </body>

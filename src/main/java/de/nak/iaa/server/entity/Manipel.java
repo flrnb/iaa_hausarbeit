@@ -83,4 +83,9 @@ public class Manipel {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return ((String.valueOf(jahrgang).length() == 1) ? "0" + jahrgang
+				: jahrgang) + " " + studienrichtung.toString();
+	}
 }

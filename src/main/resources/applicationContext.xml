@@ -7,11 +7,11 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
 	<context:annotation-config />
-	<context:component-scan base-package="de.nak.iaa.server" />
+	<context:component-scan base-package="de.nak.iaa" />
 
 	<context:property-placeholder
 		properties-ref="properties" />
-
+		
 	<bean id="properties"
 		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="locations">
@@ -28,7 +28,12 @@
 	</bean>
 
 
+	<!-- Service classes -->
+	<bean id="studentService" class="de.nak.iaa.server.business.impl.StudentServiceImpl" />
+
 	<!-- DAO layer -->
+	<bean id="manipelDAO" class="de.nak.iaa.server.dao.impl.ManipelDAOImpl" />
+
 	<tx:annotation-driven />
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">

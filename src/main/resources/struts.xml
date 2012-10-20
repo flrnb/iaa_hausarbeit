@@ -1,16 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE struts PUBLIC
-		"-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
-		"http://struts.apache.org/dtds/struts-2.0.dtd">
+		"-//Apache Software Foundation//DTD Struts Configuration 2.1//EN"
+		"http://struts.apache.org/dtds/struts-2.1.dtd">
 
 <struts>
-	<package name="default" extends="struts-default">
-		
-		<!-- <action name="" 
-			class="">
-			<result></result>
+	<package name="default" extends="tiles-default" namespace="/">
+		<action name="ShowMainMenu" class="de.nak.iaa.web.view.action.ShowMainMenuAction">
+			<result type="tiles">mainMenu</result>
 		</action>
-	 -->
+	</package>
+
+	<package name="manipel" extends="tiles-default" namespace="/manipel">
+		<action name="show" class="de.nak.iaa.web.view.action.ManipelAendernAction"
+			method="show">
+			<result type="tiles">showChangeManipel</result>
+		</action>
+		<action name="save" class="de.nak.iaa.web.view.action.ManipelAendernAction"
+			method="save">
+			<result name="success" type="redirect">${refererUrl}</result>
+			<result name="input" type="tiles">showChangeManipel</result>
+		</action>
+		<action name="noSelectedError" class="de.nak.iaa.web.view.action.ManipelAendernAction"
+			method="error">
+			<result name="success" type="tiles">noManipelSelectedError</result>
+		</action>
+	</package>
+
+	<package name="oralExams" extends="tiles-default" namespace="/oralExams">
+		<action name="show"
+			class="de.nak.iaa.web.view.action.ErgaenzungspruefungenAction"
+			method="show">
+			<result name="success" type="tiles">showOralExams</result>
+			<result name="noManipelSelected" type="redirectAction">
+				<param name="actionName">noSelectedError</param>
+				<param name="namespace">/manipel</param>
+				<param name="target">${targetUrl}</param>
+			</result>
+		</action>
+		<action name="save"
+			class="de.nak.iaa.web.view.action.ErgaenzungspruefungenAction"
+			method="save">
+			<result name="success" type="tiles">saveOralExams</result>
+			<result name="input" type="tiles">showOralExams</result>
+			<!-- <result name="input" type="redirectAction"> <param name="actionName">show</param> 
+				<param name="namespace">/OralExams</param> </result> -->
+		</action>
+	</package>
+
+	<package name="writtenExams" extends="tiles-default" namespace="/writtenExams">
+		<action name="show"
+			class="de.nak.iaa.web.view.action.PruefungsleistungenEintragenAction"
+			method="show">
+			<result name="success" type="tiles">showWrittenExams</result>
+		</action>
+		<action name="save"
+			class="de.nak.iaa.web.view.action.PruefungsleistungenEintragenAction"
+			method="save">
+			<result name="success" type="tiles">saveWrittenExams</result>
+			<result name="input" type="tiles">showWrittenExams</result>
+		</action>
+		<action name="modulSelection"
+			class="de.nak.iaa.web.view.action.PruefungsleistungenEintragenAction"
+			method="showSelectModul">
+			<result name="success" type="tiles">showSelectModul</result>
+		</action>
+	</package>
+
+	<package name="editExams" extends="tiles-default" namespace="/editExams">
+		<action name="show"
+			class="de.nak.iaa.web.view.action.PruefungsleistungenAendernAction"
+			method="show">
+			<result name="success" type="tiles">showEditExams</result>
+		</action>
+		<action name="save"
+			class="de.nak.iaa.web.view.action.PruefungsleistungenAendernAction"
+			method="save">
+			<result name="success" type="tiles">saveEditExams</result>
+			<result name="input" type="tiles">showEditExams</result>
+		</action>
 	</package>
 </struts>
