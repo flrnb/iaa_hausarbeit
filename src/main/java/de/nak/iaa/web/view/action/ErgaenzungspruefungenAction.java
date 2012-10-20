@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 
+import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
 import de.nak.iaa.web.view.formbean.ErgaenzungspruefungsBean;
@@ -41,7 +42,7 @@ public class ErgaenzungspruefungenAction extends ActionSupport implements
 		for (Map.Entry<String, ErgaenzungspruefungsBean> entry : exams
 				.entrySet()) {
 		}
-		return "success";
+		return Action.SUCCESS;
 	}
 
 	public String show() throws Exception {
@@ -52,7 +53,7 @@ public class ErgaenzungspruefungenAction extends ActionSupport implements
 					.toString());
 			return "noManipelSelected";
 		}
-		return "success";
+		return Action.SUCCESS;
 	}
 
 	public Map<String, ErgaenzungspruefungsBean> getExams() {
