@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 
 import org.junit.Before;
-import org.junit.Test;
 import org.springframework.orm.hibernate3.HibernateTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
@@ -36,7 +35,7 @@ public class PruefungsleistungPersistenceTest extends
 		pruefungsleistungDao.makePersistent(pl);
 	}
 
-	@Test
+	// @Test
 	public void testVersionierung() {
 		PlatformTransactionManager txMgr = transactionManager;
 
