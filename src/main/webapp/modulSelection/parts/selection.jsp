@@ -2,6 +2,19 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
-<s:iterator value="module" var="modul">
-<a href="<s:url action="show"/>?module=<s:property value="modul"/>">Modul <s:property value="modul"/></a><br />
-</s:iterator>
+
+<s:if test="pruefungsfaecher == null">
+	<h4>
+		Keine Module gepflegt für aktuellen Manipel<br />
+		<s:a action="ShowMainMenu" namespace="/">Zurück zum Hauptmenü</s:a>
+	</h4>
+</s:if>
+<s:else>
+	<s:iterator value="pruefungsfaecher" var="pruefungsfach">
+		<a
+			href="<s:url action="show"/>?pruefungsfach=<s:property value="%{#pruefungsfach.getId()}"/>">Modul
+			<s:property value="%{#pruefungsfach.toString()}" />
+		</a>
+		<br />
+	</s:iterator>
+</s:else>

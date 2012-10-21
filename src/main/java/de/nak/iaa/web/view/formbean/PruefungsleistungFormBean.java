@@ -1,28 +1,27 @@
 package de.nak.iaa.web.view.formbean;
 
-public class PruefungsleistungsBean {
+public class PruefungsleistungFormBean {
 
-	private String examId;
-	private String matrikelNummer;
+	private Long examId;
+	private int matrikelNummer;
 	private String name;
 	private String alteNoten;
 	private String note;
 
-	public PruefungsleistungsBean(String examId, String matrikelNummer,
-			String name, String alteNoten, String note) {
-		super();
-		this.examId = examId;
-		this.matrikelNummer = matrikelNummer;
+	public PruefungsleistungFormBean(Long id, int matrikelNr, String name,
+			String alteNoten, String note) {
+		this.examId = id;
+		this.matrikelNummer = matrikelNr;
 		this.name = name;
 		this.alteNoten = alteNoten;
 		this.note = note;
 	}
 
-	public String getMatrikelNummer() {
+	public int getMatrikelNummer() {
 		return matrikelNummer;
 	}
 
-	public void setMatrikelNummer(String matrikelNummer) {
+	public void setMatrikelNummer(int matrikelNummer) {
 		this.matrikelNummer = matrikelNummer;
 	}
 
@@ -42,11 +41,11 @@ public class PruefungsleistungsBean {
 		this.alteNoten = alteNoten;
 	}
 
-	public String getExamId() {
+	public Long getExamId() {
 		return examId;
 	}
 
-	public void setExamId(String examId) {
+	public void setExamId(Long examId) {
 		this.examId = examId;
 	}
 

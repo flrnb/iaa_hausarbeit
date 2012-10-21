@@ -15,6 +15,8 @@ import de.nak.iaa.web.view.formbean.ErgaenzungspruefungsBean;
 public class ErgaenzungspruefungenAction extends ActionSupport implements
 		SessionAware {
 
+	private static final String NO_MANIPEL_SELECTED = "noManipelSelected";
+
 	private Map<String, ErgaenzungspruefungsBean> exams;
 
 	public ErgaenzungspruefungenAction() {
@@ -51,7 +53,7 @@ public class ErgaenzungspruefungenAction extends ActionSupport implements
 				|| getSession().get("selectedManipel").equals("")) {
 			setTargetUrl(ServletActionContext.getRequest().getRequestURL()
 					.toString());
-			return "noManipelSelected";
+			return NO_MANIPEL_SELECTED;
 		}
 		return Action.SUCCESS;
 	}
@@ -65,6 +67,7 @@ public class ErgaenzungspruefungenAction extends ActionSupport implements
 	}
 
 	/* Session Teil Start */
+
 	private Map<String, Object> session;
 
 	public Map<String, Object> getSession() {
@@ -79,6 +82,7 @@ public class ErgaenzungspruefungenAction extends ActionSupport implements
 	/* Session Teil Ende */
 
 	/* Ziel Url (für Fehlerfall) Start */
+
 	private String targetUrl;
 
 	public String getTargetUrl() {

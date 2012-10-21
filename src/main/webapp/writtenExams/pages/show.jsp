@@ -4,14 +4,14 @@
 
 <h3>
 	Prüfungsergebnisse erfassen (Modul
-	<s:property value="selectedModul" />
+	<i><s:property value="selectedPruefungsfach" /></i>
 	)
 </h3>
 <s:a action="modulSelection" namespace="writtenExams">Modul wechseln</s:a>
 <p>Hier können Sie die erreichten Noten von dem Modul eingetragen
 	werden.</p>
 <form action="save">
-	<table>
+	<table class="notenTabelle" border="1">
 		<tr>
 			<th>id</th>
 			<th>matrikelnummer</th>
@@ -25,7 +25,7 @@
 				<td><s:property value="%{#pruefung.matrikelNummer}" /></td>
 				<td><s:property value="%{#pruefung.name}" /></td>
 				<td><s:property value="%{#pruefung.alteNoten}" /></td>
-				<td><s:textfield theme="simple" /></td>
+				<td><s:textfield theme="simple" cssClass="notenInputField" /></td>
 			</tr>
 		</s:iterator>
 	</table>
