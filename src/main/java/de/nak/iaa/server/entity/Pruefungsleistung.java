@@ -15,7 +15,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
 
@@ -23,7 +22,6 @@ import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.server.fachwert.Versuch;
 
 @Audited
-@AuditTable(value = "pruefungsleistung_rev")
 @Entity
 public class Pruefungsleistung {
 

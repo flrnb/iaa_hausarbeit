@@ -34,12 +34,14 @@ public class PruefungServiceImpl implements PruefungService {
 
 	@Override
 	public List<Pruefungsfach> getAllPruefungsfaecher(final Manipel manipel) {
-		return ImmutableList.copyOf(Iterables.filter(pruefungsfachDAO.findAll(), new Predicate<Pruefungsfach>() {
-			@Override
-			public boolean apply(Pruefungsfach fach) {
-				return manipel.equals(fach.getManipel());
-			}
-		}));
+		// pruefungsfachDAO.findByManipel(manipel);
+		return ImmutableList.copyOf(Iterables.filter(
+				pruefungsfachDAO.findAll(), new Predicate<Pruefungsfach>() {
+					@Override
+					public boolean apply(Pruefungsfach fach) {
+						return manipel.equals(fach.getManipel());
+					}
+				}));
 	}
 
 	public void setPruefungsfachDAO(PruefungsfachDAO pruefungsfachDAO) {
@@ -52,18 +54,21 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
-	public void addPruefungsleistung(Pruefung pruefung, Date datum, Student student, Note note) {
+	public void addPruefungsleistung(Pruefung pruefung, Date datum,
+			Student student, Note note) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public List<Pruefungsleistung> getAllPruefungsleistungen(Pruefungsfach fach, Student student) {
+	public List<Pruefungsleistung> getAllPruefungsleistungen(
+			Pruefungsfach fach, Student student) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Student> getAllErgaenzungsPruefungsStudenten(Manipel manipel, Pruefungsfach fach) {
+	public List<Student> getAllErgaenzungsPruefungsStudenten(Manipel manipel,
+			Pruefungsfach fach) {
 		// TODO Auto-generated method stub
 		return null;
 	}
