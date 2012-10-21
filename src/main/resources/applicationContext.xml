@@ -30,9 +30,12 @@
 
 	<!-- Service classes -->
 	<bean id="studentService" class="de.nak.iaa.server.business.impl.StudentServiceImpl" />
+	<bean id="pruefungService" class="de.nak.iaa.server.business.impl.PruefungServiceImpl" />
 
 	<!-- DAO layer -->
 	<bean id="manipelDAO" class="de.nak.iaa.server.dao.impl.ManipelDAOImpl" />
+	<bean id="pruefungsfachDAO" class="de.nak.iaa.server.dao.impl.PruefungsfachDAOImpl" />
+	<bean id="pruefungsleistungDAO" class="de.nak.iaa.server.dao.impl.PruefungsleistungDAOImpl" />
 
 	<tx:annotation-driven />
 	<bean id="transactionManager"
@@ -54,7 +57,7 @@
 		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="packagesToScan" value="de.nak.iaa.server.entity" />
-		<property name="schemaUpdate" value="true"/>
+		<property name="schemaUpdate" value="true" />
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>

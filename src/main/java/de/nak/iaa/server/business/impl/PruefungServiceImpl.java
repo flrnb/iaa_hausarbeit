@@ -2,6 +2,8 @@ package de.nak.iaa.server.business.impl;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.google.common.collect.ImmutableList;
 
 import de.nak.iaa.server.business.PruefungService;
@@ -17,6 +19,7 @@ import de.nak.iaa.server.fachwert.Note;
  */
 public class PruefungServiceImpl implements PruefungService {
 
+	@Autowired
 	private PruefungsfachDAO pruefungsfachDAO;
 
 	@Override
