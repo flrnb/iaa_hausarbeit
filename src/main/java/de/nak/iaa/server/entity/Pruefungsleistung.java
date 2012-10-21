@@ -44,15 +44,19 @@ public class Pruefungsleistung {
 	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 	private Pruefung pruefung;
 
+	@Enumerated(EnumType.STRING)
+	private Note note;
+
 	public Pruefungsleistung() {
 	}
 
 	public Pruefungsleistung(Versuch versuch, Date pruefungsDatum,
-			Pruefung pruefung) {
+			Pruefung pruefung, Note note) {
 		super();
 		this.versuch = versuch;
 		this.pruefungsDatum = pruefungsDatum;
 		this.pruefung = pruefung;
+		this.note = note;
 	}
 
 	public Long getId() {
@@ -96,7 +100,11 @@ public class Pruefungsleistung {
 	}
 
 	public Note getNote() {
-		// TODO implement
-		return null;
+		return note;
 	}
+
+	public void setNote(Note note) {
+		this.note = note;
+	}
+
 }

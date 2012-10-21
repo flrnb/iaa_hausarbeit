@@ -11,6 +11,7 @@ import de.nak.iaa.server.entity.Pruefung;
 import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
+import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 import de.nak.iaa.server.fachwert.Versuch;
 
@@ -70,11 +71,11 @@ public class MockPruefungService extends PruefungServiceImpl implements
 					list.add(new Pruefungsleistung(Versuch.Eins, new Date(2012,
 							6, 8), new Pruefung(new Date(), new Pruefungsfach(
 							"Titel", "beschreibung", new Manipel(2009,
-									Studienrichtung.WInf)))));
+									Studienrichtung.WInf))), Note.Drei));
 					list.add(new Pruefungsleistung(Versuch.Zwei, new Date(2012,
 							9, 15), new Pruefung(new Date(), new Pruefungsfach(
 							"Titel", "beschreibung", new Manipel(2009,
-									Studienrichtung.WInf)))));
+									Studienrichtung.WInf))), Note.DreiDrei));
 					return list;
 				}
 			}
@@ -87,11 +88,11 @@ public class MockPruefungService extends PruefungServiceImpl implements
 					list.add(new Pruefungsleistung(Versuch.Eins, new Date(2012,
 							6, 8), new Pruefung(new Date(), new Pruefungsfach(
 							"Titel", "beschreibung", new Manipel(2009,
-									Studienrichtung.WInf)))));
+									Studienrichtung.WInf))), Note.Eins));
 					list.add(new Pruefungsleistung(Versuch.Zwei, new Date(2012,
 							9, 15), new Pruefung(new Date(), new Pruefungsfach(
 							"Titel", "beschreibung", new Manipel(2009,
-									Studienrichtung.WInf)))));
+									Studienrichtung.WInf))), Note.Zwei));
 					return list;
 				}
 			}
