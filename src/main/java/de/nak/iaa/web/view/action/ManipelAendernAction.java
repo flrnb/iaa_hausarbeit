@@ -11,20 +11,23 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
 import de.nak.iaa.server.business.StudentService;
+import de.nak.iaa.server.business.mock.MockStudentService;
 import de.nak.iaa.server.entity.Manipel;
+import de.nak.iaa.server.fachwert.Studienrichtung;
+import de.nak.iaa.web.util.DataHelper;
 
 @SuppressWarnings("serial")
 public class ManipelAendernAction extends ActionSupport implements
 		SessionAware, ParameterAware {
 
-	private StudentService studentService;
-	private Map<String, Object> session;
-	private Map<String, String[]> parameters;
 	private String selectedManipel;
 	private static String refererUrl;
 
-	public Map<String, String[]> getParameters() {
-		return parameters;
+	/* Logik */
+	@Override
+	public String execute() throws Exception {
+		setStudentService(new MockStudentService());
+		return super.execute();
 	}
 
 	@Override
@@ -35,11 +38,7 @@ public class ManipelAendernAction extends ActionSupport implements
 						"Sie müssen einen Manipel auswählen");
 	}
 
-	@Override
-	public String execute() throws Exception {
-		return super.execute();
-	}
-
+	/* Actions */
 	public String show() {
 		if (ServletActionContext.getRequest().getHeader("referer") == null) {
 			setRefererUrl("show");
@@ -47,7 +46,6 @@ public class ManipelAendernAction extends ActionSupport implements
 			setRefererUrl(ServletActionContext.getRequest()
 					.getHeader("referer"));
 		}
-		System.out.println(getRefererUrl());
 		if (getSession().containsKey("selectedManipel")
 				&& getSession().get("selectedManipel") != null)
 			selectedManipel = getSession().get("selectedManipel").toString();
@@ -55,16 +53,24 @@ public class ManipelAendernAction extends ActionSupport implements
 	}
 
 	public String save() {
-		getSession().put("selectedManipel", selectedManipel);
+		String[] manipelParts = selectedManipel.split(" ", 2);
+		getSession().put(
+				"selectedManipel",
+				new Manipel(Integer.valueOf(manipelParts[0]), Studienrichtung
+						.valueOf(manipelParts[1])));
 		return Action.SUCCESS;
 	}
 
 	public String error() {
 		if (getParameters().containsKey("target")) {
-			setRefererUrl(getParameters().get("target").toString());
+			setRefererUrl(DataHelper.stringArrayToString(getParameters().get(
+					"target")));
 		}
 		return Action.SUCCESS;
 	}
+
+	/* Session Management */
+	private Map<String, Object> session;
 
 	public Map<String, Object> getSession() {
 		return session;
@@ -75,6 +81,30 @@ public class ManipelAendernAction extends ActionSupport implements
 		this.session = session;
 	}
 
+	/* Parameter Management */
+	private Map<String, String[]> parameters;
+
+	public Map<String, String[]> getParameters() {
+		return parameters;
+	}
+
+	@Override
+	public void setParameters(Map<String, String[]> parameters) {
+		this.parameters = parameters;
+	}
+
+	/* Service Management */
+	private StudentService studentService;
+
+	public StudentService getStudentService() {
+		return studentService;
+	}
+
+	public void setStudentService(StudentService studentService) {
+		this.studentService = studentService;
+	}
+
+	/* Properties */
 	public String getSelectedManipel() {
 		return selectedManipel;
 	}
@@ -93,18 +123,5 @@ public class ManipelAendernAction extends ActionSupport implements
 
 	public void setRefererUrl(String refererUrl) {
 		ManipelAendernAction.refererUrl = refererUrl;
-	}
-
-	public StudentService getStudentService() {
-		return studentService;
-	}
-
-	public void setStudentService(StudentService studentService) {
-		this.studentService = studentService;
-	}
-
-	@Override
-	public void setParameters(Map<String, String[]> parameters) {
-		this.parameters = parameters;
 	}
 }

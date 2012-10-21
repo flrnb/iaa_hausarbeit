@@ -16,8 +16,10 @@ public interface StudentService {
 
 	List<Manipel> getAllManipel();
 
+	List<Student> getAllStudenten(Predicate<Student> filter);
+
 	List<Student> getAllStudenten();
 
-	List<Student> getAllStudenten(Predicate<Student> filter);
+	List<Student> getAllStudenten(Manipel manipel);
 
 }

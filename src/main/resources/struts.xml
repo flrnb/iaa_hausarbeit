@@ -64,6 +64,11 @@
 			class="de.nak.iaa.web.view.action.PruefungsleistungenEintragenAction"
 			method="showSelectModul">
 			<result name="success" type="tiles">showSelectModul</result>
+			<result name="noManipelSelected" type="redirectAction">
+				<param name="actionName">noSelectedError</param>
+				<param name="namespace">/manipel</param>
+				<param name="target">${targetUrl}</param>
+			</result>
 		</action>
 	</package>
 

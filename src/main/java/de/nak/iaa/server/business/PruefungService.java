@@ -19,6 +19,8 @@ public interface PruefungService {
 
 	List<Pruefungsfach> getAllPruefungsfaecher(Manipel manipel);
 
+	Pruefungsfach getPruefungsfachById(Long id);
+
 	void updatePruefungsleistung(Long id, Note note);
 
 	List<Pruefungsleistung> getAllPruefungsleistungen(Pruefungsfach fach, Student student);

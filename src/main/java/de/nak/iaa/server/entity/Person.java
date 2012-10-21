@@ -1,13 +1,22 @@
 package de.nak.iaa.server.entity;
 
-public class Person {
+public abstract class Person {
+	private String name;
+	private String vorname;
 
 	public String getName() {
-		return null;
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getVorname() {
-		return null;
+		return vorname;
 	}
 
+	public void setVorname(String vorname) {
+		this.vorname = vorname;
+	}
 }

@@ -68,4 +68,9 @@ public class PruefungServiceImpl implements PruefungService {
 		return null;
 	}
 
+	@Override
+	public Pruefungsfach getPruefungsfachById(Long id) {
+		return pruefungsfachDAO.findById(id, false);
+	}
+
 }

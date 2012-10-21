@@ -33,13 +33,22 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	public List<Student> getAllStudenten(Predicate<Student> filter) {
+		return ImmutableList.copyOf(Iterables.filter(getAllStudenten(), filter));
+	}
+
+	@Override
 	public List<Student> getAllStudenten() {
 		return null;
 	}
 
 	@Override
-	public List<Student> getAllStudenten(Predicate<Student> filter) {
-		return ImmutableList.copyOf(Iterables.filter(getAllStudenten(), filter));
+	public List<Student> getAllStudenten(Manipel manipel) {
+		return getAllStudenten(new Predicate<Student>() {
+			@Override
+			public boolean apply(Student s) {
+				return true;
+			}
+		});
 	}
-
 }
