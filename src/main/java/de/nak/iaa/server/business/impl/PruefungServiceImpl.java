@@ -1,15 +1,22 @@
 package de.nak.iaa.server.business.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Iterables;
 
 import de.nak.iaa.server.business.PruefungService;
+import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
+import de.nak.iaa.server.entity.Manipel;
+import de.nak.iaa.server.entity.Pruefung;
 import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.server.entity.Pruefungsleistung;
+import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;
 
 /**
@@ -20,11 +27,19 @@ import de.nak.iaa.server.fachwert.Note;
 public class PruefungServiceImpl implements PruefungService {
 
 	@Autowired
+	private StudentService studentService;
+
+	@Autowired
 	private PruefungsfachDAO pruefungsfachDAO;
 
 	@Override
-	public List<Pruefungsfach> getAllPruefungsfaecher() {
-		return ImmutableList.copyOf(pruefungsfachDAO.findAll());
+	public List<Pruefungsfach> getAllPruefungsfaecher(final Manipel manipel) {
+		return ImmutableList.copyOf(Iterables.filter(pruefungsfachDAO.findAll(), new Predicate<Pruefungsfach>() {
+			@Override
+			public boolean apply(Pruefungsfach fach) {
+				return manipel.equals(fach.getManipel());
+			}
+		}));
 	}
 
 	public void setPruefungsfachDAO(PruefungsfachDAO pruefungsfachDAO) {
@@ -32,9 +47,25 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
-	public void updatePruefungsleistung(Pruefungsleistung leistung, Note note) {
+	public void updatePruefungsleistung(Long id, Note note) {
 		// TODO Auto-generated method stub
+	}
 
+	@Override
+	public void addPruefungsleistung(Pruefung pruefung, Date datum, Student student, Note note) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public List<Pruefungsleistung> getAllPruefungsleistungen(Pruefungsfach fach, Student student) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Student> getAllErgaenzungsPruefungsStudenten(Manipel manipel, Pruefungsfach fach) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
