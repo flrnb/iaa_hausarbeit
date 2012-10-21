@@ -11,9 +11,11 @@ import javax.annotation.Resource;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.orm.hibernate3.HibernateTransactionManager;
 
 import de.nak.iaa.ApplicationContextAwareTest;
+import de.nak.iaa.server.dao.ManipelDAO;
+import de.nak.iaa.server.dao.PruefungDAO;
+import de.nak.iaa.server.dao.PruefungsfachDAO;
 import de.nak.iaa.server.dao.PruefungsleistungDAO;
 import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.server.fachwert.Versuch;
@@ -22,31 +24,42 @@ public class PruefungsleistungPersistenceTest extends
 		ApplicationContextAwareTest {
 
 	@Resource
-	private PruefungsleistungDAO pruefungsleistungDao;
+	private PruefungsleistungDAO pruefungsleistungDAO;
 	@Resource
-	HibernateTransactionManager transactionManager;
+	private PruefungDAO pruefungDAO;
+	@Resource
+	private PruefungsfachDAO pruefungsfachDAO;
+	@Resource
+	private ManipelDAO manipelDAO;
+	private Pruefungsfach pruefungsfach;
+	private Pruefung pruefung;
 
 	@Before
 	public void setUp() {
-		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date());
-		pruefungsleistungDao.makePersistent(pl);
+		pruefungsfach = new Pruefungsfach("Titel", "beschreibung", manipelDAO
+				.findAll().get(0));
+		pruefungsfach = pruefungsfachDAO.makePersistent(pruefungsfach);
+		pruefung = new Pruefung(new Date(), pruefungsfach);
+		pruefung = pruefungDAO.makePersistent(pruefung);
 	}
 
 	@Test
 	public void testPersistierung() {
-		int countBefore = pruefungsleistungDao.findAll().size();
-		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date());
-		pruefungsleistungDao.makePersistent(pl);
+		int countBefore = pruefungsleistungDAO.findAll().size();
+		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date(),
+				pruefung);
+		pruefungsleistungDAO.makePersistent(pl);
 
-		int countAfter = pruefungsleistungDao.findAll().size();
+		int countAfter = pruefungsleistungDAO.findAll().size();
 		assertThat(countBefore + 1, is(equalTo(countAfter)));
 	}
 
 	@Test
 	public void testPersistierungMitErgaenzungspruefung() {
-		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date());
+		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date(),
+				pruefung);
 		pl.setErgaenzungsPruefung(new ErgaenzungsPruefung(Note.Drei, new Date()));
-		pl = pruefungsleistungDao.makePersistent(pl);
+		pl = pruefungsleistungDAO.makePersistent(pl);
 		assertThat(pl.getErgaenzungsPruefung(),
 				is(notNullValue(ErgaenzungsPruefung.class)));
 	}

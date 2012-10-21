@@ -10,12 +10,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
+import org.hibernate.envers.RelationTargetAuditMode;
 
 import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.server.fachwert.Versuch;
@@ -37,13 +39,20 @@ public class Pruefungsleistung {
 	@JoinColumn(name = "ERGAENZUNGSPRUEFUNG_ID")
 	private ErgaenzungsPruefung ergaenzungsPruefung;
 
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "PRUEFUNG_ID", nullable = false)
+	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
+	private Pruefung pruefung;
+
 	public Pruefungsleistung() {
 	}
 
-	public Pruefungsleistung(Versuch versuch, Date pruefungsDatum) {
+	public Pruefungsleistung(Versuch versuch, Date pruefungsDatum,
+			Pruefung pruefung) {
 		super();
 		this.versuch = versuch;
 		this.pruefungsDatum = pruefungsDatum;
+		this.pruefung = pruefung;
 	}
 
 	public Long getId() {
@@ -76,6 +85,14 @@ public class Pruefungsleistung {
 
 	public void setErgaenzungsPruefung(ErgaenzungsPruefung ergaenzungsPruefung) {
 		this.ergaenzungsPruefung = ergaenzungsPruefung;
+	}
+
+	public Pruefung getPruefung() {
+		return pruefung;
+	}
+
+	public void setPruefung(Pruefung pruefung) {
+		this.pruefung = pruefung;
 	}
 
 	public Note getNote() {

@@ -36,6 +36,7 @@
 	<bean id="manipelDAO" class="de.nak.iaa.server.dao.impl.ManipelDAOImpl" />
 	<bean id="pruefungsfachDAO" class="de.nak.iaa.server.dao.impl.PruefungsfachDAOImpl" />
 	<bean id="pruefungsleistungDAO" class="de.nak.iaa.server.dao.impl.PruefungsleistungDAOImpl" />
+	<bean id="pruefungDAO" class="de.nak.iaa.server.dao.impl.PruefungDAOImpl"/>
 
 	<tx:annotation-driven />
 	<bean id="transactionManager"
