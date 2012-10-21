@@ -14,7 +14,10 @@ public class PruefungsleistungDAOImpl extends
 
 	@Override
 	public Pruefungsleistung getOldRevision(int revision, Long primaryKey) {
+		getSession().flush();
 		AuditReader auditReader = AuditReaderFactory.get(getSession());
+		System.out.println(auditReader.getRevisions(Pruefungsleistung.class,
+				primaryKey).isEmpty());
 		return auditReader.find(Pruefungsleistung.class, primaryKey, revision);
 	}
 }

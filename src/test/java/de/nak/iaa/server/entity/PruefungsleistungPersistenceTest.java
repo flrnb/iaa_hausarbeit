@@ -6,10 +6,17 @@ import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 
+import org.junit.Before;
 import org.junit.Test;
+import org.springframework.orm.hibernate3.HibernateTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import de.nak.iaa.ApplicationContextAwareTest;
 import de.nak.iaa.server.dao.PruefungsleistungDAO;
@@ -20,16 +27,36 @@ public class PruefungsleistungPersistenceTest extends
 
 	@Resource
 	private PruefungsleistungDAO pruefungsleistungDao;
+	@Resource
+	HibernateTransactionManager transactionManager;
+
+	@Before
+	public void setUp() {
+		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date());
+		pruefungsleistungDao.makePersistent(pl);
+	}
 
 	@Test
 	public void testVersionierung() {
-		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date());
-		pl = pruefungsleistungDao.makePersistent(pl);
-		pl.setPruefungsDatum(new Date());
-		pruefungsleistungDao.makePersistent(pl);
+		PlatformTransactionManager txMgr = transactionManager;
+
+		// A new transaction is required, the wrapping transaction is for Envers
+		TransactionStatus status = txMgr
+				.getTransaction(new DefaultTransactionDefinition(
+						TransactionDefinition.PROPAGATION_REQUIRES_NEW));
+
+		// ein Tag abziehen, da das Datum in der DB die Genauigkeit Datum hat
+		Pruefungsleistung pruefungsleistung = pruefungsleistungDao.findAll()
+				.get(0);
+		pruefungsleistung.setPruefungsDatum(new Date(pruefungsleistung
+				.getPruefungsDatum().getTime()
+				- TimeUnit.MILLISECONDS.convert(1L, TimeUnit.DAYS)));
+
+		txMgr.commit(status);
+		// pruefungsleistungDao.makePersistent(pruefungsleistung);
 		Pruefungsleistung altePl = pruefungsleistungDao.getOldRevision(1,
-				pl.getId());
+				pruefungsleistung.getId());
 		assertThat(altePl.getPruefungsDatum(),
-				is(not(equalTo(pl.getPruefungsDatum()))));
+				is(not(equalTo(pruefungsleistung.getPruefungsDatum()))));
 	}
 }
