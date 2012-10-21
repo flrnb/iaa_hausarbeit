@@ -98,4 +98,9 @@ public class Pruefungsfach {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return titel;
+	}
+
 }

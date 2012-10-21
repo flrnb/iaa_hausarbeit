@@ -14,6 +14,7 @@ import javax.persistence.TemporalType;
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
+import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.server.fachwert.Versuch;
 
 @Audited
@@ -62,4 +63,8 @@ public class Pruefungsleistung {
 		this.pruefungsDatum = pruefungsDatum;
 	}
 
+	public Note getNote() {
+		// TODO implement
+		return null;
+	}
 }

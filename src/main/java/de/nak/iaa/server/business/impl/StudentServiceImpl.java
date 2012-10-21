@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.entity.Manipel;
+import de.nak.iaa.server.entity.Student;
 
 public class StudentServiceImpl implements StudentService {
 
@@ -20,6 +21,12 @@ public class StudentServiceImpl implements StudentService {
 
 	public void setManipelDAO(ManipelDAO manipelDAO) {
 		this.manipelDAO = manipelDAO;
+	}
+
+	@Override
+	public List<Student> getAllStudenten(Manipel manipel) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
