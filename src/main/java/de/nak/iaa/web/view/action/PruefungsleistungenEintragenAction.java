@@ -22,8 +22,7 @@ import de.nak.iaa.web.view.formbean.PruefungsleistungFormBean;
 
 // TODO muss von String modulen auf Pruefungsfach klasse umgestellt werden
 @SuppressWarnings("serial")
-public class PruefungsleistungenEintragenAction extends ActionSupport implements
-		SessionAware, ParameterAware {
+public class PruefungsleistungenEintragenAction extends ActionSupport implements SessionAware, ParameterAware {
 
 	private static final String NO_MANIPEL_SELECTED = "noManipelSelected";
 
@@ -58,15 +57,12 @@ public class PruefungsleistungenEintragenAction extends ActionSupport implements
 	}
 
 	public String showSelectModul() {
-		if (!getSession().containsKey("selectedManipel")
-				|| getSession().get("selectedManipel") == null
+		if (!getSession().containsKey("selectedManipel") || getSession().get("selectedManipel") == null
 				|| getSession().get("selectedManipel").equals("")) {
-			setTargetUrl(ServletActionContext.getRequest().getRequestURL()
-					.toString());
+			setTargetUrl(ServletActionContext.getRequest().getRequestURL().toString());
 			return NO_MANIPEL_SELECTED;
 		}
-		setPruefungsfaecher(getPruefungService().getPruefungsfaecherForManipel(
-				(Manipel) getSession().get("selectedManipel")));
+		setPruefungsfaecher(getPruefungService().getAllPruefungsfaecher((Manipel) getSession().get("selectedManipel")));
 		return Action.SUCCESS;
 	}
 
@@ -75,29 +71,22 @@ public class PruefungsleistungenEintragenAction extends ActionSupport implements
 	}
 
 	public String show() {
-		if (getParameters().containsKey("pruefungsfach")
-				&& !getParameters().get("pruefungsfach").equals("")) {
+		if (getParameters().containsKey("pruefungsfach") && !getParameters().get("pruefungsfach").equals("")) {
 
-			System.out
-					.println(Long.valueOf(DataHelper
-							.stringArrayToString(getParameters().get(
-									"pruefungsfach"))));
+			System.out.println(Long.valueOf(DataHelper.stringArrayToString(getParameters().get("pruefungsfach"))));
 			selectedPruefungsfach = getPruefungService().getPruefungsfachById(
-					Long.valueOf(DataHelper.stringArrayToString(getParameters()
-							.get("pruefungsfach"))));
+					Long.valueOf(DataHelper.stringArrayToString(getParameters().get("pruefungsfach"))));
 		}
 
 		pruefungen = new ArrayList<PruefungsleistungFormBean>();
 
-		for (Student student : getStudentService().getAllStudenten(
-				(Manipel) getSession().get("selectedManipel"))) {
+		for (Student student : getStudentService().getAllStudenten((Manipel) getSession().get("selectedManipel"))) {
 			if (student == null)
 				continue;
 			else {
 
-				List<Pruefungsleistung> pruefungsleistungen = getPruefungService()
-						.getPruefungsleistungenForStudentAndPruefungsfach(
-								student, selectedPruefungsfach);
+				List<Pruefungsleistung> pruefungsleistungen = getPruefungService().getAllPruefungsleistungen(
+						selectedPruefungsfach, student);
 
 				if (pruefungsleistungen == null)
 					continue;
@@ -110,11 +99,9 @@ public class PruefungsleistungenEintragenAction extends ActionSupport implements
 					}
 				}
 
-				pruefungen.add(new PruefungsleistungFormBean(
-						pruefungsleistungen.get(pruefungsleistungen.size() - 1)
-								.getId(), student.getMatrikelNr(), student
-								.getVorname() + " " + student.getName(),
-						alteNoten.toString(), null));
+				pruefungen.add(new PruefungsleistungFormBean(pruefungsleistungen.get(pruefungsleistungen.size() - 1)
+						.getId(), student.getMatrikelNr(), student.getVorname() + " " + student.getName(), alteNoten
+						.toString(), null));
 			}
 
 		}
@@ -138,8 +125,7 @@ public class PruefungsleistungenEintragenAction extends ActionSupport implements
 		return pruefungsServiceReturn;
 	}
 
-	public void setPruefungsServiceReturn(
-			Map<String, List<PruefungsleistungFormBean>> pruefungsServiceReturn) {
+	public void setPruefungsServiceReturn(Map<String, List<PruefungsleistungFormBean>> pruefungsServiceReturn) {
 		this.pruefungsServiceReturn = pruefungsServiceReturn;
 	}
 

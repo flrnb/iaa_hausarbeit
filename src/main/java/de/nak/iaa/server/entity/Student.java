@@ -4,6 +4,9 @@ public class Student extends Person {
 
 	private int matrikelNr;
 
+	public Student() {
+	}
+
 	public Student(int matrikelNr, String name, String vorname) {
 		setMatrikelNr(matrikelNr);
 		setName(name);

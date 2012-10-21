@@ -8,17 +8,19 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import de.nak.iaa.server.business.StudentService;
+import de.nak.iaa.server.business.impl.StudentServiceImpl;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 
-public class MockStudentService implements StudentService {
+public class MockStudentService extends StudentServiceImpl implements StudentService {
 
 	@SuppressWarnings("unused")
 	@Autowired
 	private ManipelDAO manipelDAO;
 
+	@Override
 	public void setManipelDAO(ManipelDAO manipelDAO) {
 		this.manipelDAO = manipelDAO;
 	}
