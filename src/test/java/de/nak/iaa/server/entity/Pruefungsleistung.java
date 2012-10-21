@@ -11,11 +11,13 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
 import de.nak.iaa.server.fachwert.Versuch;
 
 @Audited
+@AuditTable(value = "pruefungsleistung_rev")
 @Entity
 public class Pruefungsleistung {
 
