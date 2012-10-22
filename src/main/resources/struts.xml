@@ -5,6 +5,9 @@
 		"http://struts.apache.org/dtds/struts-2.1.dtd">
 
 <struts>
+	<constant name="struts.ui.theme" value="iaa" />
+	<constant name="struts.ui.templateDir" value="template" />
+
 	<package name="default" extends="tiles-default" namespace="/">
 		<action name="" class="de.nak.iaa.web.view.action.ShowMainMenuAction">
 			<result type="tiles">mainMenu</result>
@@ -19,30 +22,6 @@
 				<param name="target">${targetUrl}</param>
 			</result>
 		</global-results>
-	</package>
-
-	<package name="modulSelection" extends="manipelSelection"
-		namespace="modulSelection">
-		<action name="modulSelection" class="de.nak.iaa.web.view.action.ModulAuswahlAction"
-			method="showSelectModul">
-			<result name="success" type="tiles">showSelectModul</result>
-			<!-- <result name="success" type="redirectAction"> <param name="actionName">pruefungSelection</param> 
-				</result> -->
-			<!-- <result name="noManipelSelected" type="redirectAction">
-				<param name="actionName">noSelectedError</param>
-				<param name="namespace">/manipel</param>
-				<param name="target">${targetUrl}</param>
-			</result> -->
-		</action>
-		<action name="pruefungSelection" class="de.nak.iaa.web.view.action.ModulAuswahlAction"
-			method="showSelectPruefung">
-			<result name="success" type="tiles">showSelectPruefung</result>
-			<!-- <result name="noManipelSelected" type="redirectAction">
-				<param name="actionName">noSelectedError</param>
-				<param name="namespace">/manipel</param>
-				<param name="target">${targetUrl}</param>
-			</result> -->
-		</action>
 	</package>
 
 	<package name="manipel" extends="tiles-default" namespace="/manipel">
@@ -61,16 +40,34 @@
 		</action>
 	</package>
 
+	<package name="modulSelection" extends="manipelSelection"
+		namespace="modulSelection">
+		<action name="modulSelection" class="de.nak.iaa.web.view.action.ModulAuswahlAction"
+			method="showSelectModul">
+			<result name="success" type="tiles">showSelectModul</result>
+			<!-- <result name="success" type="redirectAction"> <param name="actionName">pruefungSelection</param> 
+				</result> -->
+			<!-- <result name="noManipelSelected" type="redirectAction"> <param name="actionName">noSelectedError</param> 
+				<param name="namespace">/manipel</param> <param name="target">${targetUrl}</param> 
+				</result> -->
+		</action>
+		<action name="pruefungSelection" class="de.nak.iaa.web.view.action.ModulAuswahlAction"
+			method="showSelectPruefung">
+			<result name="success" type="tiles">showSelectPruefung</result>
+			<!-- <result name="noManipelSelected" type="redirectAction"> <param name="actionName">noSelectedError</param> 
+				<param name="namespace">/manipel</param> <param name="target">${targetUrl}</param> 
+				</result> -->
+		</action>
+	</package>
+
 	<package name="oralExams" extends="modulSelection" namespace="/oralExams">
 		<action name="show"
 			class="de.nak.iaa.web.view.action.ErgaenzungspruefungenAction"
 			method="show">
 			<result name="success" type="tiles">showOralExams</result>
-			<!-- <result name="noManipelSelected" type="redirectAction">
-				<param name="actionName">noSelectedError</param>
-				<param name="namespace">/manipel</param>
-				<param name="target">${targetUrl}</param>
-			</result> -->
+			<!-- <result name="noManipelSelected" type="redirectAction"> <param name="actionName">noSelectedError</param> 
+				<param name="namespace">/manipel</param> <param name="target">${targetUrl}</param> 
+				</result> -->
 		</action>
 		<action name="save"
 			class="de.nak.iaa.web.view.action.ErgaenzungspruefungenAction"
