@@ -237,6 +237,14 @@ public class PruefungServiceImplTest {
 	}
 
 	@Test(expected = IllegalPruefungsleistungException.class)
+	public void testAddPruefungsleistungNichtZulaessigBestandenErgaenzung() throws IllegalPruefungsleistungException {
+		Pruefung pruefung = new Pruefung(TODAY, fach1);
+		service.addPruefungsleistung(pruefung, student1, Note.Fuenf);
+		service.addErgaenzungsPruefung(student1, fach1, TOMORROW, 90);
+		service.addPruefungsleistung(pruefung, student1, Note.Drei);
+	}
+
+	@Test(expected = IllegalPruefungsleistungException.class)
 	public void testAddPruefungsleistungNichtZulaessigDreiVersuche() throws IllegalPruefungsleistungException {
 		Pruefung pruefung = new Pruefung(TODAY, fach1);
 		service.addPruefungsleistung(pruefung, student1, Note.Sechs);

@@ -248,8 +248,9 @@ public class PruefungServiceImpl implements PruefungService {
 			return false;
 		case Fuenf:
 			ErgaenzungsPruefung ergaenzungsPruefung = leistung.getErgaenzungsPruefung();
-			// FIXME: Prüfen ob Ergänzungsprüfung bestanden ist
-			return false;
+			if (ergaenzungsPruefung == null)
+				return false;
+			return ergaenzungsPruefung.getNote().getNote() <= Note.Vier.getNote();
 		default:
 			return true;
 		}
