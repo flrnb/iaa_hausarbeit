@@ -402,7 +402,7 @@ public class PruefungServiceImplTest {
 		Pruefung pruefung1 = service.addPruefung(fach1, TODAY);
 		service.addPruefungsleistung(pruefung1, student1, Note.Sechs);
 		Pruefung pruefung2 = service.addPruefung(fach1, TOMORROW);
-		Pruefungsleistung leistung2 = service.addPruefungsleistung(pruefung2, student1, Note.Fuenf);
+		service.addPruefungsleistung(pruefung2, student1, Note.Fuenf);
 		service.addErgaenzungsPruefung(student1, fach1, THE_DAY_AFTER_TOMORROW, 40);
 		assertThat(service.getAktuelleNote(student1, fach1).get(), is(equalTo(Note.Fuenf)));
 	}
