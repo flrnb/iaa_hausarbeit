@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.google.common.base.Optional;
 
+import de.nak.iaa.server.entity.ErgaenzungsPruefung;
 import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Pruefung;
 import de.nak.iaa.server.entity.Pruefungsfach;
@@ -29,6 +30,8 @@ public interface PruefungService {
 	/**
 	 * @param id
 	 * @return Prüfungsfach mit der übergebenen ID
+	 * @throws IllegalArgumentException
+	 *             falls id nicht vergeben
 	 */
 	Pruefungsfach getPruefungsfachById(Long id);
 
@@ -43,6 +46,8 @@ public interface PruefungService {
 	/**
 	 * @param id
 	 * @return Prüfung mit der übergebenen ID
+	 * @throws IllegalArgumentException
+	 *             falls id nicht vergeben
 	 */
 	Pruefung getPruefungById(Long id);
 
@@ -51,8 +56,9 @@ public interface PruefungService {
 	 * 
 	 * @param fach
 	 * @param datum
+	 * @return neu angelegte Prüfung
 	 */
-	void addPruefung(Pruefungsfach fach, Date datum);
+	Pruefung addPruefung(Pruefungsfach fach, Date datum);
 
 	/**
 	 * @param fach
@@ -85,10 +91,12 @@ public interface PruefungService {
 	 * @param pruefung
 	 * @param student
 	 * @param note
+	 *            #
+	 * @return neu angelegte Prüfungsleistung
 	 * @throws IllegalPruefungsleistungException
 	 *             wenn die Prüfungsleistung nicht zulässig ist
 	 */
-	void addPruefungsleistung(Pruefung pruefung, Student student, Note note);
+	Pruefungsleistung addPruefungsleistung(Pruefung pruefung, Student student, Note note);
 
 	/**
 	 * @param manipel
@@ -111,8 +119,25 @@ public interface PruefungService {
 	/**
 	 * @param student
 	 * @param fach
-	 * @return die aktuell gültige Note, falls vorhanden
+	 * @return die aktuell gültige {@link Note}, falls vorhanden
 	 */
 	Optional<Note> getAktuelleNote(Student student, Pruefungsfach fach);
+
+	/**
+	 * @param pruefungsleistung
+	 * @return true, falls aktuelle eine {@link ErgaenzungsPruefung} für die
+	 *         {@link Pruefungsleistung} zulässig ist
+	 */
+	boolean isErgaenzungsPruefungZulaessig(Pruefungsleistung pruefungsleistung);
+
+	/**
+	 * für eine Prüfungsleistung eine Ergänzungsprüfung erfassen
+	 * 
+	 * @require isErgaenzungsPruefungZulaessig(pruefungsleistung)
+	 * @param pruefungsleistung
+	 * @param prozent
+	 * @return die neu erstellte {@link ErgaenzungsPruefung}
+	 */
+	ErgaenzungsPruefung addErgaenzungsPruefung(Pruefungsleistung pruefungsleistung, int prozent);
 
 }

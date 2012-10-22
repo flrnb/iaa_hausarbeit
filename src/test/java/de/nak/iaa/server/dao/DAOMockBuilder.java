@@ -23,8 +23,6 @@ public class DAOMockBuilder<E, T extends GenericDAO<E, Long>> {
 
 	private final AtomicLong ids = new AtomicLong(0L);
 
-	private final Class<T> toMock;
-
 	private final List<E> entities = new ArrayList<E>();
 
 	public static <E, T extends GenericDAO<E, Long>> DAOMockBuilder<E, T> forClass(Class<T> clazz) {
@@ -32,18 +30,12 @@ public class DAOMockBuilder<E, T extends GenericDAO<E, Long>> {
 	}
 
 	private DAOMockBuilder(Class<T> toMock) {
-		this.toMock = toMock;
 		this.mock = EasyMock.createNiceMock(toMock);
 	}
 
 	public DAOMockBuilder<E, T> addEntities(List<E> entities) {
 		for (final E e : entities) {
-			Long id = ids.incrementAndGet();
-			try {
-				BeanUtils.setProperty(e, "id", id);
-			} catch (Exception exc) {
-				throw new IllegalArgumentException("Klasse " + e.getClass().getSimpleName() + " hat kein ID-Feld");
-			}
+			setId(e);
 			this.entities.add(e);
 		}
 		return this;
@@ -53,6 +45,7 @@ public class DAOMockBuilder<E, T extends GenericDAO<E, Long>> {
 		return this.addEntities(Arrays.asList(entities));
 	}
 
+	@SuppressWarnings("unchecked")
 	public T build() {
 		EasyMock.expect(mock.findAll()).andReturn(entities).anyTimes();
 		EasyMock.expect(mock.findById(EasyMock.anyLong(), EasyMock.anyBoolean())).andAnswer(new IAnswer<E>() {
@@ -65,6 +58,18 @@ public class DAOMockBuilder<E, T extends GenericDAO<E, Long>> {
 				return null;
 			}
 		});
+		EasyMock.expect(mock.makePersistent((E) EasyMock.anyObject()));
+		EasyMock.expectLastCall().andAnswer(new IAnswer<Void>() {
+			@Override
+			public Void answer() throws Throwable {
+				E entity = (E) EasyMock.getCurrentArguments()[0];
+				if (!entities.contains(entity)) {
+					setId(entity);
+					entities.add(entity);
+				}
+				return null;
+			}
+		}).anyTimes();
 		EasyMock.replay(mock);
 		return mock;
 	}
@@ -72,10 +77,23 @@ public class DAOMockBuilder<E, T extends GenericDAO<E, Long>> {
 	public static void main(String[] args) {
 		Pruefungsleistung leistung = new Pruefungsleistung();
 		leistung.setPruefungsDatum(new java.util.Date());
-		PruefungsleistungDAO dao = DAOMockBuilder.forClass(PruefungsleistungDAO.class)
-				.addEntities(new Pruefungsleistung()).build();
+		PruefungsleistungDAO dao = DAOMockBuilder.forClass(PruefungsleistungDAO.class).addEntities(leistung).build();
 		Long id = leistung.getId();
-		System.out.println(id);
-		System.out.println(dao.findById(id, false).equals(leistung));
+		Pruefungsleistung leistung2 = new Pruefungsleistung();
+		dao.makePersistent(leistung2);
+		dao.makePersistent(leistung);
+		Long id2 = leistung2.getId();
+		List<Pruefungsleistung> findAll = dao.findAll();
+		System.out.println(id.toString() + id2 + findAll);
 	}
+
+	private void setId(final E e) {
+		Long id = ids.incrementAndGet();
+		try {
+			BeanUtils.setProperty(e, "id", id);
+		} catch (Exception exc) {
+			throw new IllegalArgumentException("Klasse " + e.getClass().getSimpleName() + " hat kein ID-Feld");
+		}
+	}
+
 }
