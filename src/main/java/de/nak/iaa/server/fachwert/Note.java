@@ -24,11 +24,15 @@ public enum Note {
 		this.note = note;
 	}
 
-	public static Note getNote(String note) {
+	private static Note getNote(String note) {
 		if (note.matches("[123456][.][037]"))
 			return lookup.get(note);
 		else
 			return lookup.get(Double.valueOf(note + ".0"));
+	}
+
+	public static boolean isValid(String note) {
+		return (Note.getNote(note) == null) ? false : true;
 	}
 
 	public Double getNote() {
