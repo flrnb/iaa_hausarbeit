@@ -1,46 +1,54 @@
 package de.nak.iaa.web.view.formbean;
 
 import de.nak.iaa.server.entity.Student;
+import de.nak.iaa.server.fachwert.Note;
 
 public class PruefungsleistungAendernFormBean extends AbstractFormBean {
 
-	private String note1;
-	private String note2;
-	private String note3;
+	private Note[] noten;
+	private boolean[] writeable;
 
 	public PruefungsleistungAendernFormBean() {
 	}
 
-	public PruefungsleistungAendernFormBean(Student student, String note1,
-			String note2, String note3) {
+	public PruefungsleistungAendernFormBean(Student student, Note[] noten,
+			boolean[] writeable) {
 		this.student = student;
-		this.note1 = note1;
-		this.note2 = note2;
-		this.note3 = note3;
+		this.noten = noten;
+		this.writeable = writeable;
+
 	}
 
 	public String getNote1() {
-		return note1;
+		return noten[0].toString();
 	}
 
 	public void setNote1(String note1) {
-		this.note1 = note1;
+		this.noten[0] = Note.get(note1);
 	}
 
 	public String getNote2() {
-		return note2;
+		return noten[1].toString();
 	}
 
 	public void setNote2(String note2) {
-		this.note2 = note2;
+		this.noten[1] = Note.get(note2);
 	}
 
 	public String getNote3() {
-		return note3;
+		return noten[2].toString();
 	}
 
 	public void setNote3(String note3) {
-		this.note3 = note3;
+		this.noten[2] = Note.get(note3);
+	}
+
+	public boolean[] getWriteable() {
+		return writeable;
+	}
+
+	public void setWriteable(boolean[] writeable) {
+		this.writeable = writeable;
 	}
 
 }
