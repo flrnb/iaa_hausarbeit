@@ -73,8 +73,9 @@ public class MockPruefungService extends PruefungServiceImpl implements Pruefung
 			if (fach.equals(pruefungsfach)) {
 				if (service.getAllStudenten(fach.getManipel()).contains(student)) {
 					List<Pruefungsleistung> list = new ArrayList<Pruefungsleistung>();
-					list.add(new Pruefungsleistung(Versuch.Eins, new Date(2012, 6, 8), pruefungen.get(0), null));
-					list.add(new Pruefungsleistung(Versuch.Zwei, new Date(2012, 9, 15), pruefungen.get(0), null));
+					list.add(new Pruefungsleistung(Versuch.Eins, new Date(2012, 6, 8), pruefungen.get(0), null, student));
+					list.add(new Pruefungsleistung(Versuch.Zwei, new Date(2012, 9, 15), pruefungen.get(0), null,
+							student));
 					return list;
 				}
 			}
@@ -83,8 +84,9 @@ public class MockPruefungService extends PruefungServiceImpl implements Pruefung
 			if (fach.equals(pruefungsfach)) {
 				if (service.getAllStudenten(fach.getManipel()).contains(student)) {
 					List<Pruefungsleistung> list = new ArrayList<Pruefungsleistung>();
-					list.add(new Pruefungsleistung(Versuch.Eins, new Date(2012, 6, 8), pruefungen.get(1), null));
-					list.add(new Pruefungsleistung(Versuch.Zwei, new Date(2012, 9, 15), pruefungen.get(1), null));
+					list.add(new Pruefungsleistung(Versuch.Eins, new Date(2012, 6, 8), pruefungen.get(1), null, student));
+					list.add(new Pruefungsleistung(Versuch.Zwei, new Date(2012, 9, 15), pruefungen.get(1), null,
+							student));
 					return list;
 				}
 			}

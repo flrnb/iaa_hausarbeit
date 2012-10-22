@@ -20,8 +20,7 @@ import de.nak.iaa.server.dao.PruefungsleistungDAO;
 import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.server.fachwert.Versuch;
 
-public class PruefungsleistungPersistenceTest extends
-		ApplicationContextAwareTest {
+public class PruefungsleistungPersistenceTest extends ApplicationContextAwareTest {
 
 	@Resource
 	private PruefungsleistungDAO pruefungsleistungDAO;
@@ -36,8 +35,7 @@ public class PruefungsleistungPersistenceTest extends
 
 	@Before
 	public void setUp() {
-		pruefungsfach = new Pruefungsfach("Titel", "beschreibung", manipelDAO
-				.findAll().get(0));
+		pruefungsfach = new Pruefungsfach("Titel", "beschreibung", manipelDAO.findAll().get(0));
 		pruefungsfach = pruefungsfachDAO.makePersistent(pruefungsfach);
 		pruefung = new Pruefung(new Date(), pruefungsfach);
 		pruefung = pruefungDAO.makePersistent(pruefung);
@@ -46,8 +44,8 @@ public class PruefungsleistungPersistenceTest extends
 	@Test
 	public void testPersistierung() {
 		int countBefore = pruefungsleistungDAO.findAll().size();
-		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date(),
-				pruefung, Note.Drei);
+		// FIXME, Student == null
+		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date(), pruefung, Note.Drei, null);
 		pruefungsleistungDAO.makePersistent(pl);
 
 		int countAfter = pruefungsleistungDAO.findAll().size();
@@ -56,11 +54,10 @@ public class PruefungsleistungPersistenceTest extends
 
 	@Test
 	public void testPersistierungMitErgaenzungspruefung() {
-		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date(),
-				pruefung, Note.EinsDrei);
+		// FIXME, Student == null
+		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date(), pruefung, Note.EinsDrei, null);
 		pl.setErgaenzungsPruefung(new ErgaenzungsPruefung(Note.Drei, new Date()));
 		pl = pruefungsleistungDAO.makePersistent(pl);
-		assertThat(pl.getErgaenzungsPruefung(),
-				is(notNullValue(ErgaenzungsPruefung.class)));
+		assertThat(pl.getErgaenzungsPruefung(), is(notNullValue(ErgaenzungsPruefung.class)));
 	}
 }
