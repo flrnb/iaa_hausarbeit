@@ -36,7 +36,16 @@
 	<bean id="manipelDAO" class="de.nak.iaa.server.dao.impl.ManipelDAOImpl" />
 	<bean id="pruefungsfachDAO" class="de.nak.iaa.server.dao.impl.PruefungsfachDAOImpl" />
 	<bean id="pruefungsleistungDAO" class="de.nak.iaa.server.dao.impl.PruefungsleistungDAOImpl" />
-	<bean id="pruefungDAO" class="de.nak.iaa.server.dao.impl.PruefungDAOImpl"/>
+	<bean id="pruefungDAO" class="de.nak.iaa.server.dao.impl.PruefungDAOImpl" />
+
+	<!-- Form Beans - Nicht löschen! Werden für Formulare benötigt @Flo: Wenn 
+		du die wo anders hinpacken willst, ok aber iwo müssen die beans definiert 
+		sein.wo is mir egal^^ -->
+	<bean id="PruefungsleistungFormBean" class="de.nak.iaa.web.view.formbean.PruefungsleistungFormBean" />
+	<bean id="PruefungsleistungAendernFormBean"
+		class="de.nak.iaa.web.view.formbean.PruefungsleistungAendernFormBean" />
+	<bean id="ErgaenzungspruefungsFormBean"
+		class="de.nak.iaa.web.view.formbean.ErgaenzungspruefungsFormBean" />
 
 	<tx:annotation-driven />
 	<bean id="transactionManager"
