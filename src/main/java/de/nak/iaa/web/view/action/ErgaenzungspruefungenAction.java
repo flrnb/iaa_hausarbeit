@@ -53,7 +53,7 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 		for (ErgaenzungspruefungsFormBean p : pruefungenBeans) {
 
 			// TODO hier validieren
-			if (p.getResultPercent().matches("\n{1,2}|100")) {
+			if (!p.getResultPercent().matches("\n{1,2}|100")) {
 				addFieldError("pruefungenBeans[" + i + "].note",
 						"Keine gültige Note");
 			}

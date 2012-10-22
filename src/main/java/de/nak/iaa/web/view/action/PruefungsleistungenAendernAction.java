@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.opensymphony.xwork2.Action;
 
+import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.web.view.formbean.PruefungsleistungAendernFormBean;
@@ -27,10 +28,23 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 			else {
 				// TODO logik einbauen, damit der service benutzt wird
 
-				// getPruefungenBeans().add(
-				// new PruefungsleistungFormBean(student.getMatrikelNr(),
-				// student.getVorname() + " " + student.getName(),
-				// , null));
+				List<Pruefungsleistung> leistungen = getPruefungService()
+						.getAllPruefungsleistungen(getSelectedPruefungsfach(),
+								student);
+				Note[] noten = new Note[3];
+				boolean[] writeable = new boolean[3];
+
+				int i = 0;
+				for (Pruefungsleistung l : leistungen) {
+					writeable[i] = getPruefungService()
+							.isPruefungsleistungEditable(l.getId());
+					noten[i] = l.getNote();
+					i++;
+				}
+
+				getPruefungenBeans().add(
+						new PruefungsleistungAendernFormBean(student, noten,
+								writeable));
 			}
 		}
 
@@ -58,15 +72,15 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 		for (PruefungsleistungAendernFormBean p : pruefungenBeans) {
 
 			// TODO hier validieren
-			if (Note.getNote(p.getNote1()) != null) {
+			if (!Note.isValid(p.getNote1())) {
 				addFieldError("pruefungenBeans[" + i + "].note1",
 						"Keine gültige Note");
 			}
-			if (Note.getNote(p.getNote2()) != null) {
+			if (!Note.isValid(p.getNote2())) {
 				addFieldError("pruefungenBeans[" + i + "].note2",
 						"Keine gültige Note");
 			}
-			if (Note.getNote(p.getNote3()) != null) {
+			if (!Note.isValid(p.getNote3())) {
 				addFieldError("pruefungenBeans[" + i + "].note3",
 						"Keine gültige Note");
 			}

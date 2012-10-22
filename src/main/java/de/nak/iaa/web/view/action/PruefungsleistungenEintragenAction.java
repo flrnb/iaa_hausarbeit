@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.struts2.interceptor.ParameterAware;
 import org.apache.struts2.interceptor.SessionAware;
 
+import com.google.common.base.Optional;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.Preparable;
 import com.opensymphony.xwork2.ValidationAware;
@@ -35,14 +36,11 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 			if (student == null)
 				continue;
 			else {
-
-				Note alteNote = null; // TODO logik einbauen, damit der service
-										// benutzt wird
+				Optional<Note> alteNote = getPruefungService().getAktuelleNote(
+						student, getSelectedPruefungsfach());
 
 				getPruefungenBeans().add(
-						new PruefungsleistungFormBean(student.getMatrikelNr(),
-								student.getVorname() + " " + student.getName(),
-								alteNote, null));
+						new PruefungsleistungFormBean(student, alteNote, null));
 			}
 		}
 
@@ -60,25 +58,26 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 
 		int i = 0;
 		for (PruefungsleistungFormBean p : pruefungenBeans) {
-
-			// TODO hier validieren
-			System.out.println(p);
-			System.out.println(p.getNote());
-			if (Note.getNote(p.getNote()) == null) {
+			System.out.println(p.getStudent());
+			if (!Note.isValid(p.getNote())) {
 				addFieldError("pruefungenBeans[" + i + "].note",
 						"Keine gültige Note");
 			}
-			// TODO process the form and save the noten
 			i++;
 		}
 
 		if (getFieldErrors().size() > 0) {
 			fuellePruefungsBeans();
 			return Action.INPUT;
+		} else {
+			for (PruefungsleistungFormBean p : pruefungenBeans) {
+				getPruefungService().addPruefungsleistung(
+						getSelectedPruefung(), p.getStudent(),
+						Note.getNote(p.getNote()));
+			}
+			// TODO show the protokoll
+			return Action.SUCCESS;
 		}
-
-		// TODO show the protokoll
-		return Action.SUCCESS;
 	}
 
 	// TODO fehlerbehandlung hinzufügen
