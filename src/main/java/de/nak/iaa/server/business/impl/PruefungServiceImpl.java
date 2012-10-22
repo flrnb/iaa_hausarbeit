@@ -14,6 +14,7 @@ import com.google.common.collect.Iterables;
 import de.nak.iaa.server.business.PruefungService;
 import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
+import de.nak.iaa.server.entity.ErgaenzungsPruefung;
 import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Pruefung;
 import de.nak.iaa.server.entity.Pruefungsfach;
@@ -55,8 +56,8 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
-	public void addPruefungsleistung(Pruefung pruefung, Student student, Note note) {
-		// TODO Auto-generated method stub
+	public Pruefungsleistung addPruefungsleistung(Pruefung pruefung, Student student, Note note) {
+		return null;
 	}
 
 	@Override
@@ -83,9 +84,8 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
-	public void addPruefung(Pruefungsfach fach, Date datum) {
-		// TODO Auto-generated method stub
-
+	public Pruefung addPruefung(Pruefungsfach fach, Date datum) {
+		return null;
 	}
 
 	@Override
@@ -112,4 +112,15 @@ public class PruefungServiceImpl implements PruefungService {
 		return null;
 	}
 
+	@Override
+	public boolean isErgaenzungsPruefungZulaessig(Pruefungsleistung pruefungsleistung) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public ErgaenzungsPruefung addErgaenzungsPruefung(Pruefungsleistung pruefungsleistung, int prozent) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
