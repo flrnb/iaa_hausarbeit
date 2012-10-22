@@ -45,6 +45,10 @@ public class ErgaenzungspruefungenAction extends AbstractAction implements
 	}
 
 	public String save() throws Exception {
+		if (isManipelSelected()) {
+			setTargetUrl(getRequestUrl());
+			return NO_MANIPEL_SELECTED;
+		}
 		return Action.SUCCESS;
 	}
 
