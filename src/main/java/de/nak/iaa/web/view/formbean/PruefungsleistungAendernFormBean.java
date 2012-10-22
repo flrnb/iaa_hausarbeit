@@ -1,5 +1,7 @@
 package de.nak.iaa.web.view.formbean;
 
+import de.nak.iaa.server.entity.Student;
+
 public class PruefungsleistungAendernFormBean extends AbstractFormBean {
 
 	private String note1;
@@ -9,11 +11,9 @@ public class PruefungsleistungAendernFormBean extends AbstractFormBean {
 	public PruefungsleistungAendernFormBean() {
 	}
 
-	public PruefungsleistungAendernFormBean(Integer matrikelNummer,
-			String name, String note1, String note2, String note3) {
-		super();
-		this.matrikelNummer = matrikelNummer;
-		this.name = name;
+	public PruefungsleistungAendernFormBean(Student student, String note1,
+			String note2, String note3) {
+		this.student = student;
 		this.note1 = note1;
 		this.note2 = note2;
 		this.note3 = note3;

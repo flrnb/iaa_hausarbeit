@@ -1,29 +1,22 @@
 package de.nak.iaa.web.view.formbean;
 
+import de.nak.iaa.server.entity.Student;
+
 public abstract class AbstractFormBean implements Comparable<AbstractFormBean> {
 
-	public Integer matrikelNummer;
-	public String name;
+	public Student student;
 
-	public void setMatrikelNummer(Integer matrikelNummer) {
-		this.matrikelNummer = matrikelNummer;
+	public Student getStudent() {
+		return student;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public int getMatrikelNummer() {
-		return matrikelNummer;
-	}
-
-	public String getName() {
-		return name;
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 
 	@Override
 	public int compareTo(AbstractFormBean o) {
-		return this.getName().compareTo(o.getName());
+		return this.getStudent().getName().compareTo(o.getStudent().getName());
 	}
 
 }

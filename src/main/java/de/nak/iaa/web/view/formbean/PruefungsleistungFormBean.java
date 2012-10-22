@@ -1,28 +1,30 @@
 package de.nak.iaa.web.view.formbean;
 
+import com.google.common.base.Optional;
+
+import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;
 
 public class PruefungsleistungFormBean extends AbstractFormBean {
 
-	private Note alteNote;
+	private Optional<Note> alteNote;
 	private String note;
 
 	public PruefungsleistungFormBean() {
 	}
 
-	public PruefungsleistungFormBean(Integer matrikelNummer, String name,
-			Note alteNote2, String note) {
-		this.matrikelNummer = matrikelNummer;
-		this.name = name;
+	public PruefungsleistungFormBean(Student student, Optional<Note> alteNote2,
+			String note) {
+		this.student = student;
 		this.alteNote = alteNote2;
 		this.note = note;
 	}
 
-	public Note getAlteNote() {
+	public Optional<Note> getAlteNote() {
 		return alteNote;
 	}
 
-	public void setAlteNote(Note alteNote) {
+	public void setAlteNote(Optional<Note> alteNote) {
 		this.alteNote = alteNote;
 	}
 

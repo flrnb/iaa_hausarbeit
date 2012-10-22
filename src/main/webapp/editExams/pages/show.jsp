@@ -26,6 +26,8 @@
 				<th>Note 3</th>
 			</tr>
 			<s:iterator value="pruefungenBeans" var="pruefung" status="stat">
+				<s:hidden name="pruefungenBeans[%{#stat.index}].student.matrikelNr"
+					value="%{#pruefung.student.matrikelNr}" />
 				<tr>
 					<td><s:property value="%{#pruefung.matrikelNummer}" /></td>
 					<td><s:property value="%{#pruefung.name}" /></td>

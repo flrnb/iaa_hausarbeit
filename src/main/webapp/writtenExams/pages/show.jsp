@@ -17,6 +17,8 @@
 		<input type="hidden" name="pruefungsfach"
 			value="<s:property value="pruefungsfach"/>" /> <input type="hidden"
 			name="pruefung" value="<s:property value="pruefung"/>" />
+			
+			"
 		<table class="notenTabelle" border="1">
 			<tr>
 				<th>matrikelnummer</th>
@@ -25,9 +27,12 @@
 				<th>neue note</th>
 			</tr>
 			<s:iterator value="pruefungenBeans" var="pruefung" status="stat">
+				<s:hidden name="pruefungenBeans[%{#stat.index}].student.matrikelNr"
+					value="%{#pruefung.student.matrikelNr}" />
 				<tr>
-					<td><s:property value="%{#pruefung.matrikelNummer}" /></td>
-					<td><s:property value="%{#pruefung.name}" /></td>
+					<td><s:property value="%{#pruefung.student.matrikelNr}" /></td>
+					<td><s:property value="%{#pruefung.student.vorname}" /> <s:property
+							value="%{#pruefung.student.name}" /></td>
 					<td><s:property value="%{#pruefung.alteNote}" /></td>
 					<td class="editorField"><s:textfield
 							cssErrorClass="fieldErrorCls"
