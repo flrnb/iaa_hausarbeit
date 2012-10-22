@@ -51,7 +51,8 @@ public class PruefungServiceImplTest {
 		fach2 = new Pruefungsfach("Fach2", "Beschreibung2", man1);
 		fach3 = new Pruefungsfach("Fach3", "Beschreibung3", man2);
 		student = new Student();
-		PruefungsfachDAO pruefungsfachDAO = DAOMockBuilder.forClass(PruefungsfachDAO.class)
+		PruefungsfachDAO pruefungsfachDAO = DAOMockBuilder
+				.forClass(PruefungsfachDAO.class)
 				.addEntities(fach1, fach2, fach3).build();
 		service.setPruefungsfachDAO(pruefungsfachDAO);
 	}
@@ -65,8 +66,8 @@ public class PruefungServiceImplTest {
 	@Test
 	public void testIsPruefungsleistungEditable() {
 		Pruefung pruefung1 = new Pruefung();
-		service.addPruefungsleistung(pruefung1, new Date(), student, Note.Fuenf);
-		service.getAllPruefungsleistungen(, student)
+		service.addPruefungsleistung(pruefung1, student, Note.Fuenf);
+		service.getAllPruefungsleistungen(fach1, student);
 	}
 
 	@Test
@@ -77,8 +78,9 @@ public class PruefungServiceImplTest {
 	@Test
 	public void testUpdatePruefungsleistung() {
 		Pruefung pruefung = new Pruefung(new Date(), fach1);
-		service.addPruefungsleistung(pruefung, new Date(), student, Note.EinsDrei);
-		List<Pruefungsleistung> allPruefungsleistungen = service.getAllPruefungsleistungen(fach1, student);
+		service.addPruefungsleistung(pruefung, student, Note.EinsDrei);
+		List<Pruefungsleistung> allPruefungsleistungen = service
+				.getAllPruefungsleistungen(fach1, student);
 		assertThat(allPruefungsleistungen.size(), is(1));
 		Pruefungsleistung leistung = allPruefungsleistungen.get(0);
 		service.updatePruefungsleistung(leistung.getId(), Note.EinsSieben);
@@ -88,10 +90,10 @@ public class PruefungServiceImplTest {
 	@Test
 	public void testUpdatePruefungsleistungNotEditable() {
 		Pruefung pruefung1 = new Pruefung();
-		service.addPruefungsleistung(pruefung1, new Date(), student, Note.Fuenf);
+		service.addPruefungsleistung(pruefung1, student, Note.Fuenf);
 		Pruefung pruefung2 = new Pruefung();
 
-		service.addPruefungsleistung(pruefung2, new Date(), student, Note.ZweiDrei);
+		service.addPruefungsleistung(pruefung2, student, Note.ZweiDrei);
 	}
 
 }
