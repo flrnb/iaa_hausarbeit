@@ -45,16 +45,18 @@ public class Pruefungsleistung {
 	@Enumerated(EnumType.STRING)
 	private Note note;
 
+	private Student student;
+
 	public Pruefungsleistung() {
 	}
 
-	public Pruefungsleistung(Versuch versuch, Date pruefungsDatum,
-			Pruefung pruefung, Note note) {
+	public Pruefungsleistung(Versuch versuch, Date pruefungsDatum, Pruefung pruefung, Note note, Student student) {
 		super();
 		this.versuch = versuch;
 		this.pruefungsDatum = pruefungsDatum;
 		this.pruefung = pruefung;
 		this.note = note;
+		this.student = student;
 	}
 
 	public Long getId() {
@@ -103,6 +105,14 @@ public class Pruefungsleistung {
 
 	public void setNote(Note note) {
 		this.note = note;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
 	}
 
 }
