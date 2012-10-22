@@ -5,7 +5,10 @@ public class ErgaenzungspruefungsFormBean extends AbstractFormBean {
 
 	private String resultPercent;
 
-	public ErgaenzungspruefungsFormBean(int matrikelNummer, String name,
+	public ErgaenzungspruefungsFormBean() {
+	}
+
+	public ErgaenzungspruefungsFormBean(Integer matrikelNummer, String name,
 			String resultPercent) {
 		this.matrikelNummer = matrikelNummer;
 		this.name = name;

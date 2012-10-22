@@ -11,7 +11,6 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.Preparable;
 import com.opensymphony.xwork2.ValidationAware;
 
-import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.web.view.formbean.PruefungsleistungFormBean;
@@ -30,10 +29,9 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 
 	public void fuellePruefungsBeans() {
 		setPruefungenBeans(new ArrayList<PruefungsleistungFormBean>());
-		System.out.println(getStudentService().getAllStudenten(
-				(Manipel) getSession().get("selectedManipel")).size());
+
 		for (Student student : getStudentService().getAllStudenten(
-				(Manipel) getSession().get("selectedManipel"))) {
+				getSelectedManipel())) {
 			if (student == null)
 				continue;
 			else {
@@ -64,11 +62,12 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 		for (PruefungsleistungFormBean p : pruefungenBeans) {
 
 			// TODO hier validieren
+			System.out.println(p);
+			System.out.println(p.getNote());
 			if (Note.getNote(p.getNote()) == null) {
 				addFieldError("pruefungenBeans[" + i + "].note",
 						"Keine gültige Note");
 			}
-			System.out.println(p.getNote());
 			// TODO process the form and save the noten
 			i++;
 		}

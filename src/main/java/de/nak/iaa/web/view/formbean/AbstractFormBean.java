@@ -2,8 +2,16 @@ package de.nak.iaa.web.view.formbean;
 
 public abstract class AbstractFormBean implements Comparable<AbstractFormBean> {
 
-	protected int matrikelNummer;
-	protected String name;
+	public Integer matrikelNummer;
+	public String name;
+
+	public void setMatrikelNummer(Integer matrikelNummer) {
+		this.matrikelNummer = matrikelNummer;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 	public int getMatrikelNummer() {
 		return matrikelNummer;

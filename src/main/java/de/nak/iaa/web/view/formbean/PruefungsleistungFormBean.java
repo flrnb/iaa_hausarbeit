@@ -10,11 +10,11 @@ public class PruefungsleistungFormBean extends AbstractFormBean {
 	public PruefungsleistungFormBean() {
 	}
 
-	public PruefungsleistungFormBean(int matrikelNr, String name,
-			Note alteNote, String note) {
-		this.matrikelNummer = matrikelNr;
+	public PruefungsleistungFormBean(Integer matrikelNummer, String name,
+			Note alteNote2, String note) {
+		this.matrikelNummer = matrikelNummer;
 		this.name = name;
-		this.alteNote = alteNote;
+		this.alteNote = alteNote2;
 		this.note = note;
 	}
 
