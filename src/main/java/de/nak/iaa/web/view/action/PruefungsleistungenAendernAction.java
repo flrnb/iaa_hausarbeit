@@ -6,7 +6,6 @@ import java.util.List;
 
 import com.opensymphony.xwork2.Action;
 
-import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.web.view.formbean.PruefungsleistungAendernFormBean;
@@ -22,7 +21,7 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 		setPruefungenBeans(new ArrayList<PruefungsleistungAendernFormBean>());
 
 		for (Student student : getStudentService().getAllStudenten(
-				(Manipel) getSession().get("selectedManipel"))) {
+				getSelectedManipel())) {
 			if (student == null)
 				continue;
 			else {

@@ -10,7 +10,6 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.Preparable;
 
-import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.web.view.formbean.ErgaenzungspruefungsFormBean;
 
@@ -28,7 +27,7 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 		setPruefungenBeans(new ArrayList<ErgaenzungspruefungsFormBean>());
 
 		for (Student student : getStudentService().getAllStudenten(
-				(Manipel) getSession().get("selectedManipel"))) {
+				getSelectedManipel())) {
 			if (student == null)
 				continue;
 			else {

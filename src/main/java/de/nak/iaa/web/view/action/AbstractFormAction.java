@@ -11,6 +11,7 @@ import com.opensymphony.xwork2.Preparable;
 
 import de.nak.iaa.server.business.PruefungService;
 import de.nak.iaa.server.business.StudentService;
+import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Pruefung;
 import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.web.util.DataHelper;
@@ -26,7 +27,7 @@ public abstract class AbstractFormAction extends ActionSupport implements
 	private String pruefungsfach;
 	private String pruefung;
 
-	/* Logik Start */
+	/* Custom Logik Start */
 
 	public boolean isManipelSelected() {
 		return (!getSession().containsKey("selectedManipel")
@@ -37,6 +38,13 @@ public abstract class AbstractFormAction extends ActionSupport implements
 	public String getRequestUrl() {
 		return ServletActionContext.getRequest().getRequestURL().toString();
 	}
+
+	public Manipel getSelectedManipel() {
+		return (Manipel) getSession().get("selectedManipel");
+	}
+
+	/* Custom Logik Ende */
+	/* Logik Start */
 
 	@Override
 	public void prepare() throws Exception {
