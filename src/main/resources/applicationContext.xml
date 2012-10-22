@@ -33,6 +33,7 @@
 	<bean id="pruefungService" class="de.nak.iaa.server.business.impl.PruefungServiceImpl" />
 
 	<!-- DAO layer -->
+	<bean id="studentDAO" class="de.nak.iaa.server.dao.impl.StudentDAOImpl" />
 	<bean id="manipelDAO" class="de.nak.iaa.server.dao.impl.ManipelDAOImpl" />
 	<bean id="pruefungsfachDAO" class="de.nak.iaa.server.dao.impl.PruefungsfachDAOImpl" />
 	<bean id="pruefungsleistungDAO" class="de.nak.iaa.server.dao.impl.PruefungsleistungDAOImpl" />
