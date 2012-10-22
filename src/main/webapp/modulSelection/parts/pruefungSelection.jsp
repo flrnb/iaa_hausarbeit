@@ -6,7 +6,7 @@
 <s:if test="pruefungen == null">
 	<h4>
 		Keine Prüfungen vorhanden für aktuelles Prüfungsfach<br />
-		<s:a action="modulSelection" namespace="/writtenExams">Zurück zum Modulauswahl</s:a>
+		<s:a action="modulSelection">Zurück zum Modulauswahl</s:a>
 	</h4>
 </s:if>
 <s:else>

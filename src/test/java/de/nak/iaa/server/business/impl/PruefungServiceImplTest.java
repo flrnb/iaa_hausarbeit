@@ -149,11 +149,12 @@ public class PruefungServiceImplTest {
 	public void testGetPruefungByIdNotPresent() {
 		service.getPruefungById(1000L);
 	}
-
+	
 	@Test
 	public void testGetAllPruefungsleistungen() {
-		// service.addPruefungsleistung(pruefung, student, note)
+		//service.addPruefungsleistung(pruefung, student, note)
 		service.getAllPruefungsleistungen(fach1, student);
 	}
+	
 
 }

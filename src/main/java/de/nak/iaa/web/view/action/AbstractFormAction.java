@@ -16,8 +16,8 @@ import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.web.util.DataHelper;
 
 @SuppressWarnings("serial")
-public class AbstractAction extends ActionSupport implements SessionAware,
-		ParameterAware, Preparable {
+public abstract class AbstractFormAction extends ActionSupport implements
+		SessionAware, ParameterAware, Preparable {
 
 	protected static final String NO_MANIPEL_SELECTED = "noManipelSelected";
 

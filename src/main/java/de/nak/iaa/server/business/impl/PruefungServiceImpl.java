@@ -123,5 +123,4 @@ public class PruefungServiceImpl implements PruefungService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 }

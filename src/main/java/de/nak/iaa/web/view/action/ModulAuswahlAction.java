@@ -13,7 +13,7 @@ import de.nak.iaa.server.entity.Pruefung;
 import de.nak.iaa.server.entity.Pruefungsfach;
 
 @SuppressWarnings("serial")
-public class ModulAuswahlAction extends AbstractAction implements
+public class ModulAuswahlAction extends AbstractFormAction implements
 		ParameterAware, SessionAware {
 	private static final String NO_MANIPEL_SELECTED = "noManipelSelected";
 
@@ -37,8 +37,7 @@ public class ModulAuswahlAction extends AbstractAction implements
 			return NO_MANIPEL_SELECTED;
 		}
 
-		setPruefungen(getPruefungService().getAllPruefung(
-				(Manipel) getSession().get("selectedManipel"),
+		setPruefungen(getPruefungService().getAllPruefungen(
 				getSelectedPruefungsfach()));
 		return Action.SUCCESS;
 	}

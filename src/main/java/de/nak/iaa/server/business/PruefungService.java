@@ -139,5 +139,4 @@ public interface PruefungService {
 	 * @return die neu erstellte {@link ErgaenzungsPruefung}
 	 */
 	ErgaenzungsPruefung addErgaenzungsPruefung(Pruefungsleistung pruefungsleistung, int prozent);
-
 }
