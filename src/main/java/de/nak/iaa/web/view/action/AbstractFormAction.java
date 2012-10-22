@@ -16,8 +16,7 @@ import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.web.util.DataHelper;
 
 @SuppressWarnings("serial")
-public abstract class AbstractFormAction extends ActionSupport implements
-		SessionAware, ParameterAware, Preparable {
+public abstract class AbstractFormAction extends ActionSupport implements SessionAware, ParameterAware, Preparable {
 
 	protected static final String NO_MANIPEL_SELECTED = "noManipelSelected";
 
@@ -29,8 +28,7 @@ public abstract class AbstractFormAction extends ActionSupport implements
 	/* Logik Start */
 
 	public boolean isManipelSelected() {
-		return (!getSession().containsKey("selectedManipel")
-				|| getSession().get("selectedManipel") == null || getSession()
+		return (!getSession().containsKey("selectedManipel") || getSession().get("selectedManipel") == null || getSession()
 				.get("selectedManipel").equals(""));
 	}
 
@@ -41,20 +39,15 @@ public abstract class AbstractFormAction extends ActionSupport implements
 	@Override
 	public void prepare() throws Exception {
 		setPruefung(DataHelper.stringArrayToString(parameters.get("pruefung")));
-		setPruefungsfach(DataHelper.stringArrayToString(parameters
-				.get("pruefungsfach")));
+		setPruefungsfach(DataHelper.stringArrayToString(parameters.get("pruefungsfach")));
 
-		if (getParameters().containsKey("pruefungsfach")
-				&& !getParameters().get("pruefungsfach").equals("")) {
+		if (getParameters().containsKey("pruefungsfach") && !getParameters().get("pruefungsfach").equals("")) {
 			selectedPruefungsfach = getPruefungService().getPruefungsfachById(
-					Long.valueOf(DataHelper.stringArrayToString(getParameters()
-							.get("pruefungsfach"))));
+					Long.valueOf(DataHelper.stringArrayToString(getParameters().get("pruefungsfach")))).get();
 		}
-		if (getParameters().containsKey("pruefung")
-				&& !getParameters().get("pruefung").equals("")) {
+		if (getParameters().containsKey("pruefung") && !getParameters().get("pruefung").equals("")) {
 			selectedPruefung = getPruefungService().getPruefungById(
-					Long.valueOf(DataHelper.stringArrayToString(getParameters()
-							.get("pruefung"))));
+					Long.valueOf(DataHelper.stringArrayToString(getParameters().get("pruefung")))).get();
 		}
 	}
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.google.common.base.Optional;
+
 import de.nak.iaa.server.business.PruefungService;
 import de.nak.iaa.server.business.impl.PruefungServiceImpl;
 import de.nak.iaa.server.entity.Manipel;
@@ -102,16 +104,16 @@ public class MockPruefungService extends PruefungServiceImpl implements Pruefung
 	}
 
 	@Override
-	public Pruefungsfach getPruefungsfachById(Long id) {
+	public Optional<Pruefungsfach> getPruefungsfachById(Long id) {
 		for (Pruefungsfach fach : pruefungsFaecher1) {
 			if (fach.getId() == id)
-				return fach;
+				return Optional.of(fach);
 		}
 		for (Pruefungsfach fach : pruefungsFaecher2) {
 			if (fach.getId() == id)
-				return fach;
+				return Optional.of(fach);
 		}
-		return null;
+		return Optional.absent();
 	}
 
 	@Override
@@ -120,11 +122,11 @@ public class MockPruefungService extends PruefungServiceImpl implements Pruefung
 	}
 
 	@Override
-	public Pruefung getPruefungById(Long id) {
+	public Optional<Pruefung> getPruefungById(Long id) {
 		for (Pruefung p : pruefungen) {
 			if (p.getId() == id)
-				return p;
+				return Optional.of(p);
 		}
-		return null;
+		return Optional.absent();
 	}
 }

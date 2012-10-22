@@ -50,24 +50,23 @@ public class DAOMockBuilder<E, T extends GenericDAO<E, Long>> {
 		EasyMock.expect(mock.findAll()).andReturn(entities).anyTimes();
 		EasyMock.expect(mock.findById(EasyMock.anyLong(), EasyMock.anyBoolean())).andAnswer(new IAnswer<E>() {
 			@Override
-			public E answer() throws Throwable {
+			public E answer() throws Exception {
 				Long id = (Long) EasyMock.getCurrentArguments()[0];
 				for (E e : entities)
-					if (id.equals(BeanUtils.getProperty(e, "id")))
+					if (id.equals(Long.valueOf(BeanUtils.getProperty(e, "id"))))
 						return e;
 				return null;
 			}
 		});
-		EasyMock.expect(mock.makePersistent((E) EasyMock.anyObject()));
-		EasyMock.expectLastCall().andAnswer(new IAnswer<Void>() {
+		EasyMock.expect(mock.makePersistent((E) EasyMock.anyObject())).andAnswer(new IAnswer<E>() {
 			@Override
-			public Void answer() throws Throwable {
+			public E answer() throws Throwable {
 				E entity = (E) EasyMock.getCurrentArguments()[0];
 				if (!entities.contains(entity)) {
 					setId(entity);
 					entities.add(entity);
 				}
-				return null;
+				return entity;
 			}
 		}).anyTimes();
 		EasyMock.replay(mock);
