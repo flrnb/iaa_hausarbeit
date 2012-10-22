@@ -12,8 +12,11 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.Preparable;
 import com.opensymphony.xwork2.ValidationAware;
 
+import de.nak.iaa.server.business.IllegalPruefungsleistungException;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;
+import de.nak.iaa.web.entity.Protokolltyp;
+import de.nak.iaa.web.entity.Protokollzeile;
 import de.nak.iaa.web.view.formbean.PruefungsleistungFormBean;
 
 @SuppressWarnings("serial")
@@ -21,6 +24,8 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 		implements SessionAware, ParameterAware, Preparable, ValidationAware {
 
 	private List<PruefungsleistungFormBean> pruefungenBeans;
+
+	private List<Protokollzeile> protokoll;
 
 	/* Logik Start */
 
@@ -70,12 +75,34 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 			fuellePruefungsBeans();
 			return Action.INPUT;
 		} else {
+			setProtokoll(new ArrayList<Protokollzeile>());
+
 			for (PruefungsleistungFormBean p : pruefungenBeans) {
-				getPruefungService().addPruefungsleistung(
-						getSelectedPruefung(), p.getStudent(),
-						Note.getNote(p.getNote()));
+				try {
+					getPruefungService().addPruefungsleistung(
+							getSelectedPruefung(), p.getStudent(),
+							Note.getNote(p.getNote()));
+				} catch (IllegalPruefungsleistungException e) {
+					getProtokoll()
+							.add(new Protokollzeile(
+									Protokolltyp.FEHLER,
+									"Note "
+											+ p.getNote()
+											+ " für "
+											+ p.getStudent().getVorname()
+											+ " "
+											+ p.getStudent().getName()
+											+ " konnte nicht eingetragen werden (Grund: "
+											+ e.getMessage() + ")."));
+				}
+				getProtokoll().add(
+						new Protokollzeile(Protokolltyp.NACHRICHT, "Note "
+								+ p.getNote() + " für "
+								+ p.getStudent().getVorname() + " "
+								+ p.getStudent().getName()
+								+ " erfolgreich eingetragen."));
 			}
-			// TODO show the protokoll
+
 			return Action.SUCCESS;
 		}
 	}
@@ -101,5 +128,13 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 	public void setPruefungenBeans(
 			List<PruefungsleistungFormBean> pruefungenBeans) {
 		this.pruefungenBeans = pruefungenBeans;
+	}
+
+	public List<Protokollzeile> getProtokoll() {
+		return protokoll;
+	}
+
+	public void setProtokoll(List<Protokollzeile> protokoll) {
+		this.protokoll = protokoll;
 	}
 }
