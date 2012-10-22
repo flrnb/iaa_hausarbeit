@@ -1,6 +1,13 @@
 package de.nak.iaa.server.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public abstract class Person {
+	@Id
 	private String name;
 	private String vorname;
 

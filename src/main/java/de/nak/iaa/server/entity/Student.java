@@ -1,5 +1,10 @@
 package de.nak.iaa.server.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
+@Entity
+@Table
 public class Student extends Person {
 
 	private int matrikelNr;
