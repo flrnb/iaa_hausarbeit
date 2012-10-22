@@ -2,6 +2,9 @@ package de.nak.iaa.server.business;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import com.google.common.base.Optional;
 
 import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Pruefung;
@@ -25,8 +28,26 @@ public interface PruefungService {
 
 	List<Pruefungsleistung> getAllPruefungsleistungen(Pruefungsfach fach, Student student);
 
-	List<Student> getAllErgaenzungsPruefungsStudenten(Manipel manipel, Pruefungsfach fach);
+	/**
+	 * @param manipel
+	 * @param fach
+	 * @return alle Studenten, bei denen aktuell eine Ergänzungsprüfung erfasst
+	 *         werden kann mit dem Datum der zu ergänzenden Prüfungsleistung
+	 */
+	Map<Student, Date> getAllErgaenzungsPruefungsStudenten(Manipel manipel, Pruefungsfach fach);
 
+	Map<Student, Optional<Pruefungsleistung>> getAllStudentenForPruefung(Pruefung pruefung, Student student);
+
+	/**
+	 * Für einen Studenten eine neue Prüfungsleistung erfassen
+	 * 
+	 * @param pruefung
+	 * @param datum
+	 * @param student
+	 * @param note
+	 * @throws IllegalPruefungsleistungException
+	 *             wenn die Prüfungsleistung nicht zulässig ist
+	 */
 	void addPruefungsleistung(Pruefung pruefung, Date datum, Student student, Note note);
 
 }
