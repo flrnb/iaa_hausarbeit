@@ -24,7 +24,7 @@ public enum Note {
 		this.note = note;
 	}
 
-	private static Note getNote(String note) {
+	public static Note getNote(String note) {
 		if (note.matches("[123456][.][037]"))
 			return lookup.get(note);
 		else
