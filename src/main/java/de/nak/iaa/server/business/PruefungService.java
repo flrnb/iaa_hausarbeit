@@ -29,11 +29,9 @@ public interface PruefungService {
 
 	/**
 	 * @param id
-	 * @return Prüfungsfach mit der übergebenen ID
-	 * @throws IllegalArgumentException
-	 *             falls id nicht vergeben
+	 * @return Prüfungsfach mit der übergebenen ID, falls vorhanden
 	 */
-	Pruefungsfach getPruefungsfachById(Long id);
+	Optional<Pruefungsfach> getPruefungsfachById(Long id);
 
 	/**
 	 * @param manipel
@@ -45,11 +43,9 @@ public interface PruefungService {
 
 	/**
 	 * @param id
-	 * @return Prüfung mit der übergebenen ID
-	 * @throws IllegalArgumentException
-	 *             falls id nicht vergeben
+	 * @return Prüfung mit der übergebenen ID, falls vorhanden
 	 */
-	Pruefung getPruefungById(Long id);
+	Optional<Pruefung> getPruefungById(Long id);
 
 	/**
 	 * legt eine neue Prüfung am übergebenen Termin an
@@ -73,6 +69,8 @@ public interface PruefungService {
 	 *            der Prüfungsleistung
 	 * @return true wenn eine nachträgliche Änderung an der Prüfungsleistung
 	 *         noch zulässig ist
+	 * @throws IllegalArgumentException
+	 *             falls id nicht vergeben
 	 */
 	boolean isPruefungsleistungEditable(Long id);
 
@@ -91,12 +89,12 @@ public interface PruefungService {
 	 * @param pruefung
 	 * @param student
 	 * @param note
-	 *            #
 	 * @return neu angelegte Prüfungsleistung
 	 * @throws IllegalPruefungsleistungException
 	 *             wenn die Prüfungsleistung nicht zulässig ist
 	 */
-	Pruefungsleistung addPruefungsleistung(Pruefung pruefung, Student student, Note note);
+	Pruefungsleistung addPruefungsleistung(Pruefung pruefung, Student student, Note note)
+			throws IllegalPruefungsleistungException;
 
 	/**
 	 * @param manipel
