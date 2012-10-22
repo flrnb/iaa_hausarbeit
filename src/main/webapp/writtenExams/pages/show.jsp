@@ -30,7 +30,7 @@
 					<td><s:property value="%{#pruefung.name}" /></td>
 					<td><s:property value="%{#pruefung.alteNote}" /></td>
 					<td class="editorField"><s:textfield
-							cssErrorClass="fieldErrorCls" title=""
+							cssErrorClass="fieldErrorCls"
 							name="pruefungenBeans[%{#stat.index}].note" theme="simple"
 							cssClass="notenInputField" /> <s:fielderror theme="iaa">
 							<s:param>pruefungenBeans[${stat.index}].note</s:param>
