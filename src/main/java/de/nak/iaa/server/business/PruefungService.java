@@ -33,4 +33,6 @@ public interface PruefungService {
 			Note note);
 
 	List<Pruefung> getAllPruefung(Manipel manipel, Pruefungsfach pruefungsfach);
+
+	Pruefung getPruefungById(Long id);
 }

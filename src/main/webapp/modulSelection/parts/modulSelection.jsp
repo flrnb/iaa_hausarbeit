@@ -12,7 +12,7 @@
 <s:else>
 	<s:iterator value="pruefungsfaecher" var="pruefungsfach">
 		<a
-			href="<s:url action="show"/>?pruefungsfach=<s:property value="%{#pruefungsfach.getId()}"/>">Modul
+			href="<s:url action="pruefungSelection"/>?pruefungsfach=<s:property value="%{#pruefungsfach.getId()}"/>">Modul
 			<s:property value="%{#pruefungsfach.toString()}" />
 		</a>
 		<br />
