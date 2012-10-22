@@ -17,8 +17,8 @@
 	</h4>
 	<s:iterator value="pruefungen" var="pruefung">
 		<a
-			href="<s:url action="show"/>?pruefungsfach=<s:property value="%{getSelectedPruefungsfach().getId()}"/>&pruefung=<s:property value="%{#pruefung.getId()}" />">Modul
-			<s:property value="%{#pruefung.toString()}" />
+			href="<s:url action="show"/>?pruefungsfach=<s:property value="%{getSelectedPruefungsfach().getId()}"/>&pruefung=<s:property value="%{#pruefung.getId()}" />">Prüfung
+			vom <s:property value="%{#pruefung.toString()}" />
 		</a>
 		<br />
 	</s:iterator>

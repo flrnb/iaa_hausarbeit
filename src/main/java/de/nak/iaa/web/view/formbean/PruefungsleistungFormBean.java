@@ -1,12 +1,16 @@
 package de.nak.iaa.web.view.formbean;
 
-public class PruefungsleistungFormBean {
+public class PruefungsleistungFormBean implements
+		Comparable<PruefungsleistungFormBean> {
 
 	private Long examId;
 	private int matrikelNummer;
 	private String name;
 	private String alteNoten;
 	private String note;
+
+	public PruefungsleistungFormBean() {
+	}
 
 	public PruefungsleistungFormBean(Long id, int matrikelNr, String name,
 			String alteNoten, String note) {
@@ -55,5 +59,10 @@ public class PruefungsleistungFormBean {
 
 	public void setNote(String note) {
 		this.note = note;
+	}
+
+	@Override
+	public int compareTo(PruefungsleistungFormBean o) {
+		return this.getName().compareTo(o.getName());
 	}
 }
