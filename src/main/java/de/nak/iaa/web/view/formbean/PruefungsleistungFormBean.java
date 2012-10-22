@@ -1,5 +1,6 @@
 package de.nak.iaa.web.view.formbean;
 
+import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;
 
 public class PruefungsleistungFormBean extends AbstractFormBean {
@@ -10,11 +11,9 @@ public class PruefungsleistungFormBean extends AbstractFormBean {
 	public PruefungsleistungFormBean() {
 	}
 
-	public PruefungsleistungFormBean(Integer matrikelNummer, String name,
-			Note alteNote2, String note) {
-		this.matrikelNummer = matrikelNummer;
-		this.name = name;
-		this.alteNote = alteNote2;
+	public PruefungsleistungFormBean(Student student, Note alteNote, String note) {
+		this.student = student;
+		this.alteNote = alteNote;
 		this.note = note;
 	}
 

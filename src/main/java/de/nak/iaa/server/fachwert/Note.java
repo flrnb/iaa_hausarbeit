@@ -31,6 +31,10 @@ public enum Note {
 			return lookup.get(Double.valueOf(note + ".0"));
 	}
 
+	public static boolean isValid(String note) {
+		return (Note.getNote(note) == null) ? false : true;
+	}
+
 	public Double getNote() {
 		return note;
 	}

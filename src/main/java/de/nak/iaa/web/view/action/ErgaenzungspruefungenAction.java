@@ -2,7 +2,9 @@ package de.nak.iaa.web.view.action;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.apache.struts2.interceptor.ParameterAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -26,17 +28,19 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 	public void fuellePruefungsBeans() {
 		setPruefungenBeans(new ArrayList<ErgaenzungspruefungsFormBean>());
 
-		for (Student student : getStudentService().getAllStudenten(
-				getSelectedManipel())) {
-			if (student == null)
+		for (Entry<Student, Date> ergaenzungspruefung : getPruefungService()
+				.getAllErgaenzungsPruefungsStudenten(getSelectedManipel(),
+						getSelectedPruefungsfach()).entrySet()) {
+			if (ergaenzungspruefung == null)
 				continue;
 			else {
+
 				// TODO logik einbauen, damit der service benutzt wird
 
-				// getPruefungenBeans().add(
-				// new PruefungsleistungFormBean(student.getMatrikelNr(),
-				// student.getVorname() + " " + student.getName(),
-				// , null));
+				getPruefungenBeans()
+						.add(new ErgaenzungspruefungsFormBean(
+								ergaenzungspruefung.getKey(),
+								ergaenzungspruefung.getValue(), null));
 			}
 		}
 
@@ -53,7 +57,7 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 		for (ErgaenzungspruefungsFormBean p : pruefungenBeans) {
 
 			// TODO hier validieren
-			if (p.getResultPercent().matches("\n{1,2}|100")) {
+			if (!p.getResultPercent().matches("\n{1,2}|100")) {
 				addFieldError("pruefungenBeans[" + i + "].note",
 						"Keine gültige Note");
 			}

@@ -9,14 +9,15 @@
 
 <s:a action="modulSelection" namespace="/writtenExams">Modul wechseln</s:a>
 
-<p>Hier können Sie die erreichten Noten von dem Modul eingetragen
-	werden.</p>
+<p>Hier können Sie die erreichten Noten von dem Modul eingetragen.</p>
 
 <s:if test="pruefungenBeans.size() > 0">
 	<form action="<s:url action="save"/>">
 		<input type="hidden" name="pruefungsfach"
 			value="<s:property value="pruefungsfach"/>" /> <input type="hidden"
 			name="pruefung" value="<s:property value="pruefung"/>" />
+			
+			"
 		<table class="notenTabelle" border="1">
 			<tr>
 				<th>matrikelnummer</th>
@@ -25,9 +26,12 @@
 				<th>neue note</th>
 			</tr>
 			<s:iterator value="pruefungenBeans" var="pruefung" status="stat">
+				<s:hidden name="pruefungenBeans[%{#stat.index}].student.matrikelNr"
+					value="%{#pruefung.student.matrikelNr}" />
 				<tr>
-					<td><s:property value="%{#pruefung.matrikelNummer}" /></td>
-					<td><s:property value="%{#pruefung.name}" /></td>
+					<td><s:property value="%{#pruefung.student.matrikelNr}" /></td>
+					<td><s:property value="%{#pruefung.student.vorname}" /> <s:property
+							value="%{#pruefung.student.name}" /></td>
 					<td><s:property value="%{#pruefung.alteNote}" /></td>
 					<td class="editorField"><s:textfield
 							cssErrorClass="fieldErrorCls"

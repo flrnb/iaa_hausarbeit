@@ -43,3 +43,13 @@ td input {
 	border: 1px solid red;
 	background-color:#fdd;
 }
+
+.protokollError {
+	color: red;
+	font-weight: bold;
+}
+
+.protokollMessage {
+	color: black;
+	font-weight: bold;
+}
