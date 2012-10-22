@@ -2,9 +2,11 @@ package de.nak.iaa.server.business.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
@@ -86,6 +88,13 @@ public class PruefungServiceImpl implements PruefungService {
 
 	@Override
 	public Pruefung getPruefungById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<Student, Optional<Pruefungsleistung>> getAllStudentenForPruefung(
+			Pruefung pruefung) {
 		// TODO Auto-generated method stub
 		return null;
 	}

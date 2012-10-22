@@ -7,12 +7,12 @@
 			value="selectedPruefungsfach" /></i> )
 </h3>
 
-<s:a action="modulSelection" namespace="writtenExams">Modul wechseln</s:a>
+<s:a action="modulSelection" namespace="/writtenExams">Modul wechseln</s:a>
 
 <p>Hier können Sie die erreichten Noten von dem Modul eingetragen
 	werden.</p>
-	
-<s:if test="#pruefungenBeans.size() > 0">
+
+<s:if test="pruefungenBeans.size() > 0">
 	<form action="<s:url action="save"/>">
 		<input type="hidden" name="pruefungsfach"
 			value="<s:property value="pruefungsfach"/>" /> <input type="hidden"
@@ -28,9 +28,13 @@
 				<tr>
 					<td><s:property value="%{#pruefung.matrikelNummer}" /></td>
 					<td><s:property value="%{#pruefung.name}" /></td>
-					<td><s:property value="%{#pruefung.alteNoten}" /></td>
-					<td><s:textfield name="pruefungenBeans[%{#stat.index}].note"
-							theme="simple" cssClass="notenInputField" /></td>
+					<td><s:property value="%{#pruefung.alteNote}" /></td>
+					<td class="editorField"><s:textfield
+							cssErrorClass="fieldErrorCls" title=""
+							name="pruefungenBeans[%{#stat.index}].note" theme="simple"
+							cssClass="notenInputField" /> <s:fielderror theme="iaa">
+							<s:param>pruefungenBeans[${stat.index}].note</s:param>
+						</s:fielderror></td>
 				</tr>
 			</s:iterator>
 		</table>

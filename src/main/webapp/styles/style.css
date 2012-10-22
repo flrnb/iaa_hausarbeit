@@ -21,7 +21,11 @@ body {
 	border-radius: 2px;
 }
 
-td {
+td .editorField {
+	test-align: left !important;	
+}
+
+td input {
 	text-align: right;
 	padding-right: 3px;
 }
@@ -29,4 +33,13 @@ td {
 .notenInputField {
 	text-align: right;
 	padding-right: 3px;
+}
+
+.errorMessage{
+	font-size: small;
+}
+
+.fieldErrorCls {
+	border: 1px solid red;
+	background-color:#fdd;
 }

@@ -15,7 +15,7 @@ import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.web.view.formbean.ErgaenzungspruefungsFormBean;
 
 @SuppressWarnings("serial")
-public class ErgaenzungspruefungenAction extends AbstractAction implements
+public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 		SessionAware, ParameterAware, Preparable {
 
 	private List<ErgaenzungspruefungsFormBean> pruefungenBeans;
@@ -24,7 +24,7 @@ public class ErgaenzungspruefungenAction extends AbstractAction implements
 	public void validate() {
 	}
 
-	public void fuelleErgaenzungspruefungsBeans() {
+	public void fuellePruefungsBeans() {
 		setPruefungenBeans(new ArrayList<ErgaenzungspruefungsFormBean>());
 
 		for (Student student : getStudentService().getAllStudenten(
@@ -49,6 +49,25 @@ public class ErgaenzungspruefungenAction extends AbstractAction implements
 			setTargetUrl(getRequestUrl());
 			return NO_MANIPEL_SELECTED;
 		}
+
+		int i = 0;
+		for (ErgaenzungspruefungsFormBean p : pruefungenBeans) {
+
+			// TODO hier validieren
+			if (p.getResultPercent().matches("\n{1,2}|100")) {
+				addFieldError("pruefungenBeans[" + i + "].note",
+						"Keine gültige Note");
+			}
+			System.out.println(p.getResultPercent());
+			// TODO process the form and save the noten
+			i++;
+		}
+
+		if (getFieldErrors().size() > 0) {
+			fuellePruefungsBeans();
+			return Action.INPUT;
+		}
+
 		return Action.SUCCESS;
 	}
 

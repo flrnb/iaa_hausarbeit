@@ -2,6 +2,9 @@ package de.nak.iaa.server.business;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+
+import com.google.common.base.Optional;
 
 import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Pruefung;
@@ -35,4 +38,15 @@ public interface PruefungService {
 	List<Pruefung> getAllPruefung(Pruefungsfach pruefungsfach);
 
 	Pruefung getPruefungById(Long id);
+
+	/**
+	 * 
+	 * @param pruefung
+	 * @param student
+	 * @return Liste aller Studenten des Manipels mit der letzten
+	 *         Prüfungsleistung für die übergebene Prüfung, falls eine vorhanden
+	 *         ist
+	 */
+	Map<Student, Optional<Pruefungsleistung>> getAllStudentenForPruefung(
+			Pruefung pruefung);
 }
