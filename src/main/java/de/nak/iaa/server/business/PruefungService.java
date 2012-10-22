@@ -132,9 +132,14 @@ public interface PruefungService {
 	 * für eine Prüfungsleistung eine Ergänzungsprüfung erfassen
 	 * 
 	 * @require isErgaenzungsPruefungZulaessig(pruefungsleistung)
-	 * @param pruefungsleistung
+	 * @param student
+	 * @param fach
 	 * @param prozent
+	 * @param datum
+	 *            (an dem die Prüfung stattgefunden hat)
 	 * @return die neu erstellte {@link ErgaenzungsPruefung}
+	 * @throws {@link IllegalStateException} falls keine Ergänzungsprüfung
+	 *         zulässig ist
 	 */
-	ErgaenzungsPruefung addErgaenzungsPruefung(Pruefungsleistung pruefungsleistung, int prozent);
+	ErgaenzungsPruefung addErgaenzungsPruefung(Student student, Pruefungsfach fach, Date datum, int prozent);
 }

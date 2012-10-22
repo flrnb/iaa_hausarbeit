@@ -36,6 +36,10 @@ public class StudentServiceImpl implements StudentService {
 		this.manipelDAO = manipelDAO;
 	}
 
+	public void setStudentDAO(StudentDAO studentDAO) {
+		this.studentDAO = studentDAO;
+	}
+
 	@Override
 	public List<Student> getAllStudenten(Predicate<Student> filter) {
 		return ImmutableList.copyOf(Iterables.filter(getAllStudenten(), filter));
@@ -47,11 +51,11 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
-	public List<Student> getAllStudenten(Manipel manipel) {
+	public List<Student> getAllStudenten(final Manipel manipel) {
 		return getAllStudenten(new Predicate<Student>() {
 			@Override
 			public boolean apply(Student s) {
-				return true;
+				return s.getManipel().equals(manipel);
 			}
 		});
 	}
