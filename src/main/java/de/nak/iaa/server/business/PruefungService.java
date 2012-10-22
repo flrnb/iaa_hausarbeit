@@ -23,10 +23,14 @@ public interface PruefungService {
 
 	void updatePruefungsleistung(Long id, Note note);
 
-	List<Pruefungsleistung> getAllPruefungsleistungen(Pruefungsfach fach, Student student);
+	List<Pruefungsleistung> getAllPruefungsleistungen(Pruefungsfach fach,
+			Student student);
 
-	List<Student> getAllErgaenzungsPruefungsStudenten(Manipel manipel, Pruefungsfach fach);
+	List<Student> getAllErgaenzungsPruefungsStudenten(Manipel manipel,
+			Pruefungsfach fach);
 
-	void addPruefungsleistung(Pruefung pruefung, Date datum, Student student, Note note);
+	void addPruefungsleistung(Pruefung pruefung, Date datum, Student student,
+			Note note);
 
+	List<Pruefung> getAllPruefung(Manipel manipel, Pruefungsfach pruefungsfach);
 }
