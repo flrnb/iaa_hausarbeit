@@ -44,23 +44,23 @@ public class MockStudentService extends StudentServiceImpl implements StudentSer
 
 		Manipel m1 = new Manipel(9, Studienrichtung.BWL);
 		List<Student> list1 = new ArrayList<Student>();
-		list1.add(new Student(11111, "eins", "09"));
-		list1.add(new Student(11112, "zwei", "09"));
-		list1.add(new Student(11113, "drei", "09"));
+		list1.add(new Student(11111, m1, "eins", "09"));
+		list1.add(new Student(11112, m1, "zwei", "09"));
+		list1.add(new Student(11113, m1, "drei", "09"));
 		map.put(m1, list1);
 
 		Manipel m2 = new Manipel(9, Studienrichtung.WInf);
 		List<Student> list2 = new ArrayList<Student>();
-		list2.add(new Student(11114, "eins", "08"));
-		list2.add(new Student(11115, "zwei", "08"));
-		list2.add(new Student(11116, "drei", "08"));
+		list2.add(new Student(11114, m2, "eins", "08"));
+		list2.add(new Student(11115, m2, "zwei", "08"));
+		list2.add(new Student(11116, m2, "drei", "08"));
 		map.put(m2, list2);
 
 		Manipel m3 = new Manipel(8, Studienrichtung.WIng);
 		List<Student> list3 = new ArrayList<Student>();
-		list3.add(new Student(11117, "eins", "08"));
-		list3.add(new Student(11118, "zwei", "08"));
-		list3.add(new Student(11119, "drei", "08"));
+		list3.add(new Student(11117, m3, "eins", "08"));
+		list3.add(new Student(11118, m3, "zwei", "08"));
+		list3.add(new Student(11119, m3, "drei", "08"));
 		map.put(m3, list3);
 
 		if (map.containsKey(manipel)) {

@@ -7,6 +7,7 @@ import static org.junit.matchers.JUnitMatchers.hasItems;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.easymock.EasyMock;
 import org.junit.Before;
@@ -50,7 +51,13 @@ public class PruefungServiceImplTest {
 
 	private Manipel man3;
 
-	private Student student;
+	private Student student1;
+
+	private Student student2;
+
+	private Student student3;
+
+	private Student studentAnderesManipel;
 
 	private static final Date TODAY = new Date();
 
@@ -82,7 +89,10 @@ public class PruefungServiceImplTest {
 		fach1 = new Pruefungsfach("Fach1", "Beschreibung1", man1);
 		fach2 = new Pruefungsfach("Fach2", "Beschreibung2", man1);
 		fach3 = new Pruefungsfach("Fach3", "Beschreibung3", man2);
-		student = new Student();
+		student1 = new Student(1, man1, "Bräunlich", "Ronny");
+		student2 = new Student(2, man1, "Biel", "Christopher");
+		student3 = new Student(3, man1, "Karagac", "Ibrahim");
+		studentAnderesManipel = new Student(4, man2, "Anderes", "Manipel");
 
 		PruefungsfachDAO pruefungsfachDAO = DAOMockBuilder.forClass(PruefungsfachDAO.class)
 				.addEntities(fach1, fach2, fach3).build();
@@ -136,12 +146,12 @@ public class PruefungServiceImplTest {
 
 	@Test
 	public void testGetAllPruefungsleistungen() throws IllegalPruefungsleistungException {
-		Pruefungsleistung leistung1 = service.addPruefungsleistung(new Pruefung(TODAY, fach1), student, Note.Sechs);
-		Pruefungsleistung leistung2 = service.addPruefungsleistung(new Pruefung(TOMORROW, fach1), student, Note.Fuenf);
+		Pruefungsleistung leistung1 = service.addPruefungsleistung(new Pruefung(TODAY, fach1), student1, Note.Sechs);
+		Pruefungsleistung leistung2 = service.addPruefungsleistung(new Pruefung(TOMORROW, fach1), student1, Note.Fuenf);
 		Pruefungsleistung leistung3 = service.addPruefungsleistung(new Pruefung(THE_DAY_AFTER_TOMORROW, fach1),
-				student, Note.Fuenf);
-		Pruefungsleistung leistung4 = service.addPruefungsleistung(new Pruefung(TOMORROW, fach2), student, Note.Fuenf);
-		List<Pruefungsleistung> leistungen = service.getAllPruefungsleistungen(fach1, student);
+				student1, Note.Fuenf);
+		Pruefungsleistung leistung4 = service.addPruefungsleistung(new Pruefung(TOMORROW, fach2), student1, Note.Fuenf);
+		List<Pruefungsleistung> leistungen = service.getAllPruefungsleistungen(fach1, student1);
 		assertThat(leistungen, hasItems(leistung1, leistung2, leistung3));
 		assertThat(leistungen, not(hasItems(leistung4)));
 	}
@@ -149,17 +159,17 @@ public class PruefungServiceImplTest {
 	@Test
 	public void testIsPruefungsleistungEditable() throws IllegalPruefungsleistungException {
 		Pruefung pruefung1 = new Pruefung(TODAY, fach1);
-		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung1, student, Note.Fuenf);
+		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung1, student1, Note.Fuenf);
 		assertTrue(service.isPruefungsleistungEditable(leistung.getId()));
 	}
 
 	@Test
 	public void testIsPruefungsleistungNotEditable() throws IllegalPruefungsleistungException {
 		Pruefung pruefung1 = new Pruefung(TODAY, fach1);
-		Pruefungsleistung leistung1 = service.addPruefungsleistung(pruefung1, student, Note.Fuenf);
+		Pruefungsleistung leistung1 = service.addPruefungsleistung(pruefung1, student1, Note.Fuenf);
 
 		Pruefung pruefung2 = new Pruefung(TODAY, fach1);
-		Pruefungsleistung leistung2 = service.addPruefungsleistung(pruefung2, student, Note.Fuenf);
+		Pruefungsleistung leistung2 = service.addPruefungsleistung(pruefung2, student1, Note.Fuenf);
 
 		assertFalse(service.isPruefungsleistungEditable(leistung1.getId()));
 		assertTrue(service.isPruefungsleistungEditable(leistung2.getId()));
@@ -168,8 +178,8 @@ public class PruefungServiceImplTest {
 	@Test
 	public void testUpdatePruefungsleistung() throws IllegalPruefungsleistungException {
 		Pruefung pruefung = new Pruefung(TODAY, fach1);
-		service.addPruefungsleistung(pruefung, student, Note.EinsDrei);
-		List<Pruefungsleistung> allPruefungsleistungen = service.getAllPruefungsleistungen(fach1, student);
+		service.addPruefungsleistung(pruefung, student1, Note.EinsDrei);
+		List<Pruefungsleistung> allPruefungsleistungen = service.getAllPruefungsleistungen(fach1, student1);
 		assertThat(allPruefungsleistungen.size(), is(1));
 		Pruefungsleistung leistung = allPruefungsleistungen.get(0);
 		service.updatePruefungsleistung(leistung.getId(), Note.EinsSieben);
@@ -179,42 +189,122 @@ public class PruefungServiceImplTest {
 	@Test(expected = IllegalStateException.class)
 	public void testUpdatePruefungsleistungNotEditableIllegalState() throws IllegalPruefungsleistungException {
 		Pruefung pruefung1 = new Pruefung(TODAY, fach1);
-		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung1, student, Note.Fuenf);
+		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung1, student1, Note.Fuenf);
 		Pruefung pruefung2 = new Pruefung(TODAY, fach1);
-		service.addPruefungsleistung(pruefung2, student, Note.ZweiDrei);
+		service.addPruefungsleistung(pruefung2, student1, Note.ZweiDrei);
 		service.updatePruefungsleistung(leistung.getId(), Note.Vier);
 	}
 
 	@Test
 	public void testAddPruefungsleistung() throws IllegalPruefungsleistungException {
 		Pruefung pruefung = new Pruefung(TODAY, fach1);
-		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung, student, Note.Drei);
-		assertThat(leistung, is(equalTo(service.getAllPruefungsleistungen(fach1, student).get(0))));
+		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung, student1, Note.Drei);
+		assertThat(leistung, is(equalTo(service.getAllPruefungsleistungen(fach1, student1).get(0))));
 		assertThat(leistung.getVersuch(), is(equalTo(Versuch.Eins)));
 	}
 
 	@Test
 	public void testAddPruefungsleistungZweiterVersuch() throws IllegalPruefungsleistungException {
 		Pruefung pruefung = new Pruefung(TODAY, fach1);
-		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung, student, Note.Sechs);
+		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung, student1, Note.Sechs);
 		assertThat(leistung.getVersuch(), is(equalTo(Versuch.Eins)));
-		Pruefungsleistung leistung2 = service.addPruefungsleistung(pruefung, student, Note.Fuenf);
+		Pruefungsleistung leistung2 = service.addPruefungsleistung(pruefung, student1, Note.Fuenf);
 		assertThat(leistung2.getVersuch(), is(equalTo(Versuch.Zwei)));
 	}
 
 	@Test(expected = IllegalPruefungsleistungException.class)
 	public void testAddPruefungsleistungNichtZulaessigBestanden() throws IllegalPruefungsleistungException {
 		Pruefung pruefung = new Pruefung(TODAY, fach1);
-		service.addPruefungsleistung(pruefung, student, Note.Drei);
-		service.addPruefungsleistung(pruefung, student, Note.Vier);
+		service.addPruefungsleistung(pruefung, student1, Note.Drei);
+		service.addPruefungsleistung(pruefung, student1, Note.Vier);
 	}
 
 	@Test(expected = IllegalPruefungsleistungException.class)
 	public void testAddPruefungsleistungNichtZulaessigDreiVersuche() throws IllegalPruefungsleistungException {
 		Pruefung pruefung = new Pruefung(TODAY, fach1);
-		service.addPruefungsleistung(pruefung, student, Note.Sechs);
-		service.addPruefungsleistung(pruefung, student, Note.Sechs);
-		service.addPruefungsleistung(pruefung, student, Note.Sechs);
-		service.addPruefungsleistung(pruefung, student, Note.Vier);
+		service.addPruefungsleistung(pruefung, student1, Note.Sechs);
+		service.addPruefungsleistung(pruefung, student1, Note.Sechs);
+		service.addPruefungsleistung(pruefung, student1, Note.Sechs);
+		service.addPruefungsleistung(pruefung, student1, Note.Vier);
+	}
+
+	@Test
+	public void testErgaenzungsPruefung() throws IllegalPruefungsleistungException {
+		Pruefung pruefung1 = new Pruefung(TODAY, fach1);
+		Pruefung pruefung2 = new Pruefung(THE_DAY_AFTER_TOMORROW, fach1);
+		Pruefung pruefung3 = new Pruefung(THE_DAY_AFTER_TOMORROW, fach2);
+
+		Pruefungsleistung leistung1 = service.addPruefungsleistung(pruefung1, student1, Note.Fuenf);
+		Pruefungsleistung leistung2 = service.addPruefungsleistung(pruefung1, student2, Note.Fuenf);
+		Pruefungsleistung leistung3 = service.addPruefungsleistung(pruefung2, student2, Note.Fuenf);
+		Pruefungsleistung leistung4 = service.addPruefungsleistung(pruefung3, student3, Note.Fuenf);
+
+		Map<Student, Date> studenten = service.getAllErgaenzungsPruefungsStudenten(man1, fach1);
+
+		assertThat(studenten.keySet(), hasItems(student1, student2));
+		assertThat(studenten.get(student1), is(equalTo(TODAY)));
+		assertThat(studenten.get(student2), is(equalTo(THE_DAY_AFTER_TOMORROW)));
+
+		assertTrue(service.isErgaenzungsPruefungZulaessig(leistung1));
+		assertFalse(service.isErgaenzungsPruefungZulaessig(leistung2));
+		assertTrue(service.isErgaenzungsPruefungZulaessig(leistung3));
+		assertTrue(service.isErgaenzungsPruefungZulaessig(leistung4));
+	}
+
+	@Test
+	public void testErgaenzungsPruefungSchonVorhandenBestanden() throws IllegalPruefungsleistungException {
+		Pruefung pruefung1 = new Pruefung(TODAY, fach1);
+
+		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung1, student1, Note.Fuenf);
+
+		assertTrue(service.isErgaenzungsPruefungZulaessig(leistung));
+
+		service.addErgaenzungsPruefung(leistung, 80);
+
+		assertFalse(service.isErgaenzungsPruefungZulaessig(leistung));
+		assertThat(service.getAllErgaenzungsPruefungsStudenten(man1, fach1).size(), is(0));
+	}
+
+	@Test
+	public void testErgaenzungsPruefungSchonVorhandenNichtBestanden() throws IllegalPruefungsleistungException {
+		Pruefung pruefung1 = new Pruefung(TODAY, fach1);
+
+		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung1, student1, Note.Fuenf);
+
+		assertTrue(service.isErgaenzungsPruefungZulaessig(leistung));
+
+		service.addErgaenzungsPruefung(leistung, 60);
+
+		assertFalse(service.isErgaenzungsPruefungZulaessig(leistung));
+		assertThat(service.getAllErgaenzungsPruefungsStudenten(man1, fach1).size(), is(0));
+	}
+
+	@Test
+	public void testErgaenzungsPruefungSowiesoBestanden() throws IllegalPruefungsleistungException {
+		Pruefung pruefung1 = new Pruefung(TODAY, fach1);
+
+		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung1, student1, Note.Drei);
+
+		assertFalse(service.isErgaenzungsPruefungZulaessig(leistung));
+		assertThat(service.getAllErgaenzungsPruefungsStudenten(man1, fach1).size(), is(0));
+	}
+
+	@Test
+	public void testErgaenzungsPruefungZweiterVersuchBestanden() throws IllegalPruefungsleistungException {
+		Pruefung pruefung1 = new Pruefung(TODAY, fach1);
+
+		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung1, student1, Note.Fuenf);
+		assertTrue(service.isErgaenzungsPruefungZulaessig(leistung));
+		service.addErgaenzungsPruefung(leistung, 50);
+
+		assertFalse(service.isErgaenzungsPruefungZulaessig(leistung));
+		Pruefungsleistung leistung2 = service.addPruefungsleistung(pruefung1, student1, Note.Drei);
+
+		assertThat(service.getAllErgaenzungsPruefungsStudenten(man1, fach1).size(), is(0));
+		assertFalse(service.isErgaenzungsPruefungZulaessig(leistung2));
+	}
+
+	public void testGetAllStudentenForPruefung() {
+
 	}
 }
