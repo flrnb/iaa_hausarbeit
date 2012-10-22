@@ -31,20 +31,10 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 				List<Pruefungsleistung> leistungen = getPruefungService()
 						.getAllPruefungsleistungen(getSelectedPruefungsfach(),
 								student);
-				Note[] noten = new Note[3];
-				boolean[] writeable = new boolean[3];
-
-				int i = 0;
-				for (Pruefungsleistung l : leistungen) {
-					writeable[i] = getPruefungService()
-							.isPruefungsleistungEditable(l.getId());
-					noten[i] = l.getNote();
-					i++;
-				}
 
 				getPruefungenBeans().add(
-						new PruefungsleistungAendernFormBean(student, noten,
-								writeable));
+						new PruefungsleistungAendernFormBean(student,
+								leistungen));
 			}
 		}
 
@@ -62,6 +52,10 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 		return Action.SUCCESS;
 	}
 
+	public boolean isWriteable(Long id) {
+		return getPruefungService().isPruefungsleistungEditable(id);
+	}
+
 	public String save() {
 		if (isManipelSelected()) {
 			setTargetUrl(getRequestUrl());
@@ -72,18 +66,30 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 		for (PruefungsleistungAendernFormBean p : pruefungenBeans) {
 
 			// TODO hier validieren
-			if (!Note.isValid(p.getNote1())) {
-				addFieldError("pruefungenBeans[" + i + "].note1",
-						"Keine gültige Note");
+			int k = 0;
+			for (Pruefungsleistung pl : p.getPruefungsleistungen()) {
+				if (getPruefungService()
+						.isPruefungsleistungEditable(pl.getId())
+						&& !Note.isValid(pl.getNote().toString())) {
+					addFieldError("pruefungenBeans[" + i + "].note" + k,
+							"Keine gültige Note");
+				}
+				k++;
 			}
-			if (!Note.isValid(p.getNote2())) {
-				addFieldError("pruefungenBeans[" + i + "].note2",
-						"Keine gültige Note");
-			}
-			if (!Note.isValid(p.getNote3())) {
-				addFieldError("pruefungenBeans[" + i + "].note3",
-						"Keine gültige Note");
-			}
+			// if
+			// (getPruefungService().isPruefungsleistungEditable(p.getPruefungsleistungen().get(0).getId())
+			// && !Note.isValid(p.getNote1())) {
+			// addFieldError("pruefungenBeans[" + i + "].note1",
+			// "Keine gültige Note");
+			// }
+			// if (p.getWriteable()[1] && !Note.isValid(p.getNote2())) {
+			// addFieldError("pruefungenBeans[" + i + "].note2",
+			// "Keine gültige Note");
+			// }
+			// if (p.getWriteable()[2] && !Note.isValid(p.getNote3())) {
+			// addFieldError("pruefungenBeans[" + i + "].note3",
+			// "Keine gültige Note");
+			// }
 			// TODO process the form and save the noten
 			i++;
 		}
@@ -91,9 +97,18 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 		if (getFieldErrors().size() > 0) {
 			fuellePruefungsBeans();
 			return Action.INPUT;
+		} else {
+			for (PruefungsleistungAendernFormBean p : pruefungenBeans) {
+				for (Pruefungsleistung pl : p.getPruefungsleistungen()) {
+					if (getPruefungService().isPruefungsleistungEditable(
+							pl.getId())) {
+						getPruefungService().updatePruefungsleistung(
+								pl.getId(), pl.getNote());
+					}
+				}
+			}
+			return Action.SUCCESS;
 		}
-		fuellePruefungsBeans();
-		return Action.SUCCESS;
 	}
 
 	/* Actions Ende */

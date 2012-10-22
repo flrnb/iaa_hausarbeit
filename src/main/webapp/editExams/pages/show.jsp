@@ -31,28 +31,41 @@
 					<td><s:property value="%{#pruefung.student.matrikelNr}" /></td>
 					<td><s:property value="%{#pruefung.student.vorname}" /> <s:property
 							value="%{#pruefung.student.name}" /></td>
-							
-					<td class="editorField"><s:textfield
+
+					<s:iterator begin="0" end="2" step="1" var="current">
+						<td class="editorField"><s:textfield
+								name="pruefungenBeans[%{#stat.index}].note%{#current}"
+								cssClass="changeNote" cssErrorClass="fieldErrorCls"
+								theme="simple" value="%{#pruefungsleistung[#current].note}"
+								disabled="%{isWriteable(#pruefungsleistung[#current].id)}" /> <s:fielderror
+								theme="iaa">
+								<s:param>pruefungenBeans[${stat.index}].note${current}</s:param>
+							</s:fielderror></td>
+					</s:iterator>
+
+					<%-- <td class="editorField"><s:textfield
 							name="pruefungenBeans[%{#stat.index}].note1"
 							cssClass="changeNote" cssErrorClass="fieldErrorCls"
-							theme="simple" value="%{#pruefung.note1}" disabled="%{#pruefung.writeable[0]}" /> <s:fielderror
+							theme="simple" value="%{#pruefung.note1}"
+							disabled="%{#pruefung.writeable[0]}" /> <s:fielderror
 							theme="iaa">
 							<s:param>pruefungenBeans[${stat.index}].note1</s:param>
 						</s:fielderror></td>
 					<td class="editorField"><s:textfield
 							name="pruefungenBeans[%{#stat.index}].note2"
 							cssClass="changeNote" cssErrorClass="fieldErrorCls"
-							theme="simple" value="%{#pruefung.note2}" disabled="%{#pruefung.writeable[1]}" /> <s:fielderror
+							theme="simple" value="%{#pruefung.note2}"
+							disabled="%{#pruefung.writeable[1]}" /> <s:fielderror
 							theme="iaa">
 							<s:param>pruefungenBeans[${stat.index}].note2</s:param>
 						</s:fielderror></td>
 					<td class="editorField"><s:textfield
 							name="pruefungenBeans[%{#stat.index}].note3"
 							cssClass="changeNote" cssErrorClass="fieldErrorCls"
-							theme="simple" value="%{#pruefung.note3}" disabled="%{#pruefung.writeable[2]}"/> <s:fielderror
-							theme="iaa">
+							theme="simple" value="%{#pruefung.note3}"
+							disabled="%{#pruefung.writeable[2]}" /> <s:fielderror theme="iaa">
 							<s:param>pruefungenBeans[${stat.index}].note3</s:param>
-						</s:fielderror></td>
+						</s:fielderror></td> --%>
 				</tr>
 			</s:iterator>
 		</table>
