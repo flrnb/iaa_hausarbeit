@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="sx" uri="/struts-dojo-tags" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
 <h3>
@@ -21,6 +22,7 @@
 		<table class="notenTabelle" border="1">
 			<tr>
 				<th>Datum</th>
+				<th>Datum der<br />Ergänzungsprüfung</th>
 				<th>Matrikelnummer</th>
 				<th>Name</th>
 				<th>Prozent</th>
@@ -30,6 +32,7 @@
 					value="%{#pruefung.student.matrikelNr}" />
 				<tr>
 					<td><s:property value="#pruefung.datum" /></td>
+					<td><sx:datetimepicker name="pruefungenBeans[%{#stat.index}].ergDatum" displayFormat="dd-MM-yyyy" value="%{#pruefung.ergDatum}"/></td>
 					<td><s:property value="#pruefung.matrikelNummer" /></td>
 					<td><s:property value="#pruefung.name" /></td>
 					<td class="editorField"><s:textfield
