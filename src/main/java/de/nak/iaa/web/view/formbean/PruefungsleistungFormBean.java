@@ -3,7 +3,6 @@ package de.nak.iaa.web.view.formbean;
 public class PruefungsleistungFormBean implements
 		Comparable<PruefungsleistungFormBean> {
 
-	private Long examId;
 	private int matrikelNummer;
 	private String name;
 	private String alteNoten;
@@ -12,9 +11,8 @@ public class PruefungsleistungFormBean implements
 	public PruefungsleistungFormBean() {
 	}
 
-	public PruefungsleistungFormBean(Long id, int matrikelNr, String name,
+	public PruefungsleistungFormBean(int matrikelNr, String name,
 			String alteNoten, String note) {
-		this.examId = id;
 		this.matrikelNummer = matrikelNr;
 		this.name = name;
 		this.alteNoten = alteNoten;
@@ -43,14 +41,6 @@ public class PruefungsleistungFormBean implements
 
 	public void setAlteNoten(String alteNoten) {
 		this.alteNoten = alteNoten;
-	}
-
-	public Long getExamId() {
-		return examId;
-	}
-
-	public void setExamId(Long examId) {
-		this.examId = examId;
 	}
 
 	public String getNote() {

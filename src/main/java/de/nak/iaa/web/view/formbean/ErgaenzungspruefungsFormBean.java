@@ -1,7 +1,8 @@
 package de.nak.iaa.web.view.formbean;
 
 //@Validations(regexFields = { @RegexFieldValidator(type = ValidatorType.SIMPLE, fieldName = "text", message = "falsche Note", expression = "[123][.][037]|[0.7]|[4.0]|[5.0]|[6.0]|[123456]") })
-public class ErgaenzungspruefungsFormBean {
+public class ErgaenzungspruefungsFormBean implements
+		Comparable<ErgaenzungspruefungsFormBean> {
 
 	private final String examId;
 	private final String matrikelNummer;
@@ -34,5 +35,10 @@ public class ErgaenzungspruefungsFormBean {
 
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public int compareTo(ErgaenzungspruefungsFormBean o) {
+		return this.getName().compareTo(o.getName());
 	}
 }

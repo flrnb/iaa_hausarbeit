@@ -6,7 +6,7 @@
 <s:if test="pruefungsfaecher == null">
 	<h4>
 		Keine Module gepflegt für aktuellen Manipel<br />
-		<s:a action="ShowMainMenu" namespace="/">Zurück zum Hauptmenü</s:a>
+		<s:a action="" namespace="/">Zurück zum Hauptmenü</s:a>
 	</h4>
 </s:if>
 <s:else>
