@@ -20,6 +20,7 @@
 			value="<s:property value="pruefung"/>" />
 		<table class="notenTabelle" border="1">
 			<tr>
+				<th>Datum</th>
 				<th>Matrikelnummer</th>
 				<th>Name</th>
 				<th>Prozent</th>
@@ -28,12 +29,13 @@
 				<s:hidden name="pruefungenBeans[%{#stat.index}].student.matrikelNr"
 					value="%{#pruefung.student.matrikelNr}" />
 				<tr>
+					<td><s:property value="#pruefung.datum" /></td>
 					<td><s:property value="#pruefung.matrikelNummer" /></td>
 					<td><s:property value="#pruefung.name" /></td>
 					<td class="editorField"><s:textfield
 							name="pruefungenBeans[%{#stat.index}].resultPercent"
-							theme="simple" cssClass="notenInputField" />
-						<s:fielderror theme="iaa">
+							theme="simple" cssClass="notenInputField" /> <s:fielderror
+							theme="iaa">
 							<s:param>pruefungenBeans[${stat.index}].resultPercent</s:param>
 						</s:fielderror></td>
 				</tr>
