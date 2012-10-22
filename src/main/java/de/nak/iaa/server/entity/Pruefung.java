@@ -1,5 +1,6 @@
 package de.nak.iaa.server.entity;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -62,4 +63,8 @@ public class Pruefung {
 		this.pruefungsfach = pruefungsfach;
 	}
 
+	@Override
+	public String toString() {
+		return DateFormat.getDateInstance().format(getDatum());
+	}
 }

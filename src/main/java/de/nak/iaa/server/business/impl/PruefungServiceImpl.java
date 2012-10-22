@@ -78,4 +78,17 @@ public class PruefungServiceImpl implements PruefungService {
 		return pruefungsfachDAO.findById(id, false);
 	}
 
+	@Override
+	public List<Pruefung> getAllPruefung(Manipel manipel,
+			Pruefungsfach pruefungsfach) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Pruefung getPruefungById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

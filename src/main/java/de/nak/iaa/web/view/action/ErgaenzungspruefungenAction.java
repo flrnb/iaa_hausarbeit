@@ -9,7 +9,7 @@ import org.apache.struts2.interceptor.SessionAware;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.ActionSupport;
 
-import de.nak.iaa.web.view.formbean.ErgaenzungspruefungsBean;
+import de.nak.iaa.web.view.formbean.ErgaenzungspruefungsFormBean;
 
 @SuppressWarnings("serial")
 public class ErgaenzungspruefungenAction extends ActionSupport implements
@@ -17,17 +17,17 @@ public class ErgaenzungspruefungenAction extends ActionSupport implements
 
 	private static final String NO_MANIPEL_SELECTED = "noManipelSelected";
 
-	private Map<String, ErgaenzungspruefungsBean> exams;
+	private Map<String, ErgaenzungspruefungsFormBean> exams;
 
 	public ErgaenzungspruefungenAction() {
-		exams = new HashMap<String, ErgaenzungspruefungsBean>();
-		exams.put("1", new ErgaenzungspruefungsBean("1", "123", "cb", "80"));
+		exams = new HashMap<String, ErgaenzungspruefungsFormBean>();
+		exams.put("1", new ErgaenzungspruefungsFormBean("1", "123", "cb", "80"));
 	}
 
 	@Override
 	public void validate() {
 		if (exams != null) {
-			for (Map.Entry<String, ErgaenzungspruefungsBean> entry : exams
+			for (Map.Entry<String, ErgaenzungspruefungsFormBean> entry : exams
 					.entrySet()) {
 				// TODO use correct regex
 				if (entry.getValue().getResultPercent() != null
@@ -41,7 +41,7 @@ public class ErgaenzungspruefungenAction extends ActionSupport implements
 	}
 
 	public String save() throws Exception {
-		for (Map.Entry<String, ErgaenzungspruefungsBean> entry : exams
+		for (Map.Entry<String, ErgaenzungspruefungsFormBean> entry : exams
 				.entrySet()) {
 		}
 		return Action.SUCCESS;
@@ -58,11 +58,11 @@ public class ErgaenzungspruefungenAction extends ActionSupport implements
 		return Action.SUCCESS;
 	}
 
-	public Map<String, ErgaenzungspruefungsBean> getExams() {
+	public Map<String, ErgaenzungspruefungsFormBean> getExams() {
 		return exams;
 	}
 
-	public void setExams(Map<String, ErgaenzungspruefungsBean> exams) {
+	public void setExams(Map<String, ErgaenzungspruefungsFormBean> exams) {
 		this.exams = exams;
 	}
 

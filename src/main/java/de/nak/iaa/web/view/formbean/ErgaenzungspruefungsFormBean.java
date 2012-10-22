@@ -1,14 +1,14 @@
 package de.nak.iaa.web.view.formbean;
 
 //@Validations(regexFields = { @RegexFieldValidator(type = ValidatorType.SIMPLE, fieldName = "text", message = "falsche Note", expression = "[123][.][037]|[0.7]|[4.0]|[5.0]|[6.0]|[123456]") })
-public class ErgaenzungspruefungsBean {
+public class ErgaenzungspruefungsFormBean {
 
 	private final String examId;
 	private final String matrikelNummer;
 	private final String name;
 	private String resultPercent;
 
-	public ErgaenzungspruefungsBean(String examId, String matrikelNummer,
+	public ErgaenzungspruefungsFormBean(String examId, String matrikelNummer,
 			String name, String resultPercent) {
 		this.examId = examId;
 		this.matrikelNummer = matrikelNummer;
