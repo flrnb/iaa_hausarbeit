@@ -1,46 +1,29 @@
 package de.nak.iaa.web.view.formbean;
 
-public class PruefungsleistungFormBean implements
-		Comparable<PruefungsleistungFormBean> {
+import de.nak.iaa.server.fachwert.Note;
 
-	private int matrikelNummer;
-	private String name;
-	private String alteNoten;
+public class PruefungsleistungFormBean extends AbstractFormBean {
+
+	private Note alteNote;
 	private String note;
 
 	public PruefungsleistungFormBean() {
 	}
 
 	public PruefungsleistungFormBean(int matrikelNr, String name,
-			String alteNoten, String note) {
+			Note alteNote, String note) {
 		this.matrikelNummer = matrikelNr;
 		this.name = name;
-		this.alteNoten = alteNoten;
+		this.alteNote = alteNote;
 		this.note = note;
 	}
 
-	public int getMatrikelNummer() {
-		return matrikelNummer;
+	public Note getAlteNote() {
+		return alteNote;
 	}
 
-	public void setMatrikelNummer(int matrikelNummer) {
-		this.matrikelNummer = matrikelNummer;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getAlteNoten() {
-		return alteNoten;
-	}
-
-	public void setAlteNoten(String alteNoten) {
-		this.alteNoten = alteNoten;
+	public void setAlteNote(Note alteNote) {
+		this.alteNote = alteNote;
 	}
 
 	public String getNote() {
@@ -49,10 +32,5 @@ public class PruefungsleistungFormBean implements
 
 	public void setNote(String note) {
 		this.note = note;
-	}
-
-	@Override
-	public int compareTo(PruefungsleistungFormBean o) {
-		return this.getName().compareTo(o.getName());
 	}
 }
