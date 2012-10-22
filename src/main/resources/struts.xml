@@ -107,7 +107,7 @@
 		</action>
 	</package>
 
-	<package name="editExams" extends="tiles-default" namespace="/editExams">
+	<package name="editExams" extends="modulSelection" namespace="/editExams">
 		<action name="show"
 			class="de.nak.iaa.web.view.action.PruefungsleistungenAendernAction"
 			method="show">

@@ -58,7 +58,6 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 				addFieldError("pruefungenBeans[" + i + "].note",
 						"Keine gültige Note");
 			}
-			System.out.println(p.getResultPercent());
 			// TODO process the form and save the noten
 			i++;
 		}
@@ -76,6 +75,7 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 			setTargetUrl(getRequestUrl());
 			return NO_MANIPEL_SELECTED;
 		}
+		fuellePruefungsBeans();
 		return Action.SUCCESS;
 	}
 

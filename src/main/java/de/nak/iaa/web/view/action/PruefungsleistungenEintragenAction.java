@@ -68,7 +68,6 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 				addFieldError("pruefungenBeans[" + i + "].note",
 						"Keine gültige Note");
 			}
-			System.out.println(p.getNote());
 			// TODO process the form and save the noten
 			i++;
 		}
