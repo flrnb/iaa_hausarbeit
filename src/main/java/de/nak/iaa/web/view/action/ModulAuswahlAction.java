@@ -37,7 +37,7 @@ public class ModulAuswahlAction extends AbstractFormAction implements
 			return NO_MANIPEL_SELECTED;
 		}
 
-		setPruefungen(getPruefungService().getAllPruefung(
+		setPruefungen(getPruefungService().getAllPruefungen(
 				getSelectedPruefungsfach()));
 		return Action.SUCCESS;
 	}

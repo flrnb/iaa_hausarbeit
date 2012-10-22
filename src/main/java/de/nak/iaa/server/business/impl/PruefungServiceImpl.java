@@ -37,13 +37,12 @@ public class PruefungServiceImpl implements PruefungService {
 	@Override
 	public List<Pruefungsfach> getAllPruefungsfaecher(final Manipel manipel) {
 		// pruefungsfachDAO.findByManipel(manipel);
-		return ImmutableList.copyOf(Iterables.filter(
-				pruefungsfachDAO.findAll(), new Predicate<Pruefungsfach>() {
-					@Override
-					public boolean apply(Pruefungsfach fach) {
-						return manipel.equals(fach.getManipel());
-					}
-				}));
+		return ImmutableList.copyOf(Iterables.filter(pruefungsfachDAO.findAll(), new Predicate<Pruefungsfach>() {
+			@Override
+			public boolean apply(Pruefungsfach fach) {
+				return manipel.equals(fach.getManipel());
+			}
+		}));
 	}
 
 	public void setPruefungsfachDAO(PruefungsfachDAO pruefungsfachDAO) {
@@ -56,21 +55,12 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
-	public void addPruefungsleistung(Pruefung pruefung, Date datum,
-			Student student, Note note) {
+	public void addPruefungsleistung(Pruefung pruefung, Student student, Note note) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public List<Pruefungsleistung> getAllPruefungsleistungen(
-			Pruefungsfach fach, Student student) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Student> getAllErgaenzungsPruefungsStudenten(Manipel manipel,
-			Pruefungsfach fach) {
+	public List<Pruefungsleistung> getAllPruefungsleistungen(Pruefungsfach fach, Student student) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -81,20 +71,43 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
-	public List<Pruefung> getAllPruefung(Pruefungsfach pruefungsfach) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Pruefung getPruefungById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Map<Student, Optional<Pruefungsleistung>> getAllStudentenForPruefung(
-			Pruefung pruefung) {
+	public List<Pruefung> getAllPruefungen(Pruefungsfach pruefungsfach) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addPruefung(Pruefungsfach fach, Date datum) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public boolean isPruefungsleistungEditable(Long id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public Map<Student, Optional<Pruefungsleistung>> getAllStudentenForPruefung(Pruefung pruefung) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<Note> getAktuelleNote(Student student, Pruefungsfach fach) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Map<Student, Date> getAllErgaenzungsPruefungsStudenten(Manipel manipel, Pruefungsfach fach) {
 		// TODO Auto-generated method stub
 		return null;
 	}
