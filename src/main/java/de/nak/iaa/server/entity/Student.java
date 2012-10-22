@@ -9,13 +9,16 @@ public class Student extends Person {
 
 	private int matrikelNr;
 
+	private Manipel manipel;
+
 	public Student() {
 	}
 
-	public Student(int matrikelNr, String name, String vorname) {
+	public Student(int matrikelNr, Manipel manipel, String name, String vorname) {
 		setMatrikelNr(matrikelNr);
 		setName(name);
 		setVorname(vorname);
+		setManipel(manipel);
 	}
 
 	public int getMatrikelNr() {
@@ -46,6 +49,14 @@ public class Student extends Person {
 		if (matrikelNr != other.matrikelNr)
 			return false;
 		return true;
+	}
+
+	public Manipel getManipel() {
+		return manipel;
+	}
+
+	public void setManipel(Manipel manipel) {
+		this.manipel = manipel;
 	}
 
 }
