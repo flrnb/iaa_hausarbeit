@@ -93,7 +93,8 @@ public interface PruefungService {
 	 * @throws IllegalPruefungsleistungException
 	 *             wenn die Prüfungsleistung nicht zulässig ist
 	 */
-	Pruefungsleistung addPruefungsleistung(Pruefung pruefung, Student student, Note note);
+	Pruefungsleistung addPruefungsleistung(Pruefung pruefung, Student student, Note note)
+			throws IllegalPruefungsleistungException;
 
 	/**
 	 * @param manipel

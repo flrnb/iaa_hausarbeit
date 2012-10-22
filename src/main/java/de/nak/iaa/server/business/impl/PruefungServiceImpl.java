@@ -2,6 +2,7 @@ package de.nak.iaa.server.business.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
 
+import de.nak.iaa.server.business.IllegalPruefungsleistungException;
 import de.nak.iaa.server.business.PruefungService;
 import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.dao.PruefungDAO;
@@ -61,14 +63,25 @@ public class PruefungServiceImpl implements PruefungService {
 
 	@Override
 	public void updatePruefungsleistung(Long id, Note note) {
+		if (!isPruefungsleistungEditable(id))
+			throw new IllegalStateException(getMsg(NICHT_EDITIERBAR));
 		pruefungsleistungDAO.findById(id, false).setNote(note);
 	}
 
 	@Override
-	public Pruefungsleistung addPruefungsleistung(Pruefung pruefung, Student student, Note note) {
+	public Pruefungsleistung addPruefungsleistung(Pruefung pruefung, Student student, Note note)
+			throws IllegalPruefungsleistungException {
 		// FIXME Datum?
-		Pruefungsleistung leistung = new Pruefungsleistung(Versuch.Eins, null, pruefung, note);
-		return pruefungsleistungDAO.makePersistent(leistung);
+		Versuch nextVersuch = Versuch.Eins;
+		for (Pruefungsleistung leistung : getAllPruefungsleistungen(pruefung.getPruefungsfach(), student)) {
+			Versuch versuch = leistung.getVersuch();
+			if (isBestanden(leistung) || !versuch.next().isPresent())
+				throw new IllegalPruefungsleistungException(getMsg(ZU_OFT));
+			if (versuch.toInt() >= nextVersuch.toInt())
+				nextVersuch = versuch.next().get();
+		}
+		Pruefungsleistung neueLeistung = new Pruefungsleistung(nextVersuch, null, pruefung, note, student);
+		return pruefungsleistungDAO.makePersistent(neueLeistung);
 	}
 
 	@Override
@@ -115,6 +128,13 @@ public class PruefungServiceImpl implements PruefungService {
 		Pruefungsleistung leistung = pruefungsleistungDAO.findById(id, false);
 		if (leistung == null)
 			throw new IllegalArgumentException();
+		List<Pruefungsleistung> leistungen = getAllPruefungsleistungen(leistung.getPruefung().getPruefungsfach(),
+				leistung.getStudent());
+		for (Pruefungsleistung eachLeistung : leistungen)
+			if (eachLeistung.getVersuch().toInt() > leistung.getVersuch().toInt())
+				return false;
+		if (leistung.getErgaenzungsPruefung() != null)
+			return false;
 		return true;
 	}
 
@@ -163,4 +183,26 @@ public class PruefungServiceImpl implements PruefungService {
 	public void setMessageSource(MessageSource messageSource) {
 		this.messageSource = messageSource;
 	}
+
+	private boolean isBestanden(Pruefungsleistung leistung) {
+		switch (leistung.getNote()) {
+		case Sechs:
+			return false;
+		case Fuenf:
+			ErgaenzungsPruefung ergaenzungsPruefung = leistung.getErgaenzungsPruefung();
+			// FIXME: Prüfen ob Ergänzungsprüfung bestanden ist
+			return false;
+		default:
+			return true;
+		}
+	}
+
+	private String getMsg(String code) {
+		return messageSource.getMessage(code, new Object[] {}, Locale.getDefault());
+	}
+
+	private static final String ZU_OFT = "pruefung.zuOft";
+
+	private static final String NICHT_EDITIERBAR = "pruefung.nichtEditierbar";
+
 }

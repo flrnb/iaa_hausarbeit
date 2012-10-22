@@ -57,7 +57,7 @@ public class DAOMockBuilder<E, T extends GenericDAO<E, Long>> {
 						return e;
 				return null;
 			}
-		});
+		}).anyTimes();
 		EasyMock.expect(mock.makePersistent((E) EasyMock.anyObject())).andAnswer(new IAnswer<E>() {
 			@Override
 			public E answer() throws Throwable {
