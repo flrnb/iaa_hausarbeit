@@ -29,10 +29,8 @@
 
 
 	<!-- Service classes -->
-	<!-- <bean id="studentService" class="de.nak.iaa.server.business.impl.StudentServiceImpl" />
-	<bean id="pruefungService" class="de.nak.iaa.server.business.impl.PruefungServiceImpl" /> -->
-	 <bean id="studentService" class="de.nak.iaa.server.business.mock.MockStudentService" />
-	<bean id="pruefungService" class="de.nak.iaa.server.business.mock.MockPruefungService" />
+	<bean id="studentService" class="de.nak.iaa.server.business.impl.StudentServiceImpl" />
+	<bean id="pruefungService" class="de.nak.iaa.server.business.impl.PruefungServiceImpl" />
 
 	<!-- DAO layer -->
 	<bean id="manipelDAO" class="de.nak.iaa.server.dao.impl.ManipelDAOImpl" />
