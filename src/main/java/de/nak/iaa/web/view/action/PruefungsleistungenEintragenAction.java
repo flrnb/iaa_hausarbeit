@@ -3,6 +3,7 @@ package de.nak.iaa.web.view.action;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.apache.struts2.interceptor.ParameterAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -13,6 +14,7 @@ import com.opensymphony.xwork2.Preparable;
 import com.opensymphony.xwork2.ValidationAware;
 
 import de.nak.iaa.server.business.IllegalPruefungsleistungException;
+import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.web.entity.Protokolltyp;
@@ -26,6 +28,7 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 	private List<PruefungsleistungFormBean> pruefungenBeans;
 
 	private List<Protokollzeile> protokoll;
+	private boolean protokollHasErrors;
 
 	/* Logik Start */
 
@@ -36,16 +39,18 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 	public void fuellePruefungsBeans() {
 		setPruefungenBeans(new ArrayList<PruefungsleistungFormBean>());
 
-		for (Student student : getStudentService().getAllStudenten(
-				getSelectedManipel())) {
+		for (Entry<Student, Optional<Pruefungsleistung>> student : getPruefungService()
+				.getAllStudentenForPruefung(getSelectedPruefung()).entrySet()) {
 			if (student == null)
 				continue;
 			else {
-				Optional<Note> alteNote = getPruefungService().getAktuelleNote(
-						student, getSelectedPruefungsfach());
+				// Optional<Note> alteNote =
+				// getPruefungService().getAktuelleNote(
+				// student, getSelectedPruefungsfach());
 
 				getPruefungenBeans().add(
-						new PruefungsleistungFormBean(student, alteNote, null));
+						new PruefungsleistungFormBean(student.getKey(), student
+								.getValue().get().getNote(), null));
 			}
 		}
 
@@ -75,6 +80,7 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 			fuellePruefungsBeans();
 			return Action.INPUT;
 		} else {
+			protokollHasErrors = false;
 			setProtokoll(new ArrayList<Protokollzeile>());
 
 			for (PruefungsleistungFormBean p : pruefungenBeans) {
@@ -83,6 +89,7 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 							getSelectedPruefung(), p.getStudent(),
 							Note.getNote(p.getNote()));
 				} catch (IllegalPruefungsleistungException e) {
+					protokollHasErrors = true;
 					getProtokoll()
 							.add(new Protokollzeile(
 									Protokolltyp.FEHLER,
@@ -136,5 +143,13 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 
 	public void setProtokoll(List<Protokollzeile> protokoll) {
 		this.protokoll = protokoll;
+	}
+
+	public boolean isProtokollHasErrors() {
+		return protokollHasErrors;
+	}
+
+	public void setProtokollHasErrors(boolean protokollHasErrors) {
+		this.protokollHasErrors = protokollHasErrors;
 	}
 }
