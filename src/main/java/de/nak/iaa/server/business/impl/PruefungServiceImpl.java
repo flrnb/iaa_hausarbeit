@@ -79,8 +79,7 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
-	public List<Pruefung> getAllPruefung(Manipel manipel,
-			Pruefungsfach pruefungsfach) {
+	public List<Pruefung> getAllPruefung(Pruefungsfach pruefungsfach) {
 		// TODO Auto-generated method stub
 		return null;
 	}

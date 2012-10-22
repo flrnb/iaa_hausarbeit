@@ -131,8 +131,7 @@ public class MockPruefungService extends PruefungServiceImpl implements
 	}
 
 	@Override
-	public List<Pruefung> getAllPruefung(Manipel manipel,
-			Pruefungsfach pruefungsfach) {
+	public List<Pruefung> getAllPruefung(Pruefungsfach pruefungsfach) {
 		return pruefungen;
 	}
 

@@ -32,7 +32,7 @@ public interface PruefungService {
 	void addPruefungsleistung(Pruefung pruefung, Date datum, Student student,
 			Note note);
 
-	List<Pruefung> getAllPruefung(Manipel manipel, Pruefungsfach pruefungsfach);
+	List<Pruefung> getAllPruefung(Pruefungsfach pruefungsfach);
 
 	Pruefung getPruefungById(Long id);
 }

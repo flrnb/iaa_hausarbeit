@@ -38,7 +38,6 @@ public class ModulAuswahlAction extends AbstractAction implements
 		}
 
 		setPruefungen(getPruefungService().getAllPruefung(
-				(Manipel) getSession().get("selectedManipel"),
 				getSelectedPruefungsfach()));
 		return Action.SUCCESS;
 	}
