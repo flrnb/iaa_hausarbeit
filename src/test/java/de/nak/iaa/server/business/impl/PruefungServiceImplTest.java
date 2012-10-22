@@ -329,6 +329,7 @@ public class PruefungServiceImplTest {
 		assertFalse(service.isErgaenzungsPruefungZulaessig(leistung2));
 	}
 
+	@Test
 	public void testGetAllStudentenForPruefung() throws IllegalPruefungsleistungException {
 		Pruefung pruefung1 = new Pruefung(TODAY, fach1);
 		Pruefung pruefung2 = new Pruefung(TOMORROW, fach1);

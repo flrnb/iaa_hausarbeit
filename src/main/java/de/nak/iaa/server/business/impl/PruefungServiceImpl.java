@@ -13,6 +13,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 
 import de.nak.iaa.server.business.IllegalPruefungsleistungException;
@@ -161,8 +162,10 @@ public class PruefungServiceImpl implements PruefungService {
 
 	@Override
 	public Map<Student, Optional<Pruefungsleistung>> getAllStudentenForPruefung(Pruefung pruefung) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<Student, Optional<Pruefungsleistung>> result = new HashMap<Student, Optional<Pruefungsleistung>>();
+		for (Student student : studentService.getAllStudenten(pruefung.getPruefungsfach().getManipel()))
+			result.put(student, getLetzterVersuch(pruefung.getPruefungsfach(), student));
+		return ImmutableMap.copyOf(result);
 	}
 
 	@Override
