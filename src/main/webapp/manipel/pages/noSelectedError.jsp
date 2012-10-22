@@ -4,7 +4,7 @@
 
 <h3>Sie müssen einen Manipel auswählen, bevor Sie Änderungen durchführen können:</h3>
 
-<s:form action="save" namespace="manipel">
+<s:form action="save" namespace="/manipel">
 	<s:select list="manipel" name="selectedManipel" label="Manipel wählen"
 		headerKey="-1" headerValue="--- Select ---" />
 	<s:submit value="Ändern"></s:submit>

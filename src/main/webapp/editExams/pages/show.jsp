@@ -3,14 +3,13 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
 <h3>
-	Prüfungsleistungen erfassen (Modul <i><s:property
+	Prüfungsleistungen ändern (Modul <i><s:property
 			value="selectedPruefungsfach" /></i> )
 </h3>
 
 <s:a action="modulSelection" namespace="/writtenExams">Modul wechseln</s:a>
 
-<p>Hier können Sie die erreichten Noten von dem Modul eingetragen
-	werden.</p>
+<p>Hier können Sie die erreichten Noten von dem Modul ändern.</p>
 
 <s:if test="pruefungenBeans.size() > 0">
 	<form action="<s:url action="save"/>">
@@ -29,26 +28,28 @@
 				<s:hidden name="pruefungenBeans[%{#stat.index}].student.matrikelNr"
 					value="%{#pruefung.student.matrikelNr}" />
 				<tr>
-					<td><s:property value="%{#pruefung.matrikelNummer}" /></td>
-					<td><s:property value="%{#pruefung.name}" /></td>
+					<td><s:property value="%{#pruefung.student.matrikelNr}" /></td>
+					<td><s:property value="%{#pruefung.student.vorname}" /> <s:property
+							value="%{#pruefung.student.name}" /></td>
+							
 					<td class="editorField"><s:textfield
 							name="pruefungenBeans[%{#stat.index}].note1"
 							cssClass="changeNote" cssErrorClass="fieldErrorCls"
-							theme="simple" value="%{#pruefung.note1}" /> <s:fielderror
+							theme="simple" value="%{#pruefung.note1}" disabled="%{#pruefung.writeable[0]}" /> <s:fielderror
 							theme="iaa">
 							<s:param>pruefungenBeans[${stat.index}].note1</s:param>
 						</s:fielderror></td>
 					<td class="editorField"><s:textfield
 							name="pruefungenBeans[%{#stat.index}].note2"
 							cssClass="changeNote" cssErrorClass="fieldErrorCls"
-							theme="simple" value="%{#pruefung.note2}" /> <s:fielderror
+							theme="simple" value="%{#pruefung.note2}" disabled="%{#pruefung.writeable[1]}" /> <s:fielderror
 							theme="iaa">
 							<s:param>pruefungenBeans[${stat.index}].note2</s:param>
 						</s:fielderror></td>
 					<td class="editorField"><s:textfield
 							name="pruefungenBeans[%{#stat.index}].note3"
 							cssClass="changeNote" cssErrorClass="fieldErrorCls"
-							theme="simple" value="%{#pruefung.note3}" /> <s:fielderror
+							theme="simple" value="%{#pruefung.note3}" disabled="%{#pruefung.writeable[2]}"/> <s:fielderror
 							theme="iaa">
 							<s:param>pruefungenBeans[${stat.index}].note3</s:param>
 						</s:fielderror></td>

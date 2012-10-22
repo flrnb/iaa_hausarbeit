@@ -9,8 +9,7 @@
 
 <s:a action="modulSelection" namespace="/writtenExams">Modul wechseln</s:a>
 
-<p>Hier können Sie die erreichten Noten von dem Modul eingetragen
-	werden.</p>
+<p>Hier können Sie die erreichten Noten von dem Modul eingetragen.</p>
 
 <s:if test="pruefungenBeans.size() > 0">
 	<form action="<s:url action="save"/>">
