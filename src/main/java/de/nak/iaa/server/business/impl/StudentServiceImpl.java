@@ -10,6 +10,7 @@ import com.google.common.collect.Iterables;
 
 import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.dao.ManipelDAO;
+import de.nak.iaa.server.dao.StudentDAO;
 import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Student;
 
@@ -22,6 +23,9 @@ public class StudentServiceImpl implements StudentService {
 
 	@Autowired
 	private ManipelDAO manipelDAO;
+
+	@Autowired
+	private StudentDAO studentDAO;
 
 	@Override
 	public List<Manipel> getAllManipel() {
@@ -39,7 +43,7 @@ public class StudentServiceImpl implements StudentService {
 
 	@Override
 	public List<Student> getAllStudenten() {
-		return null;
+		return studentDAO.findAll();
 	}
 
 	@Override

@@ -55,7 +55,7 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
-	public void addPruefungsleistung(Pruefung pruefung, Date datum, Student student, Note note) {
+	public void addPruefungsleistung(Pruefung pruefung, Student student, Note note) {
 		// TODO Auto-generated method stub
 	}
 

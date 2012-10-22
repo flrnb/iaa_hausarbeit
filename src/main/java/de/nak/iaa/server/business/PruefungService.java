@@ -83,13 +83,12 @@ public interface PruefungService {
 	 * Für einen Studenten eine neue Prüfungsleistung erfassen
 	 * 
 	 * @param pruefung
-	 * @param datum
 	 * @param student
 	 * @param note
 	 * @throws IllegalPruefungsleistungException
 	 *             wenn die Prüfungsleistung nicht zulässig ist
 	 */
-	void addPruefungsleistung(Pruefung pruefung, Date datum, Student student, Note note);
+	void addPruefungsleistung(Pruefung pruefung, Student student, Note note);
 
 	/**
 	 * @param manipel

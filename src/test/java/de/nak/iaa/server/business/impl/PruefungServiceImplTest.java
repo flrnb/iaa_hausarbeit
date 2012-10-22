@@ -40,6 +40,8 @@ public class PruefungServiceImplTest {
 
 	private Manipel man2;
 
+	private Student student;
+
 	@Before
 	public void setUp() {
 		service = new PruefungServiceImpl();
@@ -48,6 +50,7 @@ public class PruefungServiceImplTest {
 		fach1 = new Pruefungsfach("Fach1", "Beschreibung1", man1);
 		fach2 = new Pruefungsfach("Fach2", "Beschreibung2", man1);
 		fach3 = new Pruefungsfach("Fach3", "Beschreibung3", man2);
+		student = new Student();
 		PruefungsfachDAO pruefungsfachDAO = DAOMockBuilder.forClass(PruefungsfachDAO.class)
 				.addEntities(fach1, fach2, fach3).build();
 		service.setPruefungsfachDAO(pruefungsfachDAO);
@@ -60,15 +63,35 @@ public class PruefungServiceImplTest {
 	}
 
 	@Test
+	public void testIsPruefungsleistungEditable() {
+		Pruefung pruefung1 = new Pruefung();
+		service.addPruefungsleistung(pruefung1, new Date(), student, Note.Fuenf);
+		service.getAllPruefungsleistungen(, student)
+	}
+
+	@Test
+	public void testIsPruefungsleistungNotEditable() {
+
+	}
+
+	@Test
 	public void testUpdatePruefungsleistung() {
-		Student student = new Student();
-		Pruefung pruefung = new Pruefung();
+		Pruefung pruefung = new Pruefung(new Date(), fach1);
 		service.addPruefungsleistung(pruefung, new Date(), student, Note.EinsDrei);
 		List<Pruefungsleistung> allPruefungsleistungen = service.getAllPruefungsleistungen(fach1, student);
 		assertThat(allPruefungsleistungen.size(), is(1));
 		Pruefungsleistung leistung = allPruefungsleistungen.get(0);
 		service.updatePruefungsleistung(leistung.getId(), Note.EinsSieben);
-		// assertThat(leistung.getNote(), is(Note.EinsSieben))
+		assertThat(leistung.getNote(), is(Note.EinsSieben));
+	}
+
+	@Test
+	public void testUpdatePruefungsleistungNotEditable() {
+		Pruefung pruefung1 = new Pruefung();
+		service.addPruefungsleistung(pruefung1, new Date(), student, Note.Fuenf);
+		Pruefung pruefung2 = new Pruefung();
+
+		service.addPruefungsleistung(pruefung2, new Date(), student, Note.ZweiDrei);
 	}
 
 }
