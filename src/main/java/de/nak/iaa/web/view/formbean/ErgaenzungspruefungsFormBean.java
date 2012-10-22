@@ -9,6 +9,7 @@ public class ErgaenzungspruefungsFormBean extends AbstractFormBean {
 
 	private String resultPercent;
 	private Date datum;
+	private Date ergDatum;
 
 	public ErgaenzungspruefungsFormBean() {
 	}
@@ -34,5 +35,13 @@ public class ErgaenzungspruefungsFormBean extends AbstractFormBean {
 
 	public void setDatum(Date datum) {
 		this.datum = datum;
+	}
+
+	public Date getErgDatum() {
+		return ergDatum;
+	}
+
+	public void setErgDatum(Date ergDatum) {
+		this.ergDatum = ergDatum;
 	}
 }

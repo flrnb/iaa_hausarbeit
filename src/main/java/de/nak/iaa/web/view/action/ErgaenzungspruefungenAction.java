@@ -68,6 +68,12 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 		if (getFieldErrors().size() > 0) {
 			fuellePruefungsBeans();
 			return Action.INPUT;
+		} else {
+			for (ErgaenzungspruefungsFormBean p : pruefungenBeans) {
+				getPruefungService().addErgaenzungsPruefung(p.getStudent(),
+						getSelectedPruefungsfach(), p.getErgDatum(),
+						Integer.valueOf(p.getResultPercent()));
+			}
 		}
 
 		return Action.SUCCESS;
