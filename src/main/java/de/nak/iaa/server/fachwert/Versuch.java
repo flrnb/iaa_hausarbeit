@@ -15,9 +15,14 @@ public enum Versuch {
 		return intDarstellung;
 	}
 
-	public Optional<Integer> next() {
-		if (this.equals(Drei))
+	public Optional<Versuch> next() {
+		switch (this) {
+		case Eins:
+			return Optional.of(Zwei);
+		case Zwei:
+			return Optional.of(Drei);
+		default:
 			return Optional.absent();
-		return Optional.of(intDarstellung + 1);
+		}
 	}
 }
