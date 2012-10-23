@@ -20,6 +20,8 @@ public class ModulAuswahlAction extends AbstractFormAction implements
 	private List<Pruefungsfach> pruefungsfaecher;
 	private List<Pruefung> pruefungen;
 
+	/* Actions Start */
+
 	public String showSelectModul() {
 		if (isManipelSelected()) {
 			setTargetUrl(ServletActionContext.getRequest().getRequestURL()
@@ -42,7 +44,9 @@ public class ModulAuswahlAction extends AbstractFormAction implements
 		return Action.SUCCESS;
 	}
 
+	/* Actions Ende */
 	/* Properties */
+
 	public List<Pruefungsfach> getPruefungsfaecher() {
 		return pruefungsfaecher;
 	}

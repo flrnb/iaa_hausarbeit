@@ -10,6 +10,11 @@
 	</h4>
 </s:if>
 <s:else>
+	<h4>
+		Modul auswahlen (Manipel "
+		<s:property value="%{getSelectedManipel().toString()}" />
+		")
+	</h4>
 	<s:iterator value="pruefungsfaecher" var="pruefungsfach">
 		<a
 			href="<s:url action="pruefungSelection"/>?pruefungsfach=<s:property value="%{#pruefungsfach.getId()}"/>">Modul

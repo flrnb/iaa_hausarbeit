@@ -21,6 +21,8 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 
 	private List<ErgaenzungspruefungsFormBean> pruefungenBeans;
 
+	/* Logik Start */
+
 	@Override
 	public void validate() {
 	}
@@ -47,6 +49,9 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 		Collections.sort(getPruefungenBeans());
 	}
 
+	/* Logik Ende */
+	/* Actions Start */
+
 	public String save() throws Exception {
 		if (isManipelSelected()) {
 			setTargetUrl(getRequestUrl());
@@ -55,13 +60,11 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 
 		int i = 0;
 		for (ErgaenzungspruefungsFormBean p : pruefungenBeans) {
-
 			// TODO hier validieren
 			if (!p.getResultPercent().matches("\n{1,2}|100")) {
 				addFieldError("pruefungenBeans[" + i + "].note",
 						"Keine gültige Note");
 			}
-			// TODO process the form and save the noten
 			i++;
 		}
 
@@ -87,6 +90,9 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 		fuellePruefungsBeans();
 		return Action.SUCCESS;
 	}
+
+	/* Actions Ende */
+	/* Properties */
 
 	public List<ErgaenzungspruefungsFormBean> getPruefungenBeans() {
 		return pruefungenBeans;

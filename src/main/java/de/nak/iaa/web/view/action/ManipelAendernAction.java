@@ -1,29 +1,35 @@
 package de.nak.iaa.web.view.action;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ParameterAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.Action;
-import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.Preparable;
 
-import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.business.mock.MockStudentService;
 import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 import de.nak.iaa.web.util.DataHelper;
 
 @SuppressWarnings("serial")
-public class ManipelAendernAction extends ActionSupport implements
-		SessionAware, ParameterAware {
+public class ManipelAendernAction extends AbstractAction implements
+		SessionAware, ParameterAware, Preparable {
 
 	private String selectedManipel;
+	private List<Manipel> manipel;
+
 	private static String refererUrl;
 
-	/* Logik */
+	/* Logik Start */
+
+	@Override
+	public void prepare() throws Exception {
+		setManipel(getStudentService().getAllManipel());
+	}
+
 	@Override
 	public String execute() throws Exception {
 		setStudentService(new MockStudentService());
@@ -38,7 +44,9 @@ public class ManipelAendernAction extends ActionSupport implements
 						"Sie müssen einen Manipel auswählen");
 	}
 
-	/* Actions */
+	/* Logik Ende */
+	/* Actions Start */
+
 	public String show() {
 		if (ServletActionContext.getRequest().getHeader("referer") == null) {
 			setRefererUrl("show");
@@ -56,8 +64,9 @@ public class ManipelAendernAction extends ActionSupport implements
 		String[] manipelParts = selectedManipel.split(" ", 2);
 		getSession().put(
 				"selectedManipel",
-				new Manipel(Integer.valueOf(manipelParts[0]), Studienrichtung
-						.valueOf(manipelParts[1])));
+				manipel.get(manipel.indexOf(new Manipel(Integer
+						.valueOf(manipelParts[0]), Studienrichtung
+						.valueOf(manipelParts[1])))));
 		return Action.SUCCESS;
 	}
 
@@ -69,42 +78,9 @@ public class ManipelAendernAction extends ActionSupport implements
 		return Action.SUCCESS;
 	}
 
-	/* Session Management */
-	private Map<String, Object> session;
-
-	public Map<String, Object> getSession() {
-		return session;
-	}
-
-	@Override
-	public void setSession(Map<String, Object> session) {
-		this.session = session;
-	}
-
-	/* Parameter Management */
-	private Map<String, String[]> parameters;
-
-	public Map<String, String[]> getParameters() {
-		return parameters;
-	}
-
-	@Override
-	public void setParameters(Map<String, String[]> parameters) {
-		this.parameters = parameters;
-	}
-
-	/* Service Management */
-	private StudentService studentService;
-
-	public StudentService getStudentService() {
-		return studentService;
-	}
-
-	public void setStudentService(StudentService studentService) {
-		this.studentService = studentService;
-	}
-
+	/* Actions Ende */
 	/* Properties */
+
 	public String getSelectedManipel() {
 		return selectedManipel;
 	}
@@ -114,7 +90,7 @@ public class ManipelAendernAction extends ActionSupport implements
 	}
 
 	public List<Manipel> getManipel() {
-		return studentService.getAllManipel();
+		return manipel;
 	}
 
 	public String getRefererUrl() {
@@ -123,5 +99,9 @@ public class ManipelAendernAction extends ActionSupport implements
 
 	public void setRefererUrl(String refererUrl) {
 		ManipelAendernAction.refererUrl = refererUrl;
+	}
+
+	public void setManipel(List<Manipel> manipel) {
+		this.manipel = manipel;
 	}
 }
