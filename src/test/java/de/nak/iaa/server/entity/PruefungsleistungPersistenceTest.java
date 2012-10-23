@@ -17,10 +17,13 @@ import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.dao.PruefungDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
 import de.nak.iaa.server.dao.PruefungsleistungDAO;
+import de.nak.iaa.server.dao.StudentDAO;
 import de.nak.iaa.server.fachwert.Note;
+import de.nak.iaa.server.fachwert.Studienrichtung;
 import de.nak.iaa.server.fachwert.Versuch;
 
-public class PruefungsleistungPersistenceTest extends ApplicationContextAwareTest {
+public class PruefungsleistungPersistenceTest extends
+		ApplicationContextAwareTest {
 
 	@Resource
 	private PruefungsleistungDAO pruefungsleistungDAO;
@@ -30,22 +33,30 @@ public class PruefungsleistungPersistenceTest extends ApplicationContextAwareTes
 	private PruefungsfachDAO pruefungsfachDAO;
 	@Resource
 	private ManipelDAO manipelDAO;
+	@Resource
+	private StudentDAO studentDAO;
 	private Pruefungsfach pruefungsfach;
 	private Pruefung pruefung;
+	private Student student;
 
 	@Before
 	public void setUp() {
-		pruefungsfach = new Pruefungsfach("Titel", "beschreibung", manipelDAO.findAll().get(0));
+		pruefungsfach = new Pruefungsfach("Titel", "beschreibung", manipelDAO
+				.findAll().get(0));
 		pruefungsfach = pruefungsfachDAO.makePersistent(pruefungsfach);
 		pruefung = new Pruefung(new Date(), pruefungsfach);
 		pruefung = pruefungDAO.makePersistent(pruefung);
+		Manipel manipel = new Manipel(2007, Studienrichtung.BWL);
+		manipel = manipelDAO.makePersistent(manipel);
+		student = new Student(1, manipel, "Name", "Vorname");
+		studentDAO.makePersistent(student);
 	}
 
 	@Test
 	public void testPersistierung() {
 		int countBefore = pruefungsleistungDAO.findAll().size();
-		// FIXME, Student == null
-		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date(), pruefung, Note.Drei, null);
+		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date(),
+				pruefung, Note.Drei, student);
 		pruefungsleistungDAO.makePersistent(pl);
 
 		int countAfter = pruefungsleistungDAO.findAll().size();
@@ -54,10 +65,11 @@ public class PruefungsleistungPersistenceTest extends ApplicationContextAwareTes
 
 	@Test
 	public void testPersistierungMitErgaenzungspruefung() {
-		// FIXME, Student == null
-		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date(), pruefung, Note.EinsDrei, null);
+		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date(),
+				pruefung, Note.EinsDrei, student);
 		pl.setErgaenzungsPruefung(new ErgaenzungsPruefung(Note.Drei, new Date()));
 		pl = pruefungsleistungDAO.makePersistent(pl);
-		assertThat(pl.getErgaenzungsPruefung(), is(notNullValue(ErgaenzungsPruefung.class)));
+		assertThat(pl.getErgaenzungsPruefung(),
+				is(notNullValue(ErgaenzungsPruefung.class)));
 	}
 }

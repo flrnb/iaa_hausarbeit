@@ -45,12 +45,16 @@ public class Pruefungsleistung {
 	@Enumerated(EnumType.STRING)
 	private Note note;
 
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@JoinColumn(name = "STUDENT_ID", nullable = false)
+	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 	private Student student;
 
 	public Pruefungsleistung() {
 	}
 
-	public Pruefungsleistung(Versuch versuch, Date pruefungsDatum, Pruefung pruefung, Note note, Student student) {
+	public Pruefungsleistung(Versuch versuch, Date pruefungsDatum,
+			Pruefung pruefung, Note note, Student student) {
 		super();
 		this.versuch = versuch;
 		this.pruefungsDatum = pruefungsDatum;

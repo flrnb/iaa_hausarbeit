@@ -1,24 +1,26 @@
 package de.nak.iaa.server.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
-@Table
 public class Student extends Person {
 
 	private int matrikelNr;
 
+	@OneToOne(fetch = FetchType.EAGER)
+	@JoinColumn(nullable = false, name = "MANIPEL_ID")
 	private Manipel manipel;
 
 	public Student() {
 	}
 
 	public Student(int matrikelNr, Manipel manipel, String name, String vorname) {
-		setMatrikelNr(matrikelNr);
-		setName(name);
-		setVorname(vorname);
-		setManipel(manipel);
+		super(name, vorname);
+		this.matrikelNr = matrikelNr;
+		this.manipel = manipel;
 	}
 
 	public int getMatrikelNr() {

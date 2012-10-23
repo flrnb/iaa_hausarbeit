@@ -8,6 +8,7 @@ import java.util.Date;
 
 import javax.annotation.Resource;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import de.nak.iaa.ApplicationContextAwareTest;
@@ -23,6 +24,11 @@ public class PruefungPersistenceTest extends ApplicationContextAwareTest {
 	private PruefungsfachDAO pruefungsfachDAO;
 	@Resource
 	private ManipelDAO manipelDAO;
+
+	@Before
+	public void setUp() {
+
+	}
 
 	@Test
 	public void testPersist() {
