@@ -16,7 +16,7 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 
 	private List<PruefungsleistungAendernFormBean> pruefungenBeans;
 
-	/* Logik Start */
+	/* Custom Logik Start */
 
 	public void fuellePruefungsBeans() {
 		setPruefungenBeans(new ArrayList<PruefungsleistungAendernFormBean>());
@@ -40,6 +40,9 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 
 		Collections.sort(getPruefungenBeans());
 	}
+
+	/* Custom Logik Ende */
+	/* Logik Start */
 
 	/* Logik Ende */
 	/* Actions Start */

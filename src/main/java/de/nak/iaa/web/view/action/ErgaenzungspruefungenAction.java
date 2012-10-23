@@ -21,12 +21,7 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 
 	private List<ErgaenzungspruefungsFormBean> pruefungenBeans;
 
-	/* Logik Start */
-
-	@Override
-	public void validate() {
-	}
-
+	/* Custom Logik Start */
 	public void fuellePruefungsBeans() {
 		setPruefungenBeans(new ArrayList<ErgaenzungspruefungsFormBean>());
 
@@ -47,6 +42,13 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 		}
 
 		Collections.sort(getPruefungenBeans());
+	}
+
+	/* Custom Logik Ende */
+	/* Logik Start */
+
+	@Override
+	public void validate() {
 	}
 
 	/* Logik Ende */

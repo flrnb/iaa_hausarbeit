@@ -30,11 +30,7 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 	private List<Protokollzeile> protokoll;
 	private boolean protokollHasErrors;
 
-	/* Logik Start */
-
-	@Override
-	public void validate() {
-	}
+	/* Custom Logik Start */
 
 	public void fuellePruefungsBeans() {
 		setPruefungenBeans(new ArrayList<PruefungsleistungFormBean>());
@@ -55,6 +51,13 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 		}
 
 		Collections.sort(getPruefungenBeans());
+	}
+
+	/* Custom Logik Ende */
+	/* Logik Start */
+
+	@Override
+	public void validate() {
 	}
 
 	/* Logik Ende */
