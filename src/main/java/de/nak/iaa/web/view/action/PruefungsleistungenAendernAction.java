@@ -35,8 +35,6 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 						.getAllPruefungsleistungen(getSelectedPruefungsfach(),
 								student);
 
-				System.out.println(leistungen.size());
-
 				getPruefungenBeans().add(
 						new PruefungsleistungAendernFormBean(student,
 								leistungen));

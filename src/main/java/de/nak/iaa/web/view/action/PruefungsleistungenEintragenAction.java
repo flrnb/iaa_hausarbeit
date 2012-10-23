@@ -112,8 +112,6 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 
 				}
 				try {
-					System.out.println("action:" + st);
-
 					getPruefungService().addPruefungsleistung(
 							getSelectedPruefung(), st,
 							Note.getNote(p.getNote()));
@@ -126,7 +124,6 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 
 				} catch (IllegalPruefungsleistungException e) {
 					protokollHasErrors = true;
-					System.out.println("exception:" + st);
 					getProtokoll()
 							.add(new Protokollzeile(
 									Protokollzeile.FEHLER,

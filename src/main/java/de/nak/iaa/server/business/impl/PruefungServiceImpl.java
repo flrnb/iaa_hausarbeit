@@ -83,7 +83,6 @@ public class PruefungServiceImpl implements PruefungService {
 		// FIXME Datum?
 		Pruefungsleistung neueLeistung = new Pruefungsleistung(nextVersuch,
 				null, pruefung, note, student);
-		System.out.println("service:" + student);
 		return pruefungsleistungDAO.makePersistent(neueLeistung);
 	}
 
