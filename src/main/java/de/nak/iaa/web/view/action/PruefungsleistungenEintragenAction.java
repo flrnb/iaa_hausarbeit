@@ -32,6 +32,9 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 
 	/* Custom Logik Start */
 
+	/**
+	 * Fülle die pruefungenBeans
+	 */
 	public void fuellePruefungsBeans() {
 		setPruefungenBeans(new ArrayList<PruefungsleistungFormBean>());
 

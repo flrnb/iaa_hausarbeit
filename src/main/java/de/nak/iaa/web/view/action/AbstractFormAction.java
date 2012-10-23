@@ -24,16 +24,31 @@ public abstract class AbstractFormAction extends AbstractAction implements
 
 	/* Custom Logik Start */
 
+	/**
+	 * Schaue, ob ein Manipel ausgewählt ist
+	 * 
+	 * @return
+	 */
 	public boolean isManipelSelected() {
 		return (!getSession().containsKey("selectedManipel")
 				|| getSession().get("selectedManipel") == null || getSession()
 				.get("selectedManipel").equals(""));
 	}
 
+	/**
+	 * Lese die aktuelle RequestUrl
+	 * 
+	 * @return
+	 */
 	public String getRequestUrl() {
 		return ServletActionContext.getRequest().getRequestURL().toString();
 	}
 
+	/**
+	 * Lese den ausgewählten Manipel aus der Session
+	 * 
+	 * @return
+	 */
 	public Manipel getSelectedManipel() {
 		return (Manipel) getSession().get("selectedManipel");
 	}

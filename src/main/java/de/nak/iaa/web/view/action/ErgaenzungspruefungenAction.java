@@ -22,6 +22,10 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 	private List<ErgaenzungspruefungsFormBean> pruefungenBeans;
 
 	/* Custom Logik Start */
+
+	/**
+	 * Fülle die pruefungenBeans
+	 */
 	public void fuellePruefungsBeans() {
 		setPruefungenBeans(new ArrayList<ErgaenzungspruefungsFormBean>());
 

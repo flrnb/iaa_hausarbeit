@@ -18,6 +18,9 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 
 	/* Custom Logik Start */
 
+	/**
+	 * Fülle die pruefungenBeans
+	 */
 	public void fuellePruefungsBeans() {
 		setPruefungenBeans(new ArrayList<PruefungsleistungAendernFormBean>());
 
