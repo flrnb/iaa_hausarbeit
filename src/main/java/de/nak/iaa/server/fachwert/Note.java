@@ -25,8 +25,8 @@ public enum Note {
 	}
 
 	public static Note getNote(String note) {
-		if (note.matches("[123456][.][037]"))
-			return lookup.get(note);
+		if (note.matches("[123456][.][037]") || note.contains("."))
+			return lookup.get(Double.valueOf(note));
 		else
 			return lookup.get(Double.valueOf(note + ".0"));
 	}
