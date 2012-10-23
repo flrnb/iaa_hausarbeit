@@ -17,7 +17,6 @@ import de.nak.iaa.server.business.IllegalPruefungsleistungException;
 import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;
-import de.nak.iaa.web.entity.Protokolltyp;
 import de.nak.iaa.web.entity.Protokollzeile;
 import de.nak.iaa.web.view.formbean.PruefungsleistungFormBean;
 
@@ -47,9 +46,14 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 				// getPruefungService().getAktuelleNote(
 				// student, getSelectedPruefungsfach());
 
+				Note alteNote = null;
+				if (student.getValue().isPresent()) {
+					alteNote = student.getValue().get().getNote();
+				}
+
 				getPruefungenBeans().add(
-						new PruefungsleistungFormBean(student.getKey(), student
-								.getValue().get().getNote(), null));
+						new PruefungsleistungFormBean(student.getKey(),
+								alteNote, null));
 			}
 		}
 
@@ -74,8 +78,13 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 
 		int i = 0;
 		for (PruefungsleistungFormBean p : pruefungenBeans) {
-			System.out.println(p.getStudent());
-			if (!Note.isValid(p.getNote())) {
+			if (p.getNote().contains(",")) {
+				addFieldError("pruefungenBeans[" + i + "].note",
+						"Nur \".\" erlaubt");
+				// continue;
+			}
+			if (!p.getNote().equals("") && !p.getNote().contains(",")
+					&& !Note.isValid(p.getNote())) {
 				addFieldError("pruefungenBeans[" + i + "].note",
 						"Keine gültige Note");
 			}
@@ -90,30 +99,46 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 			setProtokoll(new ArrayList<Protokollzeile>());
 
 			for (PruefungsleistungFormBean p : pruefungenBeans) {
+				if (p.getNote().equals(""))
+					continue;
+
+				Student st = null;
+				for (Student s : getStudentService().getAllStudenten(
+						getSelectedManipel())) {
+					if (s.equals(p.getStudent())) {
+						st = s;
+						break;
+					}
+
+				}
 				try {
+					System.out.println("action:" + st);
+
 					getPruefungService().addPruefungsleistung(
-							getSelectedPruefung(), p.getStudent(),
+							getSelectedPruefung(), st,
 							Note.getNote(p.getNote()));
+					getProtokoll().add(
+							new Protokollzeile(Protokollzeile.NACHRICHT,
+									"Note " + p.getNote() + " für "
+											+ st.getVorname() + " "
+											+ st.getName()
+											+ " erfolgreich eingetragen."));
+
 				} catch (IllegalPruefungsleistungException e) {
 					protokollHasErrors = true;
+					System.out.println("exception:" + st);
 					getProtokoll()
 							.add(new Protokollzeile(
-									Protokolltyp.FEHLER,
+									Protokollzeile.FEHLER,
 									"Note "
 											+ p.getNote()
 											+ " für "
-											+ p.getStudent().getVorname()
+											+ st.getVorname()
 											+ " "
-											+ p.getStudent().getName()
+											+ st.getName()
 											+ " konnte nicht eingetragen werden (Grund: "
 											+ e.getMessage() + ")."));
 				}
-				getProtokoll().add(
-						new Protokollzeile(Protokolltyp.NACHRICHT, "Note "
-								+ p.getNote() + " für "
-								+ p.getStudent().getVorname() + " "
-								+ p.getStudent().getName()
-								+ " erfolgreich eingetragen."));
 			}
 
 			return Action.SUCCESS;

@@ -1,55 +1,57 @@
 @CHARSET "UTF-8";
 
-body {
-	width: 800px !important;
-	padding: 5px;
-	border: 1px solid gray;
-	border-radius: 10px;
+@media screen {
+	body {
+		width: 800px !important;
+		padding: 5px;
+		border: 1px solid gray;
+		border-radius: 10px;
+	}
+	.menu td {
+		margin: 0px;
+		padding: 5px 10px;
+		border: 1px solid gray;
+	}
+	.menu td.left {
+		border-bottom-left-radius: 10px;
+	}
+	.notenTabelle {
+		border: 1px solid black;
+		border-radius: 2px;
+	}
+	td .editorField {
+		test-align: left !important;
+	}
+	td input {
+		text-align: right;
+		padding-right: 3px;
+	}
+	.notenInputField {
+		text-align: right;
+		padding-right: 3px;
+	}
+	.errorMessage {
+		font-size: small;
+	}
+	.fieldErrorCls {
+		border: 1px solid red;
+		background-color: #fdd;
+	}
+	.protokollError {
+		color: darkred;
+		font-size: small;
+	}
+	.protokollMessage {
+		color: black;
+		font-size: small;
+	}
 }
 
-.menu td {
-	margin: 0px;
-	padding: 5px 10px;
-	border: 1px solid gray;
-}
-.menu td.left {
-	border-bottom-left-radius: 10px;
-}
-
-.notenTabelle {
-	border: 1px solid black;
-	border-radius: 2px;
-}
-
-td .editorField {
-	test-align: left !important;	
-}
-
-td input {
-	text-align: right;
-	padding-right: 3px;
-}
-
-.notenInputField {
-	text-align: right;
-	padding-right: 3px;
-}
-
-.errorMessage{
-	font-size: small;
-}
-
-.fieldErrorCls {
-	border: 1px solid red;
-	background-color:#fdd;
-}
-
-.protokollError {
-	color: red;
-	font-weight: bold;
-}
-
-.protokollMessage {
-	color: black;
-	font-weight: bold;
+@media print {
+	.printable {
+		display: block;
+	}
+	.header {
+		display: none;
+	}
 }

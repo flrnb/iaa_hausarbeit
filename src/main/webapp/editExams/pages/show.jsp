@@ -32,15 +32,21 @@
 					<td><s:property value="%{#pruefung.student.vorname}" /> <s:property
 							value="%{#pruefung.student.name}" /></td>
 
-					<s:iterator begin="0" end="2" step="1" var="current">
+					<%-- <s:iterator begin="0" end="2" step="1" var="current"> --%>
+					<s:iterator value="pruefungsleistungen" var="current" status="stat1">
+					<s:hidden name="pruefungenBeans[%{#stat.index}].pruefungsleistungen[%{#stat1.index}].id" value="%{#current.id}"></s:hidden>
 						<td class="editorField"><s:textfield
-								name="pruefungenBeans[%{#stat.index}].note%{#current}"
+								name="pruefungenBeans[%{#stat.index}].pruefungsleistungen[%{#stat1.index}].note"
 								cssClass="changeNote" cssErrorClass="fieldErrorCls"
-								theme="simple" value="%{#pruefungsleistung[#current].note}"
-								disabled="%{isWriteable(#pruefungsleistung[#current].id)}" /> <s:fielderror
+								theme="simple" value="%{#current.note.getNote()}"
+								disabled="%{!isWriteable(#current.id)}" /> <s:fielderror
 								theme="iaa">
 								<s:param>pruefungenBeans[${stat.index}].note${current}</s:param>
 							</s:fielderror></td>
+					</s:iterator>
+
+					<s:iterator begin="%{pruefungsleistungen.size()}" end="2" step="1" var="current">
+						<td></td>
 					</s:iterator>
 
 					<%-- <td class="editorField"><s:textfield

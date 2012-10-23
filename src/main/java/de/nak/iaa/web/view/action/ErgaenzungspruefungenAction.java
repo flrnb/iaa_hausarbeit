@@ -29,6 +29,10 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 	public void fuellePruefungsBeans() {
 		setPruefungenBeans(new ArrayList<ErgaenzungspruefungsFormBean>());
 
+		System.out.println(getPruefungService()
+				.getAllErgaenzungsPruefungsStudenten(getSelectedManipel(),
+						getSelectedPruefungsfach()).size());
+
 		for (Entry<Student, Date> ergaenzungspruefung : getPruefungService()
 				.getAllErgaenzungsPruefungsStudenten(getSelectedManipel(),
 						getSelectedPruefungsfach()).entrySet()) {

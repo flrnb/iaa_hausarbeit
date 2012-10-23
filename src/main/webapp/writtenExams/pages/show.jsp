@@ -16,14 +16,12 @@
 		<input type="hidden" name="pruefungsfach"
 			value="<s:property value="pruefungsfach"/>" /> <input type="hidden"
 			name="pruefung" value="<s:property value="pruefung"/>" />
-			
-			"
 		<table class="notenTabelle" border="1">
 			<tr>
-				<th>matrikelnummer</th>
-				<th>name</th>
-				<th>alte noten</th>
-				<th>neue note</th>
+				<th>MatrikelNr</th>
+				<th>Name</th>
+				<th>alte Note</th>
+				<th>neue Note</th>
 			</tr>
 			<s:iterator value="pruefungenBeans" var="pruefung" status="stat">
 				<s:hidden name="pruefungenBeans[%{#stat.index}].student.matrikelNr"
