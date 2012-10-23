@@ -6,10 +6,10 @@
 <div class="printable">
 	<h3>Protokoll</h3>
 
-	<table>
+	<table class="protokollTable">
 		<s:iterator value="protokoll" var="zeile">
 			<tr>
-				<td><s:if test="#zeile.typ == 'fehler'">
+				<td class="protokollField"><s:if test="#zeile.typ == 'fehler'">
 						<span class="protokollError"><s:property
 								value="#zeile.nachricht" /></span>
 					</s:if> <s:else>

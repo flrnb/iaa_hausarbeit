@@ -37,6 +37,12 @@
 		border: 1px solid red;
 		background-color: #fdd;
 	}
+}
+
+@media print , screen {
+	.protokollTable td.protokollField {
+		padding: 2px;
+	}
 	.protokollError {
 		color: darkred;
 		font-size: small;
