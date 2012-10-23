@@ -29,14 +29,14 @@ public class DAOMockBuilder<E, T extends GenericDAO<E, Long>> {
 		return new DAOMockBuilder<E, T>(clazz);
 	}
 
-	private DAOMockBuilder(Class<T> toMock) {
+	protected DAOMockBuilder(Class<T> toMock) {
 		this.mock = EasyMock.createNiceMock(toMock);
 	}
 
 	public DAOMockBuilder<E, T> addEntities(List<E> entities) {
 		for (final E e : entities) {
 			setId(e);
-			this.entities.add(e);
+			this.getEntities().add(e);
 		}
 		return this;
 	}
@@ -47,30 +47,30 @@ public class DAOMockBuilder<E, T extends GenericDAO<E, Long>> {
 
 	@SuppressWarnings("unchecked")
 	public T build() {
-		EasyMock.expect(mock.findAll()).andReturn(entities).anyTimes();
-		EasyMock.expect(mock.findById(EasyMock.anyLong(), EasyMock.anyBoolean())).andAnswer(new IAnswer<E>() {
+		EasyMock.expect(getMock().findAll()).andReturn(getEntities()).anyTimes();
+		EasyMock.expect(getMock().findById(EasyMock.anyLong(), EasyMock.anyBoolean())).andAnswer(new IAnswer<E>() {
 			@Override
 			public E answer() throws Exception {
 				Long id = (Long) EasyMock.getCurrentArguments()[0];
-				for (E e : entities)
+				for (E e : getEntities())
 					if (id.equals(Long.valueOf(BeanUtils.getProperty(e, "id"))))
 						return e;
 				return null;
 			}
 		}).anyTimes();
-		EasyMock.expect(mock.makePersistent((E) EasyMock.anyObject())).andAnswer(new IAnswer<E>() {
+		EasyMock.expect(getMock().makePersistent((E) EasyMock.anyObject())).andAnswer(new IAnswer<E>() {
 			@Override
 			public E answer() throws Throwable {
 				E entity = (E) EasyMock.getCurrentArguments()[0];
-				if (!entities.contains(entity)) {
+				if (!getEntities().contains(entity)) {
 					setId(entity);
-					entities.add(entity);
+					getEntities().add(entity);
 				}
 				return entity;
 			}
 		}).anyTimes();
-		EasyMock.replay(mock);
-		return mock;
+		EasyMock.replay(getMock());
+		return getMock();
 	}
 
 	public static void main(String[] args) {
@@ -93,6 +93,14 @@ public class DAOMockBuilder<E, T extends GenericDAO<E, Long>> {
 		} catch (Exception exc) {
 			throw new IllegalArgumentException("Klasse " + e.getClass().getSimpleName() + " hat kein ID-Feld");
 		}
+	}
+
+	protected T getMock() {
+		return mock;
+	}
+
+	protected List<E> getEntities() {
+		return entities;
 	}
 
 }
