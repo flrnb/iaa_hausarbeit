@@ -1,3 +1,5 @@
 INSERT INTO MANIPEL(ID, JAHRGANG, STUDIENRICHTUNG) VALUES (1, 2009, 'WInf'),(2, 2010, 'WInf'),(3, 2009, 'BWL'),(4, 2010, 'BWL'),(5, 2009, 'WIng'),(6, 2010, 'WIng');
 INSERT INTO PRUEFUNGSFACH(ID, BESCHREIBUNG, TITEL, MANIPEL_ID) VALUES (1, 'Mathematik für die 2009er Informatiker', 'Mathematik', 1),(2, 'Mathematik für die 2010er Informatiker', 'Mathematik', 2),(3, 'Buchen, buchen, buchen', 'Rechnungswesen', 3),(4, 'Buchen, buchen, buchen', 'Rechnungswesen', 4),(5, 'Mechanik usw. 2009', 'Technische Mechanik', 5),(6, 'Mechanik usw. 2010', 'Technische Mechanik', 6);
 INSERT INTO PRUEFUNG(ID, DATUM, PRUEFUNGSFACH_ID) VALUES (1, '2012-06-08', 1),(2, '2012-06-07', 2),(3, '2012-06-09', 3),(4, '2012-06-10', 4),(5, '2012-06-08', 5);
+INSERT INTO DOZENT(ID, NAME, VORNAME) VALUES (1, 'Zimmermann', 'Frank'), (2, 'Dozent', 'Der andere'), (3, 'Dozent', 'Der eine');
+INSERT INTO STUDENT(ID, VORNAME, NAME, MATRIKELNR, MANIPEL_ID) VALUES (1, 'Christopher', 'Biel', 11111, 1), (2, 'Florian', 'Borchert', 11112, 1), (3, 'Ronny', 'Bräunlich', 11113, 1), (4, 'Max', 'Lerch', 11114, 5), (5, 'Christian', 'Bauer', 11115, 5), (6, 'Kristin', 'Steffener', 11116, 6); 
