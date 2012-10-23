@@ -2,10 +2,13 @@ package de.nak.iaa.web.entity;
 
 public class Protokollzeile {
 
-	private Protokolltyp typ;
+	public final static String FEHLER = "fehler";
+	public final static String NACHRICHT = "nachricht";
+
+	private String typ;
 	private String nachricht;
 
-	public Protokollzeile(Protokolltyp typ, String nachricht) {
+	public Protokollzeile(String typ, String nachricht) {
 		super();
 		this.typ = typ;
 		this.nachricht = nachricht;
@@ -19,11 +22,11 @@ public class Protokollzeile {
 		this.nachricht = nachricht;
 	}
 
-	public Protokolltyp getTyp() {
+	public String getTyp() {
 		return typ;
 	}
 
-	public void setTyp(Protokolltyp typ) {
+	public void setTyp(String typ) {
 		this.typ = typ;
 	}
 
