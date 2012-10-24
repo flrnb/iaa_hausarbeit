@@ -48,7 +48,11 @@ public class ManipelAendernAction extends AbstractAction implements
 	/* Actions Start */
 
 	public String show() {
-		if (ServletActionContext.getRequest().getHeader("referer") == null) {
+		// Wechsle nur zur "show" action, wenn noch kein manipel ausgewählt war
+		// sonst zurück auf die startseite, damit keine falschen daten angezeigt
+		// werden
+		if (ServletActionContext.getRequest().getHeader("referer") == null
+				&& getSelectedManipel() == null) {
 			setRefererUrl("show");
 		} else {
 			setRefererUrl(ServletActionContext.getRequest()

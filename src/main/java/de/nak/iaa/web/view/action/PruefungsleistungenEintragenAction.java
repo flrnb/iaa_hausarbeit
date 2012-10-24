@@ -39,7 +39,9 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 
 		for (Entry<Student, Optional<Pruefungsleistung>> student : getPruefungService()
 				.getAllStudentenForPruefung(getSelectedPruefung()).entrySet()) {
-			if (student == null)
+			if (student == null
+					|| student.getKey().getManipel()
+							.equals(getSelectedManipel()))
 				continue;
 			else {
 				// Optional<Note> alteNote =
