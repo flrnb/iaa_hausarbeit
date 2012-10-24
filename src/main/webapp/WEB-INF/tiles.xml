@@ -15,12 +15,14 @@
 	</definition>
 
 	<definition name="showSelectModul" extends="mainLayout">
-		<put-attribute name="content" value="/modulSelection/parts/modulSelection.jsp"></put-attribute>
+		<put-attribute name="content"
+			value="/modulSelection/parts/modulSelection.jsp"></put-attribute>
 	</definition>
 	<definition name="showSelectPruefung" extends="mainLayout">
-		<put-attribute name="content" value="/modulSelection/parts/pruefungSelection.jsp"></put-attribute>
+		<put-attribute name="content"
+			value="/modulSelection/parts/pruefungSelection.jsp"></put-attribute>
 	</definition>
-	
+
 
 	<definition name="showChangeManipel" extends="mainLayout">
 		<put-attribute name="title" value="NoDaBa - Manipel ändern"></put-attribute>
@@ -28,7 +30,8 @@
 	</definition>
 
 	<definition name="noManipelSelectedError" extends="mainLayout">
-		<put-attribute name="title" value="NoDaBa - Manipel muss ausgewählt sein!"></put-attribute>
+		<put-attribute name="title"
+			value="NoDaBa - Manipel muss ausgewählt sein!"></put-attribute>
 		<put-attribute name="content" value="/manipel/pages/noSelectedError.jsp" />
 	</definition>
 
@@ -63,6 +66,11 @@
 		<put-attribute name="title"
 			value="NoDaBa - Schriftliche Prüfungen ändern"></put-attribute>
 		<put-attribute name="content" value="/editExams/pages/show.jsp" />
+	</definition>
+
+	<definition name="showOverview" extends="mainLayout">
+		<put-attribute name="title" value="NoDaBa - Übersicht"></put-attribute>
+		<put-attribute name="content" value="/overview/pages/show.jsp"></put-attribute>
 	</definition>
 
 </tiles-definitions>
