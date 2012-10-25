@@ -3,6 +3,10 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
 
+<p class="dontPrint" style="font-style: italic; text-decoration: underline; font-size: small;">
+	Wenn Sie diese Seite drucken möchten, verwenden Sie bitte die normale Durckfunktion des Browsers (Bspw. STRG + P).
+</p>
+
 <div class="printable">
 	<h3>Protokoll</h3>
 
@@ -20,6 +24,6 @@
 		</s:iterator>
 	</table>
 </div>
-<s:if test="getFieldErrors().size() > 0">
-	<a href="javascript:window.history.back()">Zurück</a>
+<s:if test="protokoll.size() > 0">
+	<br /><a class="dontPrint" href="javascript:window.history.back()">Zurück</a>
 </s:if>
