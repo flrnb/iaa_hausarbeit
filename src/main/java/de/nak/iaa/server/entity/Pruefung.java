@@ -76,4 +76,43 @@ public class Pruefung {
 	public String toString() {
 		return DateFormat.getDateInstance().format(getDatum());
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((datum == null) ? 0 : datum.hashCode());
+		result = prime * result + ((pruefer == null) ? 0 : pruefer.hashCode());
+		result = prime * result
+				+ ((pruefungsfach == null) ? 0 : pruefungsfach.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pruefung other = (Pruefung) obj;
+		if (datum == null) {
+			if (other.datum != null)
+				return false;
+		} else if (!datum.equals(other.datum))
+			return false;
+		if (pruefer == null) {
+			if (other.pruefer != null)
+				return false;
+		} else if (!pruefer.equals(other.pruefer))
+			return false;
+		if (pruefungsfach == null) {
+			if (other.pruefungsfach != null)
+				return false;
+		} else if (!pruefungsfach.equals(other.pruefungsfach))
+			return false;
+		return true;
+	}
+
 }

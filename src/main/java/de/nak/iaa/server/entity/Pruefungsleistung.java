@@ -104,4 +104,42 @@ public class Pruefungsleistung {
 		this.student = student;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((note == null) ? 0 : note.hashCode());
+		result = prime * result
+				+ ((pruefung == null) ? 0 : pruefung.hashCode());
+		result = prime * result + ((student == null) ? 0 : student.hashCode());
+		result = prime * result + ((versuch == null) ? 0 : versuch.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pruefungsleistung other = (Pruefungsleistung) obj;
+		if (note != other.note)
+			return false;
+		if (pruefung == null) {
+			if (other.pruefung != null)
+				return false;
+		} else if (!pruefung.equals(other.pruefung))
+			return false;
+		if (student == null) {
+			if (other.student != null)
+				return false;
+		} else if (!student.equals(other.student))
+			return false;
+		if (versuch != other.versuch)
+			return false;
+		return true;
+	}
+
 }

@@ -1,13 +1,18 @@
 package de.nak.iaa.server.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = { "MATRIKEL_NR" }))
 public class Student extends Person {
 
+	@Column(name = "MATRIKEL_NR")
 	private int matrikelNr;
 
 	@OneToOne(fetch = FetchType.EAGER)
