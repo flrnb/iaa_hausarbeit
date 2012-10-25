@@ -26,17 +26,18 @@ public class Pruefung {
 	@JoinColumn(name = "PRUEFUNGSFACH_ID", nullable = false)
 	private Pruefungsfach pruefungsfach;
 
-	// @ManyToOne
-	// @JoinColumn
-	// private Dozent pruefer;
+	@ManyToOne
+	@JoinColumn(name = "DOZENT_ID", nullable = false)
+	private Dozent pruefer;
 
 	public Pruefung() {
 	}
 
-	public Pruefung(Date datum, Pruefungsfach pruefungsfach /* , Dozent pruefer */) {
+	public Pruefung(Date datum, Pruefungsfach pruefungsfach, Dozent pruefer) {
 		super();
 		this.datum = datum;
 		this.pruefungsfach = pruefungsfach;
+		this.pruefer = pruefer;
 	}
 
 	public Long getId() {
@@ -61,6 +62,14 @@ public class Pruefung {
 
 	public void setPruefungsfach(Pruefungsfach pruefungsfach) {
 		this.pruefungsfach = pruefungsfach;
+	}
+
+	public Dozent getPruefer() {
+		return pruefer;
+	}
+
+	public void setPruefer(Dozent pruefer) {
+		this.pruefer = pruefer;
 	}
 
 	@Override

@@ -10,6 +10,7 @@ import com.google.common.base.Optional;
 import de.nak.iaa.server.business.IllegalPruefungsleistungException;
 import de.nak.iaa.server.business.PruefungService;
 import de.nak.iaa.server.business.impl.PruefungServiceImpl;
+import de.nak.iaa.server.entity.Dozent;
 import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Pruefung;
 import de.nak.iaa.server.entity.Pruefungsfach;
@@ -66,12 +67,12 @@ public class MockPruefungService extends PruefungServiceImpl implements
 		pruefungen = new ArrayList<Pruefung>();
 		Pruefung p7 = new Pruefung(new Date(2012, 6, 8), new Pruefungsfach(
 				"Modul1-9inf", "Modul1-9inf beschreibung", new Manipel(9,
-						Studienrichtung.WInf)));
+						Studienrichtung.WInf)), new Dozent("B", "A"));
 		p7.setId((long) 1);
 		pruefungen.add(p7);
 		Pruefung p8 = new Pruefung(new Date(2012, 9, 15), new Pruefungsfach(
 				"Modul1-9inf", "Modul1-9inf beschreibung", new Manipel(9,
-						Studienrichtung.WInf)));
+						Studienrichtung.WInf)), new Dozent("D", "C"));
 		p8.setId((long) 2);
 		pruefungen.add(p8);
 	}

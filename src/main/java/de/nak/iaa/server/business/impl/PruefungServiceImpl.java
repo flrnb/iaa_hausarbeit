@@ -22,6 +22,7 @@ import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.dao.PruefungDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
 import de.nak.iaa.server.dao.PruefungsleistungDAO;
+import de.nak.iaa.server.entity.Dozent;
 import de.nak.iaa.server.entity.ErgaenzungsPruefung;
 import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Pruefung;
@@ -148,8 +149,8 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
-	public Pruefung addPruefung(Pruefungsfach fach, Date datum) {
-		Pruefung pruefung = new Pruefung(datum, fach);
+	public Pruefung addPruefung(Pruefungsfach fach, Date datum, Dozent dozent) {
+		Pruefung pruefung = new Pruefung(datum, fach, dozent);
 		return pruefungDAO.makePersistent(pruefung);
 	}
 

@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import de.nak.iaa.ApplicationContextAwareTest;
+import de.nak.iaa.server.dao.DozentDAO;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.dao.PruefungDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
@@ -24,10 +25,13 @@ public class PruefungPersistenceTest extends ApplicationContextAwareTest {
 	private PruefungsfachDAO pruefungsfachDAO;
 	@Resource
 	private ManipelDAO manipelDAO;
+	@Resource
+	private DozentDAO dozentDOA;
 
 	@Before
 	public void setUp() {
-
+		Dozent d = new Dozent("B", "A");
+		dozentDOA.makePersistent(d);
 	}
 
 	@Test
@@ -37,7 +41,8 @@ public class PruefungPersistenceTest extends ApplicationContextAwareTest {
 				.makePersistent(new Pruefungsfach("Fach", "Beschreibung",
 						manipel));
 		int countBefore = pruefungDAO.findAll().size();
-		Pruefung pruefung = new Pruefung(new Date(), pruefungsfach);
+		Pruefung pruefung = new Pruefung(new Date(), pruefungsfach, dozentDOA
+				.findAll().get(0));
 		pruefungDAO.makePersistent(pruefung);
 		int countAfter = pruefungDAO.findAll().size();
 		assertThat(countBefore + 1, is(equalTo(countAfter)));
