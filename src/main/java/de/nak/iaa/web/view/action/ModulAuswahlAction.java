@@ -20,6 +20,13 @@ public class ModulAuswahlAction extends AbstractFormAction implements
 	private List<Pruefungsfach> pruefungsfaecher;
 	private List<Pruefung> pruefungen;
 
+	/* Custom Logik Start */
+
+	public String getCurrentNamespace() {
+		return ServletActionContext.getActionMapping().getNamespace();
+	}
+
+	/* Custom Logik Ende */
 	/* Actions Start */
 
 	public String showSelectModul() {

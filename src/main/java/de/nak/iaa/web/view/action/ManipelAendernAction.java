@@ -85,10 +85,6 @@ public class ManipelAendernAction extends AbstractAction implements
 	/* Actions Ende */
 	/* Properties */
 
-	public String getSelectedManipel() {
-		return selectedManipel;
-	}
-
 	public void setSelectedManipel(String selectedManipel) {
 		this.selectedManipel = selectedManipel;
 	}

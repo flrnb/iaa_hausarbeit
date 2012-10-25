@@ -1,12 +1,10 @@
 package de.nak.iaa.web.view.action;
 
-import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ParameterAware;
 import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.Preparable;
 
-import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Pruefung;
 import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.web.util.DataHelper;
@@ -15,43 +13,12 @@ import de.nak.iaa.web.util.DataHelper;
 public abstract class AbstractFormAction extends AbstractAction implements
 		SessionAware, ParameterAware, Preparable {
 
-	protected static final String NO_MANIPEL_SELECTED = "noManipelSelected";
-
 	private Pruefungsfach selectedPruefungsfach;
 	private Pruefung selectedPruefung;
 	private String pruefungsfach;
 	private String pruefung;
 
 	/* Custom Logik Start */
-
-	/**
-	 * Schaue, ob ein Manipel ausgewählt ist
-	 * 
-	 * @return
-	 */
-	public boolean isManipelSelected() {
-		return (!getSession().containsKey("selectedManipel")
-				|| getSession().get("selectedManipel") == null || getSession()
-				.get("selectedManipel").equals(""));
-	}
-
-	/**
-	 * Lese die aktuelle RequestUrl
-	 * 
-	 * @return
-	 */
-	public String getRequestUrl() {
-		return ServletActionContext.getRequest().getRequestURL().toString();
-	}
-
-	/**
-	 * Lese den ausgewählten Manipel aus der Session
-	 * 
-	 * @return
-	 */
-	public Manipel getSelectedManipel() {
-		return (Manipel) getSession().get("selectedManipel");
-	}
 
 	/* Custom Logik Ende */
 	/* Logik Start */
@@ -78,19 +45,6 @@ public abstract class AbstractFormAction extends AbstractAction implements
 	}
 
 	/* Logik Ende */
-	/* Ziel Url (für Fehlerfall) Start */
-
-	private String targetUrl;
-
-	public String getTargetUrl() {
-		return targetUrl;
-	}
-
-	public void setTargetUrl(String targetUrl) {
-		this.targetUrl = targetUrl;
-	}
-
-	/* Ziel Url (für Fehlerfall) Ende */
 	/* Properties */
 
 	public Pruefungsfach getSelectedPruefungsfach() {

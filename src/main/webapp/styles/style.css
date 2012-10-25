@@ -39,6 +39,31 @@
 	}
 
 	/* Toggle Panel Css Start */
+	.collapsibleTable {
+		margin-top: 5px;
+		margin-left: auto;
+		margin-right: auto;
+		width: 90%;
+		border: 1px solid darkgray;
+	}
+	.collapsibleTable .c-header {
+		background-color: gray;
+		color: white;
+		border: 1px solid darkgray;
+	}
+	.collapsibleTable .c-content {
+		border: 1px solid darkgray;
+	}
+	.collapsed {
+		display: none;
+	}
+	.expanded {
+		display: block;
+	}
+	.collapsibleTable td {
+		padding: 3px;
+		margin: 0px;
+	}
 
 	/* Toggle Panel Css Ende */
 }

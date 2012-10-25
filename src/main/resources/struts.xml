@@ -41,7 +41,7 @@
 	</package>
 
 	<package name="modulSelection" extends="manipelSelection"
-		namespace="modulSelection">
+		namespace="/modulSelection">
 		<action name="modulSelection" class="de.nak.iaa.web.view.action.ModulAuswahlAction"
 			method="showSelectModul">
 			<result name="success" type="tiles">showSelectModul</result>
@@ -51,6 +51,16 @@
 				<param name="namespace">/manipel</param> <param name="target">${targetUrl}</param> 
 				</result> -->
 		</action>
+		<!-- <action name="pruefungSelection" class="de.nak.iaa.web.view.action.ModulAuswahlAction"
+			method="showSelectPruefung">
+			<result name="success" type="tiles">showSelectPruefung</result>
+			<result name="noManipelSelected" type="redirectAction"> <param name="actionName">noSelectedError</param> 
+				<param name="namespace">/manipel</param> <param name="target">${targetUrl}</param> 
+				</result>
+		</action> -->
+	</package>
+	
+	<package name="pruefungSelection" extends="modulSelection" namespace="/modulSelection">
 		<action name="pruefungSelection" class="de.nak.iaa.web.view.action.ModulAuswahlAction"
 			method="showSelectPruefung">
 			<result name="success" type="tiles">showSelectPruefung</result>
@@ -80,7 +90,7 @@
 
 	</package>
 
-	<package name="writtenExams" extends="modulSelection"
+	<package name="writtenExams" extends="pruefungSelection"
 		namespace="/writtenExams">
 		<action name="show"
 			class="de.nak.iaa.web.view.action.PruefungsleistungenEintragenAction"
@@ -107,7 +117,7 @@
 		</action>
 	</package>
 
-	<package name="editExams" extends="modulSelection" namespace="/editExams">
+	<package name="editExams" extends="pruefungSelection" namespace="/editExams">
 		<action name="show"
 			class="de.nak.iaa.web.view.action.PruefungsleistungenAendernAction"
 			method="show">
@@ -121,7 +131,7 @@
 		</action>
 	</package>
 	
-	<package name="overview" extends="tiles-default" namespace="/overview">
+	<package name="overview" extends="manipelSelection" namespace="/overview">
 		<action name="show" method="show" class="de.nak.iaa.web.view.action.ShowOverview">
 			<result name="success" type="tiles">showOverview</result>
 		</action>
