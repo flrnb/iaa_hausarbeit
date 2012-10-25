@@ -65,10 +65,4 @@ public class Student extends Person {
 	public void setManipel(Manipel manipel) {
 		this.manipel = manipel;
 	}
-
-	@Override
-	public String toString() {
-		return getVorname() + " " + getName();
-	}
-
 }

@@ -82,4 +82,8 @@ public abstract class Person {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return getVorname() + " " + getName();
+	}
 }
