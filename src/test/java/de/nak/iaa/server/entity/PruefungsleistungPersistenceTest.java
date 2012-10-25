@@ -55,8 +55,8 @@ public class PruefungsleistungPersistenceTest extends
 	@Test
 	public void testPersistierung() {
 		int countBefore = pruefungsleistungDAO.findAll().size();
-		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date(),
-				pruefung, Note.Drei, student);
+		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, pruefung,
+				Note.Drei, student);
 		pruefungsleistungDAO.makePersistent(pl);
 
 		int countAfter = pruefungsleistungDAO.findAll().size();
@@ -65,8 +65,8 @@ public class PruefungsleistungPersistenceTest extends
 
 	@Test
 	public void testPersistierungMitErgaenzungspruefung() {
-		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, new Date(),
-				pruefung, Note.EinsDrei, student);
+		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, pruefung,
+				Note.EinsDrei, student);
 		pl.setErgaenzungsPruefung(new ErgaenzungsPruefung(Note.Drei, new Date()));
 		pl = pruefungsleistungDAO.makePersistent(pl);
 		assertThat(pl.getErgaenzungsPruefung(),

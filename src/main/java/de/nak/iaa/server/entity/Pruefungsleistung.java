@@ -1,7 +1,5 @@
 package de.nak.iaa.server.entity;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
@@ -30,8 +26,6 @@ public class Pruefungsleistung {
 	private Long id;
 	@Enumerated(EnumType.STRING)
 	private Versuch versuch;
-	@Temporal(TemporalType.DATE)
-	private Date pruefungsDatum;
 
 	@OneToOne(optional = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ERGAENZUNGSPRUEFUNG_ID")
@@ -53,11 +47,10 @@ public class Pruefungsleistung {
 	public Pruefungsleistung() {
 	}
 
-	public Pruefungsleistung(Versuch versuch, Date pruefungsDatum,
-			Pruefung pruefung, Note note, Student student) {
+	public Pruefungsleistung(Versuch versuch, Pruefung pruefung, Note note,
+			Student student) {
 		super();
 		this.versuch = versuch;
-		this.pruefungsDatum = pruefungsDatum;
 		this.pruefung = pruefung;
 		this.note = note;
 		this.student = student;
@@ -77,14 +70,6 @@ public class Pruefungsleistung {
 
 	public void setVersuch(Versuch versuch) {
 		this.versuch = versuch;
-	}
-
-	public Date getPruefungsDatum() {
-		return pruefungsDatum;
-	}
-
-	public void setPruefungsDatum(Date pruefungsDatum) {
-		this.pruefungsDatum = pruefungsDatum;
 	}
 
 	public ErgaenzungsPruefung getErgaenzungsPruefung() {
