@@ -61,4 +61,9 @@ public class Student extends Person {
 		this.manipel = manipel;
 	}
 
+	@Override
+	public String toString() {
+		return getVorname() + " " + getName();
+	}
+
 }
