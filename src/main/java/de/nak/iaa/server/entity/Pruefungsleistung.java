@@ -1,7 +1,5 @@
 package de.nak.iaa.server.entity;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import org.hibernate.envers.Audited;
 import org.hibernate.envers.RelationTargetAuditMode;
@@ -30,8 +26,6 @@ public class Pruefungsleistung {
 	private Long id;
 	@Enumerated(EnumType.STRING)
 	private Versuch versuch;
-	@Temporal(TemporalType.DATE)
-	private Date pruefungsDatum;
 
 	@OneToOne(optional = true, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ERGAENZUNGSPRUEFUNG_ID")
@@ -53,11 +47,10 @@ public class Pruefungsleistung {
 	public Pruefungsleistung() {
 	}
 
-	public Pruefungsleistung(Versuch versuch, Date pruefungsDatum,
-			Pruefung pruefung, Note note, Student student) {
+	public Pruefungsleistung(Versuch versuch, Pruefung pruefung, Note note,
+			Student student) {
 		super();
 		this.versuch = versuch;
-		this.pruefungsDatum = pruefungsDatum;
 		this.pruefung = pruefung;
 		this.note = note;
 		this.student = student;
@@ -77,14 +70,6 @@ public class Pruefungsleistung {
 
 	public void setVersuch(Versuch versuch) {
 		this.versuch = versuch;
-	}
-
-	public Date getPruefungsDatum() {
-		return pruefungsDatum;
-	}
-
-	public void setPruefungsDatum(Date pruefungsDatum) {
-		this.pruefungsDatum = pruefungsDatum;
 	}
 
 	public ErgaenzungsPruefung getErgaenzungsPruefung() {
@@ -117,6 +102,44 @@ public class Pruefungsleistung {
 
 	public void setStudent(Student student) {
 		this.student = student;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((note == null) ? 0 : note.hashCode());
+		result = prime * result
+				+ ((pruefung == null) ? 0 : pruefung.hashCode());
+		result = prime * result + ((student == null) ? 0 : student.hashCode());
+		result = prime * result + ((versuch == null) ? 0 : versuch.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pruefungsleistung other = (Pruefungsleistung) obj;
+		if (note != other.note)
+			return false;
+		if (pruefung == null) {
+			if (other.pruefung != null)
+				return false;
+		} else if (!pruefung.equals(other.pruefung))
+			return false;
+		if (student == null) {
+			if (other.student != null)
+				return false;
+		} else if (!student.equals(other.student))
+			return false;
+		if (versuch != other.versuch)
+			return false;
+		return true;
 	}
 
 }
