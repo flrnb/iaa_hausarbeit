@@ -4,7 +4,6 @@ import java.util.Date;
 
 import de.nak.iaa.server.entity.Student;
 
-//@Validations(regexFields = { @RegexFieldValidator(type = ValidatorType.SIMPLE, fieldName = "text", message = "falsche Note", expression = "[123][.][037]|[0.7]|[4.0]|[5.0]|[6.0]|[123456]") })
 public class ErgaenzungspruefungsFormBean extends AbstractFormBean {
 
 	private String resultPercent;

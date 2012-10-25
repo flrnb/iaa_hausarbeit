@@ -16,8 +16,15 @@
 		border-bottom-left-radius: 10px;
 	}
 	.notenTabelle {
+		border: 0px;
+	}
+	
+	.notenTabelle td {
 		border: 1px solid black;
 		border-radius: 2px;
+	}
+	.notenTabelle td,th {
+		padding: 4px;
 	}
 	td .editorField {
 		test-align: left !important;
@@ -29,6 +36,9 @@
 	.notenInputField {
 		text-align: right;
 		padding-right: 3px;
+	}
+	.changeNote {
+		width: 45px;
 	}
 	.errorMessage {
 		font-size: small;

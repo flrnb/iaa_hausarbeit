@@ -29,17 +29,13 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 	public void fuellePruefungsBeans() {
 		setPruefungenBeans(new ArrayList<ErgaenzungspruefungsFormBean>());
 
-		System.out.println(getPruefungService()
-				.getAllErgaenzungsPruefungsStudenten(getSelectedManipel(),
-						getSelectedPruefungsfach()).size());
-
 		for (Entry<Student, Date> ergaenzungspruefung : getPruefungService()
 				.getAllErgaenzungsPruefungsStudenten(getSelectedManipel(),
 						getSelectedPruefungsfach()).entrySet()) {
+			System.out.println("hier bin ich");
 			if (ergaenzungspruefung == null)
 				continue;
 			else {
-
 				// TODO logik einbauen, damit der service benutzt wird
 
 				getPruefungenBeans()
@@ -71,9 +67,17 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 		int i = 0;
 		for (ErgaenzungspruefungsFormBean p : pruefungenBeans) {
 			// TODO hier validieren
+			if (p.getResultPercent().isEmpty()
+					&& (p.getErgDatum() == null || p.getErgDatum().equals("")))
+				continue;
+
 			if (!p.getResultPercent().matches("\n{1,2}|100")) {
-				addFieldError("pruefungenBeans[" + i + "].note",
+				addFieldError("pruefungenBeans[" + i + "].resultPercent",
 						"Keine gültige Note");
+			}
+			if (p.getErgDatum() == null || p.getErgDatum().equals("")) {
+				addFieldError("pruefungenBeans[" + i + "].ergDatum",
+						"Kein Datum angegeben");
 			}
 			i++;
 		}

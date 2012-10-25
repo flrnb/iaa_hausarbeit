@@ -37,41 +37,17 @@
 					<s:hidden name="pruefungenBeans[%{#stat.index}].pruefungsleistungen[%{#stat1.index}].id" value="%{#current.id}"></s:hidden>
 						<td class="editorField"><s:textfield
 								name="pruefungenBeans[%{#stat.index}].pruefungsleistungen[%{#stat1.index}].note"
-								cssClass="changeNote" cssErrorClass="fieldErrorCls"
+								cssClass="changeNote notenInputField" cssErrorClass="fieldErrorCls"
 								theme="simple" value="%{#current.note.getNote()}"
 								disabled="%{!isWriteable(#current.id)}" /> <s:fielderror
 								theme="iaa">
-								<s:param>pruefungenBeans[${stat.index}].note${current}</s:param>
+								<s:param>pruefungenBeans[${stat.index}].pruefungsleistungen[${stat1.index}].note</s:param>
 							</s:fielderror></td>
 					</s:iterator>
 
 					<s:iterator begin="%{pruefungsleistungen.size()}" end="2" step="1" var="current">
 						<td></td>
 					</s:iterator>
-
-					<%-- <td class="editorField"><s:textfield
-							name="pruefungenBeans[%{#stat.index}].note1"
-							cssClass="changeNote" cssErrorClass="fieldErrorCls"
-							theme="simple" value="%{#pruefung.note1}"
-							disabled="%{#pruefung.writeable[0]}" /> <s:fielderror
-							theme="iaa">
-							<s:param>pruefungenBeans[${stat.index}].note1</s:param>
-						</s:fielderror></td>
-					<td class="editorField"><s:textfield
-							name="pruefungenBeans[%{#stat.index}].note2"
-							cssClass="changeNote" cssErrorClass="fieldErrorCls"
-							theme="simple" value="%{#pruefung.note2}"
-							disabled="%{#pruefung.writeable[1]}" /> <s:fielderror
-							theme="iaa">
-							<s:param>pruefungenBeans[${stat.index}].note2</s:param>
-						</s:fielderror></td>
-					<td class="editorField"><s:textfield
-							name="pruefungenBeans[%{#stat.index}].note3"
-							cssClass="changeNote" cssErrorClass="fieldErrorCls"
-							theme="simple" value="%{#pruefung.note3}"
-							disabled="%{#pruefung.writeable[2]}" /> <s:fielderror theme="iaa">
-							<s:param>pruefungenBeans[${stat.index}].note3</s:param>
-						</s:fielderror></td> --%>
 				</tr>
 			</s:iterator>
 		</table>
