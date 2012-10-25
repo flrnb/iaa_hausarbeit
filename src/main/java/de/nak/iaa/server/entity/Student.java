@@ -2,7 +2,6 @@ package de.nak.iaa.server.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -15,7 +14,7 @@ public class Student extends Person {
 	@Column(name = "MATRIKEL_NR")
 	private int matrikelNr;
 
-	@OneToOne(fetch = FetchType.EAGER)
+	@OneToOne
 	@JoinColumn(nullable = false, name = "MANIPEL_ID")
 	private Manipel manipel;
 
