@@ -33,19 +33,26 @@
 							value="%{#pruefung.student.name}" /></td>
 
 					<%-- <s:iterator begin="0" end="2" step="1" var="current"> --%>
-					<s:iterator value="pruefungsleistungen" var="current" status="stat1">
-					<s:hidden name="pruefungenBeans[%{#stat.index}].pruefungsleistungen[%{#stat1.index}].id" value="%{#current.id}"></s:hidden>
+					<s:iterator value="pruefungsleistungen" var="current"
+						status="stat1">
+						<s:hidden
+							name="pruefungenBeans[%{#stat.index}].pruefungsleistungen[%{#stat1.index}].id"
+							value="%{#current.id}"></s:hidden>
 						<td class="editorField"><s:textfield
 								name="pruefungenBeans[%{#stat.index}].pruefungsleistungen[%{#stat1.index}].note"
-								cssClass="changeNote notenInputField" cssErrorClass="fieldErrorCls"
-								theme="simple" value="%{#current.note.getNote()}"
-								disabled="%{!isWriteable(#current.id)}" /> <s:fielderror
+								cssClass="changeNote notenInputField"
+								cssErrorClass="fieldErrorCls" theme="simple"
+								value="%{#current.note.getNote()}"
+								disabled="%{!isWriteable(#current.id)}" /> <a
+							href="<s:url action="delete"/>?pruefungsfach=<s:property value="%{getSelectedPruefungsfach().getId()}"/>&pruefung=<s:property value="%{getSelectedPruefung().getId()}"/>&deleteId=<s:property value="%{#current.id}"/>"
+							class="linkButton" title="Eintrag löschen">X</a> <s:fielderror
 								theme="iaa">
 								<s:param>pruefungenBeans[${stat.index}].pruefungsleistungen[${stat1.index}].note</s:param>
 							</s:fielderror></td>
 					</s:iterator>
 
-					<s:iterator begin="%{pruefungsleistungen.size()}" end="2" step="1" var="current">
+					<s:iterator begin="%{pruefungsleistungen.size()}" end="2" step="1"
+						var="current">
 						<td></td>
 					</s:iterator>
 				</tr>

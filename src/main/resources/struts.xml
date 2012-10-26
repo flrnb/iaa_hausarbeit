@@ -129,6 +129,17 @@
 			<result name="success" type="tiles">saveEditExams</result>
 			<result name="input" type="tiles">showEditExams</result>
 		</action>
+		<action name="delete" class="de.nak.iaa.web.view.action.PruefungsleistungenAendernAction"
+			method="delete">
+			<result name="success" type="redirectAction">
+				<param name="actionName">show</param>
+				<param name="namespace">/editExams</param>
+				<param name="pruefungsfach">${getSelectedPruefungsfach().getId()}</param>
+				<param name="pruefung">${getSelectedPruefung().getId()}</param>
+			</result>
+			
+			<!-- <result name="success" type="tiles">showEditExams</result> -->
+		</action>
 	</package>
 	
 	<package name="overview" extends="manipelSelection" namespace="/overview">

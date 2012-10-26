@@ -105,6 +105,17 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 		}
 	}
 
+	public String delete() {
+		if (getParameters().containsKey("deleteId")) {
+			getParameters().get("deleteId");
+			// behandle, wenn keine prüfungsleistung vorhanden ist
+			// lösch den mist
+		} else {
+			// hier muss iwie ne fehlerseite hin
+		}
+		return Action.SUCCESS;
+	}
+
 	/* Actions Ende */
 	/* Properties */
 
