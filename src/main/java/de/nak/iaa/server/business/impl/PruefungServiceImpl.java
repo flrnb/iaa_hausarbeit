@@ -69,11 +69,17 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
-	public Pruefungsleistung addPruefungsleistung(Pruefung pruefung,
-			Student student, Note note)
+	public void stornierePruefungsleistung(Long id) {
+		if (!isPruefungsleistungEditable(id))
+			throw new IllegalStateException(getMsg(NICHT_EDITIERBAR));
+		Pruefungsleistung toDelete = pruefungsleistungDAO.findById(id, false);
+		pruefungsleistungDAO.makeTransient(toDelete);
+	}
+
+	@Override
+	public Pruefungsleistung addPruefungsleistung(Pruefung pruefung, Student student, Note note)
 			throws IllegalPruefungsleistungException {
-		Optional<Pruefungsleistung> leistung = getLetzterVersuch(
-				pruefung.getPruefungsfach(), student);
+		Optional<Pruefungsleistung> leistung = getLetzterVersuch(pruefung.getPruefungsfach(), student);
 		Versuch nextVersuch = null;
 		if (leistung.isPresent()) {
 			Versuch versuch = leistung.get().getVersuch();
@@ -83,48 +89,22 @@ public class PruefungServiceImpl implements PruefungService {
 		} else {
 			nextVersuch = Versuch.Eins;
 		}
-		// FIXME Datum?
-		Pruefungsleistung neueLeistung = new Pruefungsleistung(nextVersuch,
-				pruefung, note, student);
+		Pruefungsleistung neueLeistung = new Pruefungsleistung(nextVersuch, pruefung, note, student);
 		return pruefungsleistungDAO.makePersistent(neueLeistung);
 	}
 
-	private Optional<Pruefungsleistung> getLetzterVersuch(Pruefungsfach fach,
-			Student student) {
-		Optional<Pruefungsleistung> letzteLeistung = Optional.absent();
-		for (final Pruefungsleistung leistung : getAllPruefungsleistungen(fach,
-				student)) {
-			final Versuch versuch = leistung.getVersuch();
-			if (!versuch.next().isPresent())
-				return Optional.of(leistung);
-			letzteLeistung = letzteLeistung.transform(
-					new Function<Pruefungsleistung, Pruefungsleistung>() {
-						@Override
-						public Pruefungsleistung apply(Pruefungsleistung current) {
-							return (current.getVersuch().toInt() < versuch
-									.toInt()) ? leistung : current;
-						}
-					}).or(Optional.of(leistung));
-		}
-		return letzteLeistung;
-	}
-
 	@Override
-	public List<Pruefungsleistung> getAllPruefungsleistungen(
-			final Pruefungsfach fach, final Student student) {
+	public List<Pruefungsleistung> getAllPruefungsleistungen(final Pruefungsfach fach, final Student student) {
 		return getAllPruefungsleistungen(new Predicate<Pruefungsleistung>() {
 			@Override
 			public boolean apply(Pruefungsleistung leistung) {
-				return fach.equals(leistung.getPruefung().getPruefungsfach())
-						&& student.equals(leistung.getStudent());
+				return fach.equals(leistung.getPruefung().getPruefungsfach()) && student.equals(leistung.getStudent());
 			}
 		});
 	}
 
-	public List<Pruefungsleistung> getAllPruefungsleistungen(
-			Predicate<Pruefungsleistung> filter) {
-		return ImmutableList.copyOf(Iterables.filter(
-				pruefungsleistungDAO.findAll(), filter));
+	public List<Pruefungsleistung> getAllPruefungsleistungen(Predicate<Pruefungsleistung> filter) {
+		return ImmutableList.copyOf(Iterables.filter(pruefungsleistungDAO.findAll(), filter));
 	}
 
 	@Override
@@ -139,13 +119,12 @@ public class PruefungServiceImpl implements PruefungService {
 
 	@Override
 	public List<Pruefung> getAllPruefungen(final Pruefungsfach pruefungsfach) {
-		return ImmutableList.copyOf(Iterables.filter(pruefungDAO.findAll(),
-				new Predicate<Pruefung>() {
-					@Override
-					public boolean apply(Pruefung p) {
-						return pruefungsfach.equals(p.getPruefungsfach());
-					}
-				}));
+		return ImmutableList.copyOf(Iterables.filter(pruefungDAO.findAll(), new Predicate<Pruefung>() {
+			@Override
+			public boolean apply(Pruefung p) {
+				return pruefungsfach.equals(p.getPruefungsfach());
+			}
+		}));
 	}
 
 	@Override
@@ -154,74 +133,68 @@ public class PruefungServiceImpl implements PruefungService {
 		return pruefungDAO.makePersistent(pruefung);
 	}
 
+	/**
+	 * FIXME Wenn es in der fachlichen Zukunft eine gelöschte Prüfungsleistung
+	 * gibt, sollten die Vorgänger nicht editierbar sein
+	 */
 	@Override
 	public boolean isPruefungsleistungEditable(Long id) {
 		Pruefungsleistung leistung = pruefungsleistungDAO.findById(id, false);
 		if (leistung == null)
 			throw new IllegalArgumentException();
-		List<Pruefungsleistung> leistungen = getAllPruefungsleistungen(leistung
-				.getPruefung().getPruefungsfach(), leistung.getStudent());
+		List<Pruefungsleistung> leistungen = getAllPruefungsleistungen(leistung.getPruefung().getPruefungsfach(),
+				leistung.getStudent());
 		for (Pruefungsleistung eachLeistung : leistungen)
-			if (eachLeistung.getVersuch().toInt() > leistung.getVersuch()
-					.toInt())
+			if (eachLeistung.getVersuch().toInt() > leistung.getVersuch().toInt())
 				return false;
 		if (leistung.getErgaenzungsPruefung() != null)
+			return false;
+		if (hatFachlichenNachfolger(leistung))
 			return false;
 		return true;
 	}
 
 	@Override
-	public Map<Student, Optional<Pruefungsleistung>> getAllStudentenForPruefung(
-			Pruefung pruefung) {
+	public Map<Student, Optional<Pruefungsleistung>> getAllStudentenForPruefung(Pruefung pruefung) {
 		Map<Student, Optional<Pruefungsleistung>> result = new HashMap<Student, Optional<Pruefungsleistung>>();
-		for (Student student : studentService.getAllStudenten(pruefung
-				.getPruefungsfach().getManipel()))
-			result.put(student,
-					getLetzterVersuch(pruefung.getPruefungsfach(), student));
+		for (Student student : studentService.getAllStudenten(pruefung.getPruefungsfach().getManipel()))
+			result.put(student, getLetzterVersuch(pruefung.getPruefungsfach(), student));
 		return ImmutableMap.copyOf(result);
 	}
 
 	@Override
 	public Optional<Note> getAktuelleNote(Student student, Pruefungsfach fach) {
-		return getLetzterVersuch(fach, student).transform(
-				new Function<Pruefungsleistung, Note>() {
-					@Override
-					public Note apply(Pruefungsleistung leistung) {
-						ErgaenzungsPruefung ergPruefung = leistung
-								.getErgaenzungsPruefung();
-						if (ergPruefung == null)
-							return leistung.getNote();
-						else
-							return ergPruefung.getNote();
-					}
-				});
+		return getLetzterVersuch(fach, student).transform(new Function<Pruefungsleistung, Note>() {
+			@Override
+			public Note apply(Pruefungsleistung leistung) {
+				ErgaenzungsPruefung ergPruefung = leistung.getErgaenzungsPruefung();
+				if (ergPruefung == null)
+					return leistung.getNote();
+				else
+					return ergPruefung.getNote();
+			}
+		});
 	}
 
 	@Override
-	public Map<Student, Date> getAllErgaenzungsPruefungsStudenten(
-			Manipel manipel, Pruefungsfach fach) {
+	public Map<Student, Date> getAllErgaenzungsPruefungsStudenten(Manipel manipel, Pruefungsfach fach) {
 		final Map<Student, Date> result = new HashMap<Student, Date>();
 		for (final Student student : studentService.getAllStudenten(manipel)) {
-			Optional<Pruefungsleistung> optLeistung = getLetzterVersuch(fach,
-					student);
-			optLeistung
-					.transform(new Function<Pruefungsleistung, Pruefungsleistung>() {
-						@Override
-						public Pruefungsleistung apply(
-								Pruefungsleistung leistung) {
-							if (isErgaenzungsPruefungZulaessig(leistung))
-								result.put(student, leistung.getPruefung()
-										.getDatum());
-							return leistung;
-						}
-					});
+			Optional<Pruefungsleistung> optLeistung = getLetzterVersuch(fach, student);
+			optLeistung.transform(new Function<Pruefungsleistung, Pruefungsleistung>() {
+				@Override
+				public Pruefungsleistung apply(Pruefungsleistung leistung) {
+					if (isErgaenzungsPruefungZulaessig(leistung))
+						result.put(student, leistung.getPruefung().getDatum());
+					return leistung;
+				}
+			});
 		}
 		return result;
 	}
 
 	@Override
-	public boolean isErgaenzungsPruefungZulaessig(
-			final Pruefungsleistung pruefungsleistung) {
+	public boolean isErgaenzungsPruefungZulaessig(final Pruefungsleistung pruefungsleistung) {
 		Pruefungsfach fach = pruefungsleistung.getPruefung().getPruefungsfach();
 		Student student = pruefungsleistung.getStudent();
 		Boolean isLetzterVersuch = getLetzterVersuch(fach, student).transform(
@@ -231,24 +204,72 @@ public class PruefungServiceImpl implements PruefungService {
 						return leistung.equals(pruefungsleistung);
 					}
 				}).or(false);
-		return isLetzterVersuch
-				&& pruefungsleistung.getNote().equals(Note.Fuenf)
+		return isLetzterVersuch && pruefungsleistung.getNote().equals(Note.Fuenf)
 				&& pruefungsleistung.getErgaenzungsPruefung() == null;
 	}
 
 	@Override
-	public ErgaenzungsPruefung addErgaenzungsPruefung(Student student,
-			Pruefungsfach fach, Date datum, int prozent) {
-		Optional<Pruefungsleistung> letzterVersuch = getLetzterVersuch(fach,
-				student);
-		if (!letzterVersuch.isPresent()
-				|| !isErgaenzungsPruefungZulaessig(letzterVersuch.get()))
+	public ErgaenzungsPruefung addErgaenzungsPruefung(Student student, Pruefungsfach fach, Date datum, int prozent) {
+		Optional<Pruefungsleistung> letzterVersuch = getLetzterVersuch(fach, student);
+		if (!letzterVersuch.isPresent() || !isErgaenzungsPruefungZulaessig(letzterVersuch.get()))
 			throw new IllegalStateException(KEINE_ERGAENZUNGSPRUEFUNG);
 		Note note = (prozent >= 80) ? Note.Vier : Note.Fuenf;
-		ErgaenzungsPruefung ergaenzungsPruefung = new ErgaenzungsPruefung(note,
-				datum);
+		ErgaenzungsPruefung ergaenzungsPruefung = new ErgaenzungsPruefung(note, datum);
 		letzterVersuch.get().setErgaenzungsPruefung(ergaenzungsPruefung);
 		return ergaenzungsPruefung;
+	}
+
+	/**
+	 * gibt für ein Prüfungsfach den letzten Versuch eines Studenten zurück
+	 * 
+	 * @param fach
+	 * @param student
+	 * @return Pruefungsleistung, falls vorhanden
+	 */
+	private Optional<Pruefungsleistung> getLetzterVersuch(Pruefungsfach fach, Student student) {
+		Optional<Pruefungsleistung> letzteLeistung = Optional.absent();
+		for (final Pruefungsleistung leistung : getAllPruefungsleistungen(fach, student)) {
+			final Versuch versuch = leistung.getVersuch();
+			if (!versuch.next().isPresent())
+				return Optional.of(leistung);
+			letzteLeistung = letzteLeistung.transform(new Function<Pruefungsleistung, Pruefungsleistung>() {
+				@Override
+				public Pruefungsleistung apply(Pruefungsleistung current) {
+					return (current.getVersuch().toInt() < versuch.toInt()) ? leistung : current;
+				}
+			}).or(Optional.of(leistung));
+		}
+		return letzteLeistung;
+	}
+
+	/**
+	 * ermittelt für eine Prüfungsleistung, ob es einen Nachfolgeversuch gibt,
+	 * auch wenn dieser ggf. schon gelöscht wurde
+	 * 
+	 * @param leistung
+	 * @return boolean
+	 */
+	private boolean hatFachlichenNachfolger(Pruefungsleistung leistung) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	private boolean isBestanden(Pruefungsleistung leistung) {
+		switch (leistung.getNote()) {
+		case Sechs:
+			return false;
+		case Fuenf:
+			ErgaenzungsPruefung ergaenzungsPruefung = leistung.getErgaenzungsPruefung();
+			if (ergaenzungsPruefung == null)
+				return false;
+			return ergaenzungsPruefung.getNote().getNote() <= Note.Vier.getNote();
+		default:
+			return true;
+		}
+	}
+
+	private String getMsg(String code) {
+		return messageSource.getMessage(code, new Object[] {}, Locale.getDefault());
 	}
 
 	public void setPruefungDAO(PruefungDAO pruefungDAO) {
@@ -259,8 +280,7 @@ public class PruefungServiceImpl implements PruefungService {
 		this.pruefungsfachDAO = pruefungsfachDAO;
 	}
 
-	public void setPruefungsleistungDAO(
-			PruefungsleistungDAO pruefungsleistungDAO) {
+	public void setPruefungsleistungDAO(PruefungsleistungDAO pruefungsleistungDAO) {
 		this.pruefungsleistungDAO = pruefungsleistungDAO;
 	}
 
@@ -270,27 +290,6 @@ public class PruefungServiceImpl implements PruefungService {
 
 	public void setMessageSource(MessageSource messageSource) {
 		this.messageSource = messageSource;
-	}
-
-	private boolean isBestanden(Pruefungsleistung leistung) {
-		switch (leistung.getNote()) {
-		case Sechs:
-			return false;
-		case Fuenf:
-			ErgaenzungsPruefung ergaenzungsPruefung = leistung
-					.getErgaenzungsPruefung();
-			if (ergaenzungsPruefung == null)
-				return false;
-			return ergaenzungsPruefung.getNote().getNote() <= Note.Vier
-					.getNote();
-		default:
-			return true;
-		}
-	}
-
-	private String getMsg(String code) {
-		return messageSource.getMessage(code, new Object[] {},
-				Locale.getDefault());
 	}
 
 	private static final String ZU_OFT = "pruefung.zuOft";

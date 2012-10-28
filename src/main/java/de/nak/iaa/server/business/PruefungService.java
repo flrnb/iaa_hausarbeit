@@ -63,8 +63,7 @@ public interface PruefungService {
 	 * @return alle bisherigen Prüfungsleistungen eines Studenten in einem
 	 *         Prüfungsfach
 	 */
-	List<Pruefungsleistung> getAllPruefungsleistungen(Pruefungsfach fach,
-			Student student);
+	List<Pruefungsleistung> getAllPruefungsleistungen(Pruefungsfach fach, Student student);
 
 	/**
 	 * @param id
@@ -86,6 +85,15 @@ public interface PruefungService {
 	void updatePruefungsleistung(Long id, Note note);
 
 	/**
+	 * @require isPruefungsleistungEditable(id)
+	 * @param id
+	 * @param note
+	 * @trows {@link IllegalStateException} wenn Prüfungsleistung nicht
+	 *        editierbar ist
+	 */
+	void stornierePruefungsleistung(Long id);
+
+	/**
 	 * Für einen Studenten eine neue Prüfungsleistung erfassen
 	 * 
 	 * @param pruefung
@@ -95,8 +103,8 @@ public interface PruefungService {
 	 * @throws IllegalPruefungsleistungException
 	 *             wenn die Prüfungsleistung nicht zulässig ist
 	 */
-	Pruefungsleistung addPruefungsleistung(Pruefung pruefung, Student student,
-			Note note) throws IllegalPruefungsleistungException;
+	Pruefungsleistung addPruefungsleistung(Pruefung pruefung, Student student, Note note)
+			throws IllegalPruefungsleistungException;
 
 	/**
 	 * @param manipel
@@ -104,8 +112,7 @@ public interface PruefungService {
 	 * @return alle Studenten, bei denen aktuell eine Ergänzungsprüfung erfasst
 	 *         werden kann mit dem Datum der zu ergänzenden Prüfungsleistung
 	 */
-	Map<Student, Date> getAllErgaenzungsPruefungsStudenten(Manipel manipel,
-			Pruefungsfach fach);
+	Map<Student, Date> getAllErgaenzungsPruefungsStudenten(Manipel manipel, Pruefungsfach fach);
 
 	/**
 	 * 
@@ -115,8 +122,7 @@ public interface PruefungService {
 	 *         Prüfungsleistung für die übergebene Prüfung, falls eine vorhanden
 	 *         ist
 	 */
-	Map<Student, Optional<Pruefungsleistung>> getAllStudentenForPruefung(
-			Pruefung pruefung);
+	Map<Student, Optional<Pruefungsleistung>> getAllStudentenForPruefung(Pruefung pruefung);
 
 	/**
 	 * @param student
@@ -145,6 +151,5 @@ public interface PruefungService {
 	 * @throws {@link IllegalStateException} falls keine Ergänzungsprüfung
 	 *         zulässig ist
 	 */
-	ErgaenzungsPruefung addErgaenzungsPruefung(Student student,
-			Pruefungsfach fach, Date datum, int prozent);
+	ErgaenzungsPruefung addErgaenzungsPruefung(Student student, Pruefungsfach fach, Date datum, int prozent);
 }
