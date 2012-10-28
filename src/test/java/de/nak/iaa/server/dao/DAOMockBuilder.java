@@ -9,8 +9,6 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.easymock.EasyMock;
 import org.easymock.IAnswer;
 
-import de.nak.iaa.server.entity.Pruefungsleistung;
-
 /**
  * Generischer Mockbuilder für DAOs <br/>
  * Wird zum Testen der Serviceklassen benötigt.
@@ -25,8 +23,7 @@ public class DAOMockBuilder<E, T extends GenericDAO<E, Long>> {
 
 	private final List<E> entities = new ArrayList<E>();
 
-	public static <E, T extends GenericDAO<E, Long>> DAOMockBuilder<E, T> forClass(
-			Class<T> clazz) {
+	public static <E, T extends GenericDAO<E, Long>> DAOMockBuilder<E, T> forClass(Class<T> clazz) {
 		return new DAOMockBuilder<E, T>(clazz);
 	}
 
@@ -48,49 +45,30 @@ public class DAOMockBuilder<E, T extends GenericDAO<E, Long>> {
 
 	@SuppressWarnings("unchecked")
 	public T build() {
-		EasyMock.expect(getMock().findAll()).andReturn(getEntities())
-				.anyTimes();
-		EasyMock.expect(
-				getMock().findById(EasyMock.anyLong(), EasyMock.anyBoolean()))
-				.andAnswer(new IAnswer<E>() {
-					@Override
-					public E answer() throws Exception {
-						Long id = (Long) EasyMock.getCurrentArguments()[0];
-						for (E e : getEntities())
-							if (id.equals(Long.valueOf(BeanUtils.getProperty(e,
-									"id"))))
-								return e;
-						return null;
-					}
-				}).anyTimes();
-		EasyMock.expect(getMock().makePersistent((E) EasyMock.anyObject()))
-				.andAnswer(new IAnswer<E>() {
-					@Override
-					public E answer() throws Throwable {
-						E entity = (E) EasyMock.getCurrentArguments()[0];
-						if (!getEntities().contains(entity)) {
-							setId(entity);
-							getEntities().add(entity);
-						}
-						return entity;
-					}
-				}).anyTimes();
+		EasyMock.expect(getMock().findAll()).andReturn(getEntities()).anyTimes();
+		EasyMock.expect(getMock().findById(EasyMock.anyLong(), EasyMock.anyBoolean())).andAnswer(new IAnswer<E>() {
+			@Override
+			public E answer() throws Exception {
+				Long id = (Long) EasyMock.getCurrentArguments()[0];
+				for (E e : getEntities())
+					if (id.equals(Long.valueOf(BeanUtils.getProperty(e, "id"))))
+						return e;
+				return null;
+			}
+		}).anyTimes();
+		EasyMock.expect(getMock().makePersistent((E) EasyMock.anyObject())).andAnswer(new IAnswer<E>() {
+			@Override
+			public E answer() throws Throwable {
+				E entity = (E) EasyMock.getCurrentArguments()[0];
+				if (!getEntities().contains(entity)) {
+					setId(entity);
+					getEntities().add(entity);
+				}
+				return entity;
+			}
+		}).anyTimes();
 		EasyMock.replay(getMock());
 		return getMock();
-	}
-
-	public static void main(String[] args) {
-		Pruefungsleistung leistung = new Pruefungsleistung();
-		PruefungsleistungDAO dao = DAOMockBuilder
-				.forClass(PruefungsleistungDAO.class).addEntities(leistung)
-				.build();
-		Long id = leistung.getId();
-		Pruefungsleistung leistung2 = new Pruefungsleistung();
-		dao.makePersistent(leistung2);
-		dao.makePersistent(leistung);
-		Long id2 = leistung2.getId();
-		List<Pruefungsleistung> findAll = dao.findAll();
-		System.out.println(id.toString() + id2 + findAll);
 	}
 
 	private void setId(final E e) {
@@ -98,8 +76,7 @@ public class DAOMockBuilder<E, T extends GenericDAO<E, Long>> {
 		try {
 			BeanUtils.setProperty(e, "id", id);
 		} catch (Exception exc) {
-			throw new IllegalArgumentException("Klasse "
-					+ e.getClass().getSimpleName() + " hat kein ID-Feld");
+			throw new IllegalArgumentException("Klasse " + e.getClass().getSimpleName() + " hat kein ID-Feld");
 		}
 	}
 
