@@ -4,8 +4,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.javatuples.Triplet;
+
 import com.google.common.base.Optional;
 
+import de.nak.iaa.server.business.PruefungsleistungenUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.entity.Dozent;
 import de.nak.iaa.server.entity.ErgaenzungsPruefung;
 import de.nak.iaa.server.entity.Manipel;
@@ -100,11 +103,23 @@ public interface PruefungService {
 	 * @param student
 	 * @param note
 	 * @return neu angelegte Prüfungsleistung
-	 * @throws IllegalPruefungsleistungException
+	 * @throws PruefungsleistungenUpdateException
 	 *             wenn die Prüfungsleistung nicht zulässig ist
+	 * @deprecated diese Methode ist nicht transaktionssicher,
 	 */
+	@Deprecated
 	Pruefungsleistung addPruefungsleistung(Pruefung pruefung, Student student, Note note)
 			throws IllegalPruefungsleistungException;
+
+	/**
+	 * legt alle übergebenen Prüfungsleistungen in einer Transaktion an
+	 * 
+	 * @param leistungen
+	 * @throws PruefungsleistungenUpdateException
+	 *             falls mind. eine Prüfungsleistung nicht zulässig ist
+	 */
+	void addPruefungsleistungen(List<Triplet<Pruefung, Student, Note>> leistungen)
+			throws PruefungsleistungenUpdateException;
 
 	/**
 	 * @param manipel

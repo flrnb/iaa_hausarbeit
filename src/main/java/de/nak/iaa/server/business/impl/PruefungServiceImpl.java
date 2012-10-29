@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 
@@ -16,8 +17,9 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 
-import de.nak.iaa.server.business.IllegalPruefungsleistungException;
 import de.nak.iaa.server.business.PruefungService;
+import de.nak.iaa.server.business.PruefungsleistungenUpdateException;
+import de.nak.iaa.server.business.PruefungsleistungenUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.dao.PruefungDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
@@ -84,13 +86,31 @@ public class PruefungServiceImpl implements PruefungService {
 		if (leistung.isPresent()) {
 			Versuch versuch = leistung.get().getVersuch();
 			if (isBestanden(leistung.get()) || !versuch.next().isPresent())
-				throw new IllegalPruefungsleistungException(getMsg(ZU_OFT));
+				throw new IllegalPruefungsleistungException(student, getMsg(ZU_OFT));
 			nextVersuch = versuch.next().get();
 		} else {
 			nextVersuch = Versuch.Eins;
 		}
 		Pruefungsleistung neueLeistung = new Pruefungsleistung(nextVersuch, pruefung, note, student);
 		return pruefungsleistungDAO.makePersistent(neueLeistung);
+	}
+
+	@Override
+	public void addPruefungsleistungen(List<Triplet<Pruefung, Student, Note>> leistungen)
+			throws PruefungsleistungenUpdateException {
+		PruefungsleistungenUpdateException exc = new PruefungsleistungenUpdateException();
+		for (Triplet<Pruefung, Student, Note> leistung : leistungen) {
+			Pruefung pruefung = leistung.getValue0();
+			Student student = leistung.getValue1();
+			Note note = leistung.getValue2();
+			try {
+				addPruefungsleistung(pruefung, student, note);
+			} catch (IllegalPruefungsleistungException e) {
+				exc.addNestedException(e);
+			}
+		}
+		if (exc.getNestedExceptions().isPresent())
+			throw exc;
 	}
 
 	@Override

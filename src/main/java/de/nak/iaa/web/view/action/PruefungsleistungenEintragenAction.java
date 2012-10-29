@@ -13,7 +13,7 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.Preparable;
 import com.opensymphony.xwork2.ValidationAware;
 
-import de.nak.iaa.server.business.IllegalPruefungsleistungException;
+import de.nak.iaa.server.business.PruefungsleistungenUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;
@@ -21,8 +21,8 @@ import de.nak.iaa.web.entity.Protokollzeile;
 import de.nak.iaa.web.view.formbean.PruefungsleistungFormBean;
 
 @SuppressWarnings("serial")
-public class PruefungsleistungenEintragenAction extends AbstractFormAction
-		implements SessionAware, ParameterAware, Preparable, ValidationAware {
+public class PruefungsleistungenEintragenAction extends AbstractFormAction implements SessionAware, ParameterAware,
+		Preparable, ValidationAware {
 
 	private List<PruefungsleistungFormBean> pruefungenBeans;
 
@@ -37,11 +37,9 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 	public void fuellePruefungsBeans() {
 		setPruefungenBeans(new ArrayList<PruefungsleistungFormBean>());
 
-		for (Entry<Student, Optional<Pruefungsleistung>> student : getPruefungService()
-				.getAllStudentenForPruefung(getSelectedPruefung()).entrySet()) {
-			if (student == null
-					|| !student.getKey().getManipel()
-							.equals(getSelectedManipel()))
+		for (Entry<Student, Optional<Pruefungsleistung>> student : getPruefungService().getAllStudentenForPruefung(
+				getSelectedPruefung()).entrySet()) {
+			if (student == null || !student.getKey().getManipel().equals(getSelectedManipel()))
 				continue;
 			else {
 				// Optional<Note> alteNote =
@@ -53,9 +51,7 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 					alteNote = student.getValue().get().getNote();
 				}
 
-				getPruefungenBeans().add(
-						new PruefungsleistungFormBean(student.getKey(),
-								alteNote, null));
+				getPruefungenBeans().add(new PruefungsleistungFormBean(student.getKey(), alteNote, null));
 			}
 		}
 
@@ -81,14 +77,11 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 		int i = 0;
 		for (PruefungsleistungFormBean p : pruefungenBeans) {
 			if (p.getNote().contains(",")) {
-				addFieldError("pruefungenBeans[" + i + "].note",
-						"Nur \".\" erlaubt");
+				addFieldError("pruefungenBeans[" + i + "].note", "Nur \".\" erlaubt");
 				// continue;
 			}
-			if (!p.getNote().equals("") && !p.getNote().contains(",")
-					&& !Note.isValid(p.getNote())) {
-				addFieldError("pruefungenBeans[" + i + "].note",
-						"Keine gültige Note");
+			if (!p.getNote().equals("") && !p.getNote().contains(",") && !Note.isValid(p.getNote())) {
+				addFieldError("pruefungenBeans[" + i + "].note", "Keine gültige Note");
 			}
 			i++;
 		}
@@ -105,8 +98,7 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 					continue;
 
 				Student st = null;
-				for (Student s : getStudentService().getAllStudenten(
-						getSelectedManipel())) {
+				for (Student s : getStudentService().getAllStudenten(getSelectedManipel())) {
 					if (s.equals(p.getStudent())) {
 						st = s;
 						break;
@@ -114,29 +106,17 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 
 				}
 				try {
-					getPruefungService().addPruefungsleistung(
-							getSelectedPruefung(), st,
-							Note.getNote(p.getNote()));
+					getPruefungService().addPruefungsleistung(getSelectedPruefung(), st, Note.getNote(p.getNote()));
 					getProtokoll().add(
-							new Protokollzeile(Protokollzeile.NACHRICHT,
-									"Note " + p.getNote() + " für "
-											+ st.getVorname() + " "
-											+ st.getName()
-											+ " erfolgreich eingetragen."));
+							new Protokollzeile(Protokollzeile.NACHRICHT, "Note " + p.getNote() + " für "
+									+ st.getVorname() + " " + st.getName() + " erfolgreich eingetragen."));
 
 				} catch (IllegalPruefungsleistungException e) {
 					protokollHasErrors = true;
-					getProtokoll()
-							.add(new Protokollzeile(
-									Protokollzeile.FEHLER,
-									"Note "
-											+ p.getNote()
-											+ " für "
-											+ st.getVorname()
-											+ " "
-											+ st.getName()
-											+ " konnte nicht eingetragen werden (Grund: "
-											+ e.getMessage() + ")."));
+					getProtokoll().add(
+							new Protokollzeile(Protokollzeile.FEHLER, "Note " + p.getNote() + " für " + st.getVorname()
+									+ " " + st.getName() + " konnte nicht eingetragen werden (Grund: " + e.getMessage()
+									+ ")."));
 				}
 			}
 
@@ -162,8 +142,7 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 		return pruefungenBeans;
 	}
 
-	public void setPruefungenBeans(
-			List<PruefungsleistungFormBean> pruefungenBeans) {
+	public void setPruefungenBeans(List<PruefungsleistungFormBean> pruefungenBeans) {
 		this.pruefungenBeans = pruefungenBeans;
 	}
 
