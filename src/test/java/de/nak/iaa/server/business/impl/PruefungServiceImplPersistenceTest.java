@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import de.nak.iaa.ApplicationContextAwareTest;
 import de.nak.iaa.server.business.IllegalPruefungsleistungException;
+import de.nak.iaa.server.business.PruefungService;
 import de.nak.iaa.server.dao.DozentDAO;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
@@ -34,7 +35,7 @@ import de.nak.iaa.server.fachwert.Studienrichtung;
 public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareTest {
 
 	@Autowired
-	public PruefungServiceImpl service;
+	public PruefungService service;
 
 	@Resource
 	public ManipelDAO manipelDAO;

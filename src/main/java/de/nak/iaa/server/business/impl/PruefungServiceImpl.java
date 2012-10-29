@@ -180,8 +180,7 @@ public class PruefungServiceImpl implements PruefungService {
 	public Map<Student, Date> getAllErgaenzungsPruefungsStudenten(Manipel manipel, Pruefungsfach fach) {
 		final Map<Student, Date> result = new HashMap<Student, Date>();
 		for (final Student student : studentService.getAllStudenten(manipel)) {
-			Optional<Pruefungsleistung> optLeistung = getLetzterVersuch(fach, student);
-			optLeistung.transform(new Function<Pruefungsleistung, Pruefungsleistung>() {
+			getLetzterVersuch(fach, student).transform(new Function<Pruefungsleistung, Pruefungsleistung>() {
 				@Override
 				public Pruefungsleistung apply(Pruefungsleistung leistung) {
 					if (isErgaenzungsPruefungZulaessig(leistung))

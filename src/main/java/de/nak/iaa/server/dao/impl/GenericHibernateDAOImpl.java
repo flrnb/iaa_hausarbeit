@@ -15,15 +15,16 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import de.nak.iaa.server.dao.GenericDAO;
 
 /**
- * Based on http://community.jboss.org/docs/DOC-13955
+ * Based on http://community.jboss.org/docs/DOC-13955 <br/>
+ * <b>aus dem Archetypen http://code.google.com/p/spring-archetypes/</b>
  * 
  * @param <T>
  *            entity type
  * @param <ID>
  *            primary key
  */
-public abstract class GenericHibernateDAOImpl<T, ID extends Serializable>
-		extends HibernateDaoSupport implements GenericDAO<T, ID> {
+public abstract class GenericHibernateDAOImpl<T, ID extends Serializable> extends HibernateDaoSupport implements
+		GenericDAO<T, ID> {
 
 	private Class<T> persistentClass;
 
@@ -35,12 +36,11 @@ public abstract class GenericHibernateDAOImpl<T, ID extends Serializable>
 	@SuppressWarnings({ "unchecked" })
 	public GenericHibernateDAOImpl() {
 		try {
-			persistentClass = (Class<T>) ((ParameterizedType) getClass()
-					.getGenericSuperclass()).getActualTypeArguments()[0];
+			persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass())
+					.getActualTypeArguments()[0];
 		} catch (ClassCastException e) {
 			// can be raised when DAO is inherited twice
-			persistentClass = (Class<T>) ((ParameterizedType) getClass()
-					.getSuperclass().getGenericSuperclass())
+			persistentClass = (Class<T>) ((ParameterizedType) getClass().getSuperclass().getGenericSuperclass())
 					.getActualTypeArguments()[0];
 		}
 	}
@@ -48,8 +48,7 @@ public abstract class GenericHibernateDAOImpl<T, ID extends Serializable>
 	public T findById(Long id, boolean lock) {
 		T entity;
 		if (lock) {
-			entity = getHibernateTemplate().get(persistentClass, id,
-					LockMode.PESSIMISTIC_WRITE);
+			entity = getHibernateTemplate().get(persistentClass, id, LockMode.PESSIMISTIC_WRITE);
 		} else {
 			entity = getHibernateTemplate().get(persistentClass, id);
 		}

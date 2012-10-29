@@ -4,21 +4,25 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Based on http://community.jboss.org/docs/DOC-13955
- * @param <T> entity type
- * @param <ID> primary key
- *
+ * Based on http://community.jboss.org/docs/DOC-13955<br/>
+ * <b>aus dem Archetypen http://code.google.com/p/spring-archetypes/</b>
+ * 
+ * @param <T>
+ *            entity type
+ * @param <ID>
+ *            primary key
+ * 
  * @see de.nak.iaa.server.dao.impl.GenericHibernateDAOImpl
  */
 public interface GenericDAO<T, ID extends Serializable> {
 
-    T findById(ID id, boolean lock);
+	T findById(ID id, boolean lock);
 
-    List<T> findAll();
+	List<T> findAll();
 
-    List<T> findByExample(T exampleInstance, String[] excludeProperty);
+	List<T> findByExample(T exampleInstance, String[] excludeProperty);
 
-    T makePersistent(T entity);
+	T makePersistent(T entity);
 
-    void makeTransient(T entity);
+	void makeTransient(T entity);
 }

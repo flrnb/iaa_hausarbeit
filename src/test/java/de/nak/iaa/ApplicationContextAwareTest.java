@@ -1,6 +1,5 @@
 package de.nak.iaa;
 
-
 import org.hibernate.FlushMode;
 import org.hibernate.SessionFactory;
 import org.junit.After;
@@ -15,30 +14,32 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * Base class fo unit tests with spring context.
  * <p>
- * Each method is run within a transaction which is rolled back when method is over.
- * Hibernate sessions which used in tests are have {@link org.hibernate.FlushMode#ALWAYS}
- *
+ * Each method is run within a transaction which is rolled back when method is
+ * over. Hibernate sessions which used in tests are have
+ * {@link org.hibernate.FlushMode#ALWAYS} <br/>
+ * <b>aus dem Archetypen http://code.google.com/p/spring-archetypes/</b>
+ * 
  * @see org.springframework.test.context.transaction.TransactionConfiguration
  * @see org.springframework.transaction.annotation.Transactional
  * @see org.hibernate.Session#setFlushMode(org.hibernate.FlushMode)
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
+@ContextConfiguration(locations = { "classpath:applicationContext.xml" })
 @TransactionConfiguration(defaultRollback = true, transactionManager = "transactionManager")
 @Transactional
 public abstract class ApplicationContextAwareTest {
 
-    @Autowired
-    public SessionFactory sessionFactory;
+	@Autowired
+	public SessionFactory sessionFactory;
 
-    @Before
-    public void beforeMethod() {
-        sessionFactory.getCurrentSession().setFlushMode(FlushMode.ALWAYS);
-    }
+	@Before
+	public void beforeMethod() {
+		sessionFactory.getCurrentSession().setFlushMode(FlushMode.ALWAYS);
+	}
 
-    @After
-    public void afterMethod() {
-        // nothing
-    }
-    
+	@After
+	public void afterMethod() {
+		// nothing
+	}
+
 }
