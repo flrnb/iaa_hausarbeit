@@ -20,7 +20,7 @@ import com.google.common.collect.Iterables;
 import de.nak.iaa.server.business.IllegalUpdateException;
 import de.nak.iaa.server.business.IllegalUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.business.PruefungService;
-import de.nak.iaa.server.business.PruefungsAenderung;
+import de.nak.iaa.server.business.PruefungsleistungAenderung;
 import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.dao.PruefungDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
@@ -63,9 +63,9 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
-	public void updatePruefungsleistungen(List<? extends PruefungsAenderung> aenderungen) throws IllegalUpdateException {
+	public void updatePruefungsleistungen(List<? extends PruefungsleistungAenderung> aenderungen) throws IllegalUpdateException {
 		IllegalUpdateException exc = new IllegalUpdateException();
-		for (PruefungsAenderung aenderung : aenderungen) {
+		for (PruefungsleistungAenderung aenderung : aenderungen) {
 			Long id = aenderung.getId();
 			if (!isPruefungsleistungEditable(id)) {
 				Student student = pruefungsleistungDAO.findById(id, false).getStudent();

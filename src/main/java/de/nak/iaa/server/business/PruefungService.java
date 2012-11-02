@@ -109,7 +109,7 @@ public interface PruefungService {
 	 * @throws IllegalUpdateException
 	 *             falls eine Änderung nicht zulässig ist
 	 */
-	void updatePruefungsleistungen(List<? extends PruefungsAenderung> aenderungen) throws IllegalUpdateException;
+	void updatePruefungsleistungen(List<? extends PruefungsleistungAenderung> aenderungen) throws IllegalUpdateException;
 
 	/**
 	 * Für einen Studenten eine neue Prüfungsleistung erfassen

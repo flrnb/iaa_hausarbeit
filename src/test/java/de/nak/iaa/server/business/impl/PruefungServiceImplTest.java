@@ -23,7 +23,7 @@ import com.google.common.base.Optional;
 import de.nak.iaa.server.business.IllegalUpdateException;
 import de.nak.iaa.server.business.IllegalUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.business.PruefungService;
-import de.nak.iaa.server.business.PruefungsAenderung.Update;
+import de.nak.iaa.server.business.PruefungsleistungAenderung.Update;
 import de.nak.iaa.server.dao.DAOMockBuilder;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.dao.PruefungDAO;

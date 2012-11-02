@@ -15,7 +15,7 @@ import de.nak.iaa.ApplicationContextAwareTest;
 import de.nak.iaa.server.business.IllegalUpdateException;
 import de.nak.iaa.server.business.IllegalUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.business.PruefungService;
-import de.nak.iaa.server.business.PruefungsAenderung.Delete;
+import de.nak.iaa.server.business.PruefungsleistungAenderung.Delete;
 import de.nak.iaa.server.dao.DozentDAO;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;

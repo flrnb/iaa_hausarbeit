@@ -10,18 +10,28 @@ import de.nak.iaa.server.fachwert.Note;
  * 
  * @author flrnb
  */
-public interface PruefungsAenderung {
+public interface PruefungsleistungAenderung {
 
 	void perform(PruefungsleistungDAO dao) throws IllegalStateException;
 
 	Long getId();
 
-	public static class Update implements PruefungsAenderung {
+	/**
+	 * Eine vorhandene Prüfungsleistung ändern
+	 * 
+	 * @author flrnb
+	 */
+	public static class Update implements PruefungsleistungAenderung {
 
 		private final Long id;
 
 		private final Note note;
 
+		/**
+		 * @param id
+		 * @param note
+		 * @require id ist gültig
+		 */
 		public Update(Long id, Note note) {
 			this.id = id;
 			this.note = note;
@@ -40,10 +50,19 @@ public interface PruefungsAenderung {
 		}
 	}
 
-	public static class Delete implements PruefungsAenderung {
+	/**
+	 * Eine vorhandene Prüfungsleistung ändern
+	 * 
+	 * @author flrnb
+	 */
+	public static class Delete implements PruefungsleistungAenderung {
 
 		private final Long id;
 
+		/**
+		 * @param id
+		 * @require id ist gültig
+		 */
 		public Delete(Long id) {
 			this.id = id;
 		}

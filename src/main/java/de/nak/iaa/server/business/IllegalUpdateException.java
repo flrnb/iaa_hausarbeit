@@ -17,6 +17,8 @@ import de.nak.iaa.server.entity.Student;
  */
 public class IllegalUpdateException extends Exception {
 
+	private static final long serialVersionUID = -2554662398324014159L;
+
 	private Optional<List<IllegalPruefungsleistungException>> nested = Optional.absent();
 
 	public void addNestedException(final IllegalPruefungsleistungException exc) {
@@ -34,6 +36,12 @@ public class IllegalUpdateException extends Exception {
 		return nested;
 	}
 
+	/**
+	 * Exception, die Auskunft über einen Fehler für eine studentenbezogene
+	 * Änderung an einer Prüfungsleistung gibt
+	 * 
+	 * @author flrnb
+	 */
 	public static class IllegalPruefungsleistungException extends Exception {
 
 		private final Student student;
@@ -49,7 +57,5 @@ public class IllegalUpdateException extends Exception {
 			return student;
 		}
 	}
-
-	private static final long serialVersionUID = -2554662398324014159L;
 
 }
