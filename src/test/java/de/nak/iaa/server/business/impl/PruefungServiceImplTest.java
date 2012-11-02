@@ -28,6 +28,7 @@ import de.nak.iaa.server.dao.PruefungDAO;
 import de.nak.iaa.server.dao.PruefungsFachDAOMockBuilder;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
 import de.nak.iaa.server.dao.PruefungsleistungDAO;
+import de.nak.iaa.server.dao.PruefungsleistungDAOMockBuilder;
 import de.nak.iaa.server.dao.StudentDAO;
 import de.nak.iaa.server.entity.Dozent;
 import de.nak.iaa.server.entity.Manipel;
@@ -125,7 +126,7 @@ public class PruefungServiceImplTest {
 		PruefungDAO pruefungDAO = DAOMockBuilder.forClass(PruefungDAO.class).build();
 		service.setPruefungDAO(pruefungDAO);
 
-		PruefungsleistungDAO pruefungsleistungDAO = DAOMockBuilder.forClass(PruefungsleistungDAO.class).build();
+		PruefungsleistungDAO pruefungsleistungDAO = new PruefungsleistungDAOMockBuilder().build();
 		service.setPruefungsleistungDAO(pruefungsleistungDAO);
 
 		service.setMessageSource(msgSource);

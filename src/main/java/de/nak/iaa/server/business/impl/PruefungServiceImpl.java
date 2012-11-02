@@ -167,9 +167,7 @@ public class PruefungServiceImpl implements PruefungService {
 		for (Pruefungsleistung eachLeistung : leistungen)
 			if (eachLeistung.getVersuch().toInt() > leistung.getVersuch().toInt())
 				return false;
-		if (leistung.getErgaenzungsPruefung() != null)
-			return false;
-		if (hatFachlichenNachfolger(leistung))
+		if (leistung.getErgaenzungsPruefung() != null || hasFachlichenNachfolger(leistung))
 			return false;
 		return true;
 	}
@@ -268,9 +266,15 @@ public class PruefungServiceImpl implements PruefungService {
 	 * @param leistung
 	 * @return boolean
 	 */
-	private boolean hatFachlichenNachfolger(Pruefungsleistung leistung) {
-		// TODO Auto-generated method stub
-		return false;
+	private boolean hasFachlichenNachfolger(final Pruefungsleistung leistung) {
+		return leistung.getVersuch().next().transform(new Function<Versuch, Boolean>() {
+			@Override
+			public Boolean apply(Versuch nextVersuch) {
+				List<Pruefungsleistung> alteRevs = pruefungsleistungDAO.getAlteRevisionenFuerVersuch(leistung.getId(),
+						nextVersuch);
+				return !alteRevs.isEmpty();
+			}
+		}).or(false);
 	}
 
 	private boolean isBestanden(Pruefungsleistung leistung) {
