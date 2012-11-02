@@ -6,9 +6,12 @@ import java.util.List;
 
 import com.opensymphony.xwork2.Action;
 
+import de.nak.iaa.server.business.IllegalUpdateException;
+import de.nak.iaa.server.business.PruefungsleistungAenderung;
 import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;
+import de.nak.iaa.web.util.DataHelper;
 import de.nak.iaa.web.view.formbean.PruefungsleistungAendernFormBean;
 
 @SuppressWarnings("serial")
@@ -35,9 +38,10 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 						.getAllPruefungsleistungen(getSelectedPruefungsfach(),
 								student);
 
-				getPruefungenBeans().add(
-						new PruefungsleistungAendernFormBean(student,
-								leistungen));
+				if (!leistungen.isEmpty())
+					getPruefungenBeans().add(
+							new PruefungsleistungAendernFormBean(student,
+									leistungen));
 			}
 		}
 
@@ -92,13 +96,22 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 			fuellePruefungsBeans();
 			return Action.INPUT;
 		} else {
+			List<PruefungsleistungAenderung> aenderungen = new ArrayList<PruefungsleistungAenderung>();
 			for (PruefungsleistungAendernFormBean p : pruefungenBeans) {
 				for (Pruefungsleistung pl : p.getPruefungsleistungen()) {
 					if (getPruefungService().isPruefungsleistungEditable(
 							pl.getId())) {
-						getPruefungService().updatePruefungsleistung(
-								pl.getId(), pl.getNote());
+						aenderungen.add(new PruefungsleistungAenderung.Update(
+								pl.getId(), pl.getNote()));
 					}
+				}
+			}
+			if (!aenderungen.isEmpty()) {
+				try {
+					getPruefungService().updatePruefungsleistungen(aenderungen);
+				} catch (IllegalUpdateException e) {
+					// TODO und was soll ich hiermit bitte machen??!!
+					e.printStackTrace();
 				}
 			}
 			return Action.SUCCESS;
@@ -107,11 +120,20 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 
 	public String delete() {
 		if (getParameters().containsKey("deleteId")) {
-			getParameters().get("deleteId");
-			// behandle, wenn keine prüfungsleistung vorhanden ist
-			// lösch den mist
+			List<PruefungsleistungAenderung> aenderungen = new ArrayList<PruefungsleistungAenderung>();
+			aenderungen.add(new PruefungsleistungAenderung.Delete(Long
+					.getLong(DataHelper.stringArrayToString(getParameters()
+							.get("deleteId")))));
+			try {
+				getPruefungService().updatePruefungsleistungen(aenderungen);
+			} catch (IllegalUpdateException e) {
+				// TODO behandle, wenn keine prüfungsleistung vorhanden ist
+				// (fehlerseite)
+				// dafür referrer holen und an die fehlerseite übergeben
+				e.printStackTrace();
+			}
 		} else {
-			// hier muss iwie ne fehlerseite hin
+			// TODO hier muss iwie ne fehlerseite hin
 		}
 		return Action.SUCCESS;
 	}
