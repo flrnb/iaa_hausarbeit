@@ -2,10 +2,10 @@ package de.nak.iaa.web.view.action;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.TreeMap;
 
 import org.apache.struts2.interceptor.ParameterAware;
 import org.apache.struts2.interceptor.SessionAware;
@@ -104,7 +104,7 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction
 			return Action.INPUT;
 		} else {
 			protokollHasErrors = false;
-			setProtokoll(new HashMap<Student, Protokollzeile>());
+			setProtokoll(new TreeMap<Student, Protokollzeile>());
 
 			List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
 			for (PruefungsleistungFormBean p : pruefungenBeans) {

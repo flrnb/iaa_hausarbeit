@@ -30,7 +30,7 @@
 					<td><s:property value="%{#pruefung.student.matrikelNr}" /></td>
 					<td><s:property value="%{#pruefung.student.vorname}" /> <s:property
 							value="%{#pruefung.student.name}" /></td>
-					<td><s:property value="%{#pruefung.alteNote}" /></td>
+					<td align="center"><s:property value="%{#pruefung.alteNote.getNote()}" /></td>
 					<td class="editorField"><s:textfield
 							cssErrorClass="fieldErrorCls"
 							name="pruefungenBeans[%{#stat.index}].note" theme="simple"

@@ -13,12 +13,12 @@
 	<table class="protokollTable">
 		<s:iterator value="protokoll" var="zeile">
 			<tr>
-				<td class="protokollField"><s:if test="#zeile.typ == 'fehler'">
+				<td class="protokollField"><s:if test="#zeile.value.typ == 'fehler'">
 						<span class="protokollError"><s:property
-								value="#zeile.nachricht" /></span>
+								value="#zeile.value.nachricht" /></span>
 					</s:if> <s:else>
 						<span class="protokollMessage"><s:property
-								value="#zeile.nachricht" /></span>
+								value="#zeile.value.nachricht" /></span>
 					</s:else></td>
 			</tr>
 		</s:iterator>
