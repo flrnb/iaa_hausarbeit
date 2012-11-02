@@ -17,9 +17,10 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 
+import de.nak.iaa.server.business.IllegalUpdateException;
+import de.nak.iaa.server.business.IllegalUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.business.PruefungService;
-import de.nak.iaa.server.business.PruefungsleistungenUpdateException;
-import de.nak.iaa.server.business.PruefungsleistungenUpdateException.IllegalPruefungsleistungException;
+import de.nak.iaa.server.business.PruefungsAenderung;
 import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.dao.PruefungDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
@@ -62,6 +63,22 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
+	public void updatePruefungsleistungen(List<? extends PruefungsAenderung> aenderungen) throws IllegalUpdateException {
+		IllegalUpdateException exc = new IllegalUpdateException();
+		for (PruefungsAenderung aenderung : aenderungen) {
+			Long id = aenderung.getId();
+			if (!isPruefungsleistungEditable(id)) {
+				Student student = pruefungsleistungDAO.findById(id, false).getStudent();
+				exc.addNestedException(new IllegalPruefungsleistungException(student, getMsg(NICHT_EDITIERBAR)));
+			}
+			aenderung.perform(pruefungsleistungDAO);
+		}
+		if (exc.getNestedExceptions().isPresent())
+			throw exc;
+	}
+
+	@Override
+	@Deprecated
 	public void updatePruefungsleistung(Long id, Note note) {
 		if (!isPruefungsleistungEditable(id))
 			throw new IllegalStateException(getMsg(NICHT_EDITIERBAR));
@@ -71,6 +88,7 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
+	@Deprecated
 	public void stornierePruefungsleistung(Long id) {
 		if (!isPruefungsleistungEditable(id))
 			throw new IllegalStateException(getMsg(NICHT_EDITIERBAR));
@@ -96,9 +114,8 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
-	public void addPruefungsleistungen(List<Triplet<Pruefung, Student, Note>> leistungen)
-			throws PruefungsleistungenUpdateException {
-		PruefungsleistungenUpdateException exc = new PruefungsleistungenUpdateException();
+	public void addPruefungsleistungen(List<Triplet<Pruefung, Student, Note>> leistungen) throws IllegalUpdateException {
+		IllegalUpdateException exc = new IllegalUpdateException();
 		for (Triplet<Pruefung, Student, Note> leistung : leistungen) {
 			Pruefung pruefung = leistung.getValue0();
 			Student student = leistung.getValue1();

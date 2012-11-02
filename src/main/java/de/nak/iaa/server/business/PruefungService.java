@@ -8,7 +8,7 @@ import org.javatuples.Triplet;
 
 import com.google.common.base.Optional;
 
-import de.nak.iaa.server.business.PruefungsleistungenUpdateException.IllegalPruefungsleistungException;
+import de.nak.iaa.server.business.IllegalUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.entity.Dozent;
 import de.nak.iaa.server.entity.ErgaenzungsPruefung;
 import de.nak.iaa.server.entity.Manipel;
@@ -84,7 +84,10 @@ public interface PruefungService {
 	 * @param note
 	 * @trows {@link IllegalStateException} wenn Prüfungsleistung nicht
 	 *        editierbar ist
+	 * @deprecated updatePruefungsleistungen(List<PruefungsAenderung>
+	 *             aenderungen) benutzen
 	 */
+	@Deprecated
 	void updatePruefungsleistung(Long id, Note note);
 
 	/**
@@ -93,8 +96,20 @@ public interface PruefungService {
 	 * @param note
 	 * @trows {@link IllegalStateException} wenn Prüfungsleistung nicht
 	 *        editierbar ist
+	 * @deprecated updatePruefungsleistungen(List<PruefungsAenderung>
+	 *             aenderungen) benutzen
 	 */
+	@Deprecated
 	void stornierePruefungsleistung(Long id);
+
+	/**
+	 * führt die Liste der übergebenen Änderungsaufgaben durch
+	 * 
+	 * @param aenderungen
+	 * @throws IllegalUpdateException
+	 *             falls eine Änderung nicht zulässig ist
+	 */
+	void updatePruefungsleistungen(List<? extends PruefungsAenderung> aenderungen) throws IllegalUpdateException;
 
 	/**
 	 * Für einen Studenten eine neue Prüfungsleistung erfassen
@@ -103,7 +118,7 @@ public interface PruefungService {
 	 * @param student
 	 * @param note
 	 * @return neu angelegte Prüfungsleistung
-	 * @throws PruefungsleistungenUpdateException
+	 * @throws IllegalUpdateException
 	 *             wenn die Prüfungsleistung nicht zulässig ist
 	 * @deprecated diese Methode ist nicht transaktionssicher,
 	 */
@@ -115,11 +130,10 @@ public interface PruefungService {
 	 * legt alle übergebenen Prüfungsleistungen in einer Transaktion an
 	 * 
 	 * @param leistungen
-	 * @throws PruefungsleistungenUpdateException
+	 * @throws IllegalUpdateException
 	 *             falls mind. eine Prüfungsleistung nicht zulässig ist
 	 */
-	void addPruefungsleistungen(List<Triplet<Pruefung, Student, Note>> leistungen)
-			throws PruefungsleistungenUpdateException;
+	void addPruefungsleistungen(List<Triplet<Pruefung, Student, Note>> leistungen) throws IllegalUpdateException;
 
 	/**
 	 * @param manipel
@@ -167,4 +181,5 @@ public interface PruefungService {
 	 *         zulässig ist
 	 */
 	ErgaenzungsPruefung addErgaenzungsPruefung(Student student, Pruefungsfach fach, Date datum, int prozent);
+
 }

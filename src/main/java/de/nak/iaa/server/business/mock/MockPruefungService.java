@@ -8,7 +8,7 @@ import java.util.Random;
 import com.google.common.base.Optional;
 
 import de.nak.iaa.server.business.PruefungService;
-import de.nak.iaa.server.business.PruefungsleistungenUpdateException.IllegalPruefungsleistungException;
+import de.nak.iaa.server.business.IllegalUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.business.impl.PruefungServiceImpl;
 import de.nak.iaa.server.entity.Dozent;
 import de.nak.iaa.server.entity.Manipel;

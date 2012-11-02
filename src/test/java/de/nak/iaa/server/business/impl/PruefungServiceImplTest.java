@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import static org.junit.matchers.JUnitMatchers.hasItems;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,9 +20,10 @@ import org.springframework.context.MessageSource;
 
 import com.google.common.base.Optional;
 
+import de.nak.iaa.server.business.IllegalUpdateException;
+import de.nak.iaa.server.business.IllegalUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.business.PruefungService;
-import de.nak.iaa.server.business.PruefungsleistungenUpdateException;
-import de.nak.iaa.server.business.PruefungsleistungenUpdateException.IllegalPruefungsleistungException;
+import de.nak.iaa.server.business.PruefungsAenderung.Update;
 import de.nak.iaa.server.dao.DAOMockBuilder;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.dao.PruefungDAO;
@@ -204,27 +206,28 @@ public class PruefungServiceImplTest {
 	}
 
 	@Test
-	public void testUpdatePruefungsleistung() throws IllegalPruefungsleistungException {
+	public void testUpdatePruefungsleistung() throws IllegalUpdateException, IllegalPruefungsleistungException {
 		Pruefung pruefung = new Pruefung(TODAY, fach1, dozent);
 		service.addPruefungsleistung(pruefung, student1, Note.EinsDrei);
 		List<Pruefungsleistung> allPruefungsleistungen = service.getAllPruefungsleistungen(fach1, student1);
 		assertThat(allPruefungsleistungen.size(), is(1));
 		Pruefungsleistung leistung = allPruefungsleistungen.get(0);
-		service.updatePruefungsleistung(leistung.getId(), Note.EinsSieben);
+		service.updatePruefungsleistungen(Arrays.asList(new Update(leistung.getId(), Note.EinsSieben)));
 		assertThat(leistung.getNote(), is(Note.EinsSieben));
 	}
 
-	@Test(expected = IllegalStateException.class)
-	public void testUpdatePruefungsleistungNotEditableIllegalState() throws IllegalPruefungsleistungException {
+	@Test(expected = IllegalUpdateException.class)
+	public void testUpdatePruefungsleistungNotEditableIllegalState() throws IllegalPruefungsleistungException,
+			IllegalUpdateException {
 		Pruefung pruefung1 = new Pruefung(TODAY, fach1, dozent);
 		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung1, student1, Note.Fuenf);
 		Pruefung pruefung2 = new Pruefung(TODAY, fach1, dozent);
 		service.addPruefungsleistung(pruefung2, student1, Note.ZweiDrei);
-		service.updatePruefungsleistung(leistung.getId(), Note.Vier);
+		service.updatePruefungsleistungen(Arrays.asList(new Update(leistung.getId(), Note.Vier)));
 	}
 
 	@Test
-	public void testAddPruefungsleistungen() throws PruefungsleistungenUpdateException {
+	public void testAddPruefungsleistungen() throws IllegalUpdateException {
 		Pruefung pruefung = new Pruefung(TODAY, fach1, dozent);
 		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
 		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung, student1, Note.Drei));
@@ -233,7 +236,7 @@ public class PruefungServiceImplTest {
 	}
 
 	@Test
-	public void testAddPruefungsleistungenZweiterVersuch() throws PruefungsleistungenUpdateException {
+	public void testAddPruefungsleistungenZweiterVersuch() throws IllegalUpdateException {
 		Pruefung pruefung = new Pruefung(TODAY, fach1, dozent);
 		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
 		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung, student1, Note.Sechs));
@@ -247,8 +250,8 @@ public class PruefungServiceImplTest {
 		assertThat(leistung2.getVersuch(), is(equalTo(Versuch.Zwei)));
 	}
 
-	@Test(expected = PruefungsleistungenUpdateException.class)
-	public void testAddPruefungsleistungenNichtZulaessigBestanden() throws PruefungsleistungenUpdateException {
+	@Test(expected = IllegalUpdateException.class)
+	public void testAddPruefungsleistungenNichtZulaessigBestanden() throws IllegalUpdateException {
 		Pruefung pruefung = new Pruefung(TODAY, fach1, dozent);
 		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
 		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung, student1, Note.Drei));
@@ -256,8 +259,8 @@ public class PruefungServiceImplTest {
 		service.addPruefungsleistungen(leistungen);
 	}
 
-	@Test(expected = PruefungsleistungenUpdateException.class)
-	public void testAddPruefungsleistungenNichtZulaessigBestandenErgaenzung() throws PruefungsleistungenUpdateException {
+	@Test(expected = IllegalUpdateException.class)
+	public void testAddPruefungsleistungenNichtZulaessigBestandenErgaenzung() throws IllegalUpdateException {
 		Pruefung pruefung = new Pruefung(TODAY, fach1, dozent);
 		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
 		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung, student1, Note.Fuenf));
@@ -269,8 +272,8 @@ public class PruefungServiceImplTest {
 		service.addPruefungsleistungen(leistungen);
 	}
 
-	@Test(expected = PruefungsleistungenUpdateException.class)
-	public void testAddPruefungsleistungenNichtZulaessigDreiVersuche() throws PruefungsleistungenUpdateException {
+	@Test(expected = IllegalUpdateException.class)
+	public void testAddPruefungsleistungenNichtZulaessigDreiVersuche() throws IllegalUpdateException {
 		Pruefung pruefung = new Pruefung(TODAY, fach1, dozent);
 
 		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
@@ -284,7 +287,7 @@ public class PruefungServiceImplTest {
 	}
 
 	@Test
-	public void testAddPruefungsleistungenNichtZulaessigNestedExceptions() throws PruefungsleistungenUpdateException {
+	public void testAddPruefungsleistungenNichtZulaessigNestedExceptions() throws IllegalUpdateException {
 
 		Pruefung pruefung = new Pruefung(TODAY, fach1, dozent);
 
@@ -305,7 +308,7 @@ public class PruefungServiceImplTest {
 		try {
 			service.addPruefungsleistungen(leistungen);
 			fail("Exception expected");
-		} catch (PruefungsleistungenUpdateException e) {
+		} catch (IllegalUpdateException e) {
 			assertTrue(e.getNestedExceptions().isPresent());
 			List<IllegalPruefungsleistungException> list = e.getNestedExceptions().get();
 			assertThat(list.size(), is(1));

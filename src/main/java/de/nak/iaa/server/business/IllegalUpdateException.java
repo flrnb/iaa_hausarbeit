@@ -11,11 +11,11 @@ import de.nak.iaa.server.entity.Student;
 
 /**
  * Exception die geworfen wird, falls versucht wurde eine Prüfungsleistung
- * anzulegen, obwohl die fachlich nicht (mehr) zulässig ist.
+ * anzulegen oder zu ändern, obwohl die fachlich nicht (mehr) zulässig ist.
  * 
  * @author flrnb
  */
-public class PruefungsleistungenUpdateException extends Exception {
+public class IllegalUpdateException extends Exception {
 
 	private Optional<List<IllegalPruefungsleistungException>> nested = Optional.absent();
 

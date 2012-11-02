@@ -13,7 +13,7 @@ import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.Preparable;
 import com.opensymphony.xwork2.ValidationAware;
 
-import de.nak.iaa.server.business.PruefungsleistungenUpdateException.IllegalPruefungsleistungException;
+import de.nak.iaa.server.business.IllegalUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;

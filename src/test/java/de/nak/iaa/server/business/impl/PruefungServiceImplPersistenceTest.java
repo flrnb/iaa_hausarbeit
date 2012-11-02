@@ -2,6 +2,7 @@ package de.nak.iaa.server.business.impl;
 
 import static org.junit.Assert.*;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.annotation.Resource;
@@ -11,8 +12,10 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import de.nak.iaa.ApplicationContextAwareTest;
+import de.nak.iaa.server.business.IllegalUpdateException;
+import de.nak.iaa.server.business.IllegalUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.business.PruefungService;
-import de.nak.iaa.server.business.PruefungsleistungenUpdateException.IllegalPruefungsleistungException;
+import de.nak.iaa.server.business.PruefungsAenderung.Delete;
 import de.nak.iaa.server.dao.DozentDAO;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
@@ -73,7 +76,8 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 	}
 
 	@Test
-	public void testIsPruefungsleistungEditableNachfolgerGeloescht() throws IllegalPruefungsleistungException {
+	public void testIsPruefungsleistungEditableNachfolgerGeloescht() throws IllegalPruefungsleistungException,
+			IllegalUpdateException {
 		Pruefung pruefung1 = service.addPruefung(fach, datum, dozent);
 		Pruefungsleistung leistung1 = service.addPruefungsleistung(pruefung1, student, Note.Sechs);
 		assertTrue(service.isPruefungsleistungEditable(leistung1.getId()));
@@ -83,7 +87,7 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 		assertFalse(service.isPruefungsleistungEditable(leistung1.getId()));
 		assertTrue(service.isPruefungsleistungEditable(leistung2.getId()));
 
-		service.stornierePruefungsleistung(leistung2.getId());
+		service.updatePruefungsleistungen(Arrays.asList(new Delete(leistung2.getId())));
 		// das löschen einer zukünftigen Prüfungsleistung macht die Vorgänger
 		// nicht editierbar
 		assertFalse(service.isPruefungsleistungEditable(leistung1.getId()));
