@@ -9,21 +9,15 @@ import de.nak.iaa.web.util.DataHelper;
 
 public class StringNoteConverter extends StrutsTypeConverter {
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public Object convertFromString(Map context, String[] values, Class toClass) {
 		return Note.getNote(DataHelper.stringArrayToString(values));
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public String convertToString(Map context, Object o) {
 		return o.toString();
 	}
-
-	// @Override
-	// public Object convertValue(Object value, Class toType) {
-	// if (toType.equals(String.class))
-	// return ((Note) value).toString();
-	// else
-	// return Note.get((String) value);
-	// }
 }
