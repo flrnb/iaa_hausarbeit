@@ -63,7 +63,8 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
-	public void updatePruefungsleistungen(List<? extends PruefungsleistungAenderung> aenderungen) throws IllegalUpdateException {
+	public void updatePruefungsleistungen(List<? extends PruefungsleistungAenderung> aenderungen)
+			throws IllegalUpdateException {
 		IllegalUpdateException exc = new IllegalUpdateException();
 		for (PruefungsleistungAenderung aenderung : aenderungen) {
 			Long id = aenderung.getId();
@@ -85,15 +86,6 @@ public class PruefungServiceImpl implements PruefungService {
 		Pruefungsleistung leistung = pruefungsleistungDAO.findById(id, false);
 		leistung.setNote(note);
 		pruefungsleistungDAO.makePersistent(leistung);
-	}
-
-	@Override
-	@Deprecated
-	public void stornierePruefungsleistung(Long id) {
-		if (!isPruefungsleistungEditable(id))
-			throw new IllegalStateException(getMsg(NICHT_EDITIERBAR));
-		Pruefungsleistung toDelete = pruefungsleistungDAO.findById(id, false);
-		pruefungsleistungDAO.makeTransient(toDelete);
 	}
 
 	@Override

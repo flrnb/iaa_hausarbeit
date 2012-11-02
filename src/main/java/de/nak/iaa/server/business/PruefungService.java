@@ -91,25 +91,14 @@ public interface PruefungService {
 	void updatePruefungsleistung(Long id, Note note);
 
 	/**
-	 * @require isPruefungsleistungEditable(id)
-	 * @param id
-	 * @param note
-	 * @trows {@link IllegalStateException} wenn Prüfungsleistung nicht
-	 *        editierbar ist
-	 * @deprecated updatePruefungsleistungen(List<PruefungsAenderung>
-	 *             aenderungen) benutzen
-	 */
-	@Deprecated
-	void stornierePruefungsleistung(Long id);
-
-	/**
 	 * führt die Liste der übergebenen Änderungsaufgaben durch
 	 * 
 	 * @param aenderungen
 	 * @throws IllegalUpdateException
 	 *             falls eine Änderung nicht zulässig ist
 	 */
-	void updatePruefungsleistungen(List<? extends PruefungsleistungAenderung> aenderungen) throws IllegalUpdateException;
+	void updatePruefungsleistungen(List<? extends PruefungsleistungAenderung> aenderungen)
+			throws IllegalUpdateException;
 
 	/**
 	 * Für einen Studenten eine neue Prüfungsleistung erfassen
