@@ -45,28 +45,14 @@
 		<action name="modulSelection" class="de.nak.iaa.web.view.action.ModulAuswahlAction"
 			method="showSelectModul">
 			<result name="success" type="tiles">showSelectModul</result>
-			<!-- <result name="success" type="redirectAction"> <param name="actionName">pruefungSelection</param> 
-				</result> -->
-			<!-- <result name="noManipelSelected" type="redirectAction"> <param name="actionName">noSelectedError</param> 
-				<param name="namespace">/manipel</param> <param name="target">${targetUrl}</param> 
-				</result> -->
 		</action>
-		<!-- <action name="pruefungSelection" class="de.nak.iaa.web.view.action.ModulAuswahlAction"
-			method="showSelectPruefung">
-			<result name="success" type="tiles">showSelectPruefung</result>
-			<result name="noManipelSelected" type="redirectAction"> <param name="actionName">noSelectedError</param> 
-				<param name="namespace">/manipel</param> <param name="target">${targetUrl}</param> 
-				</result>
-		</action> -->
 	</package>
-	
-	<package name="pruefungSelection" extends="modulSelection" namespace="/modulSelection">
+
+	<package name="pruefungSelection" extends="modulSelection"
+		namespace="/modulSelection">
 		<action name="pruefungSelection" class="de.nak.iaa.web.view.action.ModulAuswahlAction"
 			method="showSelectPruefung">
 			<result name="success" type="tiles">showSelectPruefung</result>
-			<!-- <result name="noManipelSelected" type="redirectAction"> <param name="actionName">noSelectedError</param> 
-				<param name="namespace">/manipel</param> <param name="target">${targetUrl}</param> 
-				</result> -->
 		</action>
 	</package>
 
@@ -75,17 +61,12 @@
 			class="de.nak.iaa.web.view.action.ErgaenzungspruefungenAction"
 			method="show">
 			<result name="success" type="tiles">showOralExams</result>
-			<!-- <result name="noManipelSelected" type="redirectAction"> <param name="actionName">noSelectedError</param> 
-				<param name="namespace">/manipel</param> <param name="target">${targetUrl}</param> 
-				</result> -->
 		</action>
 		<action name="save"
 			class="de.nak.iaa.web.view.action.ErgaenzungspruefungenAction"
 			method="save">
 			<result name="success" type="tiles">saveOralExams</result>
 			<result name="input" type="tiles">showOralExams</result>
-			<!-- <result name="input" type="redirectAction"> <param name="actionName">show</param> 
-				<param name="namespace">/OralExams</param> </result> -->
 		</action>
 
 	</package>
@@ -95,29 +76,19 @@
 		<action name="show"
 			class="de.nak.iaa.web.view.action.PruefungsleistungenEintragenAction"
 			method="show">
-			<!-- <interceptor-ref name="store"> <param name="operationMode">RETRIEVE</param> 
-				</interceptor-ref> <interceptor-ref name="defaultStack" /> -->
 			<result name="success" type="tiles">showWrittenExams</result>
 			<result name="input" type="tiles">showWrittenExams</result>
-			<!-- <result name="input" type="redirectAction"> <param name="actionName">show</param> 
-				<param name="namespace">/writtenExams</param> <param name="pruefungsfach">${pruefungsfach}</param> 
-				<param name="pruefung">${pruefung}</param> </result> -->
 		</action>
 		<action name="save"
 			class="de.nak.iaa.web.view.action.PruefungsleistungenEintragenAction"
 			method="save">
-			<!-- <interceptor-ref name="store"> <param name="operationMode">STORE</param> 
-				</interceptor-ref> <interceptor-ref name="defaultStack" /> -->
 			<result name="success" type="tiles">saveWrittenExams</result>
-			<!-- <result name="input" type="tiles">showWrittenExams</result> -->
 			<result name="input" type="chain">show</result>
-			<!-- <result name="input" type="redirectAction"> <param name="actionName">show</param> 
-				<param name="namespace">/writtenExams</param> <param name="pruefungsfach">${pruefungsfach}</param> 
-				<param name="pruefung">${pruefung}</param> </result> -->
 		</action>
 	</package>
 
-	<package name="editExams" extends="pruefungSelection" namespace="/editExams">
+	<package name="editExams" extends="pruefungSelection"
+		namespace="/editExams">
 		<action name="show"
 			class="de.nak.iaa.web.view.action.PruefungsleistungenAendernAction"
 			method="show">
@@ -129,7 +100,8 @@
 			<result name="success" type="tiles">saveEditExams</result>
 			<result name="input" type="tiles">showEditExams</result>
 		</action>
-		<action name="delete" class="de.nak.iaa.web.view.action.PruefungsleistungenAendernAction"
+		<action name="delete"
+			class="de.nak.iaa.web.view.action.PruefungsleistungenAendernAction"
 			method="delete">
 			<result name="success" type="redirectAction">
 				<param name="actionName">show</param>
@@ -137,13 +109,12 @@
 				<param name="pruefungsfach">${getSelectedPruefungsfach().getId()}</param>
 				<param name="pruefung">${getSelectedPruefung().getId()}</param>
 			</result>
-			
-			<!-- <result name="success" type="tiles">showEditExams</result> -->
 		</action>
 	</package>
-	
+
 	<package name="overview" extends="manipelSelection" namespace="/overview">
-		<action name="show" method="show" class="de.nak.iaa.web.view.action.ShowOverview">
+		<action name="show" method="show"
+			class="de.nak.iaa.web.view.action.ShowOverview">
 			<result name="success" type="tiles">showOverview</result>
 		</action>
 	</package>
