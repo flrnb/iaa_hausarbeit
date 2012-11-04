@@ -10,6 +10,11 @@ import de.nak.iaa.server.business.DozentService;
 import de.nak.iaa.server.dao.DozentDAO;
 import de.nak.iaa.server.entity.Dozent;
 
+/**
+ * Implementierung für {@link DozentService}
+ * 
+ * @author flrnb
+ */
 public class DozentServiceImpl implements DozentService {
 
 	@Autowired
