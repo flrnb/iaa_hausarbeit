@@ -28,8 +28,9 @@ public class PruefungsleistungDAOImpl extends
 			Long primaryKey, Versuch versuch) {
 		AuditReader auditReader = AuditReaderFactory.get(getSession());
 		AuditQuery query = auditReader.createQuery()
-				.forRevisionsOfEntity(Pruefungsleistung.class, true, false)
-				.add(AuditEntity.property("versuch").eq(versuch));
+				.forRevisionsOfEntity(Pruefungsleistung.class, true, true)
+				.add(AuditEntity.property("versuch").eq(versuch))
+				.add(AuditEntity.id().eq(primaryKey));
 		return query.getResultList();
 	}
 }
