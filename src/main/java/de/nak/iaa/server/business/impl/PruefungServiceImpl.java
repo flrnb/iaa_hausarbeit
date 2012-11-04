@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.SortedMap;
 
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -237,6 +238,13 @@ public class PruefungServiceImpl implements PruefungService {
 		return ergaenzungsPruefung;
 	}
 
+	@Override
+	public Map<Versuch, SortedMap<Date, Pruefungsleistung>> getPruefungsleistungHistorie(Student student,
+			Pruefungsfach fach) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	/**
 	 * gibt für ein Prüfungsfach den letzten Versuch eines Studenten zurück
 	 * 
@@ -323,4 +331,5 @@ public class PruefungServiceImpl implements PruefungService {
 	private static final String KEINE_ERGAENZUNGSPRUEFUNG = "pruefung.keineErgaenzung";
 
 	private static final String PRUEFUNG_ZUKUNFT = "pruefung.zukunftVorhanden";
+
 }

@@ -1,11 +1,15 @@
 package de.nak.iaa.server.business.impl;
 
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
 
 import javax.annotation.Resource;
 
@@ -19,6 +23,7 @@ import de.nak.iaa.server.business.IllegalUpdateException;
 import de.nak.iaa.server.business.IllegalUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.business.PruefungService;
 import de.nak.iaa.server.business.PruefungsleistungAenderung.Delete;
+import de.nak.iaa.server.business.PruefungsleistungAenderung.Update;
 import de.nak.iaa.server.dao.DozentDAO;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
@@ -31,6 +36,7 @@ import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.server.fachwert.Studienrichtung;
+import de.nak.iaa.server.fachwert.Versuch;
 
 /**
  * PersistenceTest für PruefungService-Implementierung. Einige Funktionalitäten
@@ -57,13 +63,21 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 
 	private Pruefungsfach fach;
 
-	private Date datum;
+	private Date datum1;
+
+	private Date datum2;
+
+	private Date datum3;
 
 	private Dozent dozent;
 
 	private Manipel manipel;
 
 	private Student student;
+
+	private Pruefung pruefung1;
+	private Pruefung pruefung2;
+	private Pruefung pruefung3;
 
 	@Before
 	public void setUp() {
@@ -73,22 +87,31 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 		pruefungsfachDAO.makePersistent(fach);
 		dozent = new Dozent("Mustermann", "Max");
 		dozentDAO.makePersistent(dozent);
-		datum = new Date();
+		datum1 = new Date();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(datum1);
+		cal.add(10, Calendar.DAY_OF_YEAR);
+		datum2 = cal.getTime();
+		cal.add(10, Calendar.DAY_OF_YEAR);
+		datum3 = cal.getTime();
+
 		student = new Student(1234, manipel, "Gefallen", "Durch");
 		studentDAO.makePersistent(student);
+
+		pruefung1 = service.addPruefung(fach, datum1, dozent);
+		pruefung2 = service.addPruefung(fach, datum2, dozent);
+		pruefung3 = service.addPruefung(fach, datum3, dozent);
 	}
 
 	@Test
 	public void testIsPruefungsleistungEditableNachfolgerGeloescht() throws IllegalPruefungsleistungException,
 			IllegalUpdateException {
-		Pruefung pruefung1 = service.addPruefung(fach, datum, dozent);
 		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
 		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung1, student, Note.Sechs));
 		service.addPruefungsleistungen(leistungen);
 		Pruefungsleistung leistung1 = service.getAllPruefungsleistungen(fach, student).get(0);
 		assertTrue(service.isPruefungsleistungEditable(leistung1.getId()));
 
-		Pruefung pruefung2 = service.addPruefung(fach, datum, dozent);
 		leistungen.clear();
 
 		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung2, student, Note.DreiDrei));
@@ -101,5 +124,74 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 		// das löschen einer zukünftigen Prüfungsleistung macht die Vorgänger
 		// nicht editierbar
 		assertFalse(service.isPruefungsleistungEditable(leistung1.getId()));
+	}
+
+	@Test
+	public void testGetPruefungsleistungHistorieEmpty() {
+		Map<Versuch, SortedMap<Date, Pruefungsleistung>> pruefungsleistungHistorie = service
+				.getPruefungsleistungHistorie(student, fach);
+		assertTrue(pruefungsleistungHistorie.get(Versuch.Eins).isEmpty());
+		assertTrue(pruefungsleistungHistorie.get(Versuch.Zwei).isEmpty());
+		assertTrue(pruefungsleistungHistorie.get(Versuch.Drei).isEmpty());
+	}
+
+	@Test
+	public void testGetPruefungsleistungHistorie() throws IllegalUpdateException {
+		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
+
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung1, student, Note.Fuenf));
+		service.addPruefungsleistungen(leistungen);
+		leistungen.clear();
+
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung2, student, Note.Fuenf));
+		service.addPruefungsleistungen(leistungen);
+		leistungen.clear();
+
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung3, student, Note.Fuenf));
+		service.addPruefungsleistungen(leistungen);
+
+		Map<Versuch, SortedMap<Date, Pruefungsleistung>> pruefungsleistungHistorie = service
+				.getPruefungsleistungHistorie(student, fach);
+		assertThat(pruefungsleistungHistorie.get(Versuch.Eins).size(), is(1));
+		assertThat(pruefungsleistungHistorie.get(Versuch.Zwei).size(), is(1));
+		assertThat(pruefungsleistungHistorie.get(Versuch.Drei).size(), is(1));
+	}
+
+	@Test
+	public void testGetPruefungsleistungHistorieUpdate() throws IllegalUpdateException {
+		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
+
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung1, student, Note.Fuenf));
+		service.addPruefungsleistungen(leistungen);
+		leistungen.clear();
+
+		Pruefungsleistung leistung = service.getAllPruefungsleistungen(fach, student).get(0);
+
+		service.updatePruefungsleistungen(Arrays.asList(new Update(leistung.getId(), Note.Vier)));
+
+		Map<Versuch, SortedMap<Date, Pruefungsleistung>> pruefungsleistungHistorie = service
+				.getPruefungsleistungHistorie(student, fach);
+		assertThat(pruefungsleistungHistorie.get(Versuch.Eins).size(), is(2));
+		assertThat(pruefungsleistungHistorie.get(Versuch.Zwei).size(), is(0));
+		assertThat(pruefungsleistungHistorie.get(Versuch.Drei).size(), is(0));
+	}
+
+	@Test
+	public void testGetPruefungsleistungHistorieGeloescht() throws IllegalUpdateException {
+		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
+
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung1, student, Note.Fuenf));
+		service.addPruefungsleistungen(leistungen);
+		leistungen.clear();
+
+		Pruefungsleistung leistung = service.getAllPruefungsleistungen(fach, student).get(0);
+
+		service.updatePruefungsleistungen(Arrays.asList(new Delete(leistung.getId())));
+
+		Map<Versuch, SortedMap<Date, Pruefungsleistung>> pruefungsleistungHistorie = service
+				.getPruefungsleistungHistorie(student, fach);
+		assertThat(pruefungsleistungHistorie.get(Versuch.Eins).size(), is(2));
+		assertThat(pruefungsleistungHistorie.get(Versuch.Zwei).size(), is(0));
+		assertThat(pruefungsleistungHistorie.get(Versuch.Drei).size(), is(0));
 	}
 }

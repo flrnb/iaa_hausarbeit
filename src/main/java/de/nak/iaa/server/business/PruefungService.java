@@ -3,6 +3,7 @@ package de.nak.iaa.server.business;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
 
 import org.javatuples.Triplet;
 
@@ -16,6 +17,7 @@ import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;
+import de.nak.iaa.server.fachwert.Versuch;
 
 /**
  * Service für pruefungs- und pruefungsleistungsbezogene Aufgaben
@@ -142,5 +144,16 @@ public interface PruefungService {
 	 *         zulässig ist
 	 */
 	ErgaenzungsPruefung addErgaenzungsPruefung(Student student, Pruefungsfach fach, Date datum, int prozent);
+
+	/**
+	 * ermittelt die Historie der Prüfungsleistungen für einen Studenten und ein
+	 * Prüfungsfach
+	 * 
+	 * @param student
+	 * @param fach
+	 * @return für jeden Versuch alle jemals erfassten Prüfungsleistungen, nach
+	 *         ihrem Datum sortiert
+	 */
+	Map<Versuch, SortedMap<Date, Pruefungsleistung>> getPruefungsleistungHistorie(Student student, Pruefungsfach fach);
 
 }

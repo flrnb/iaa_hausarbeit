@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
@@ -33,7 +32,7 @@
 	<!-- Service classes -->
 	<bean id="studentService" class="de.nak.iaa.server.business.impl.StudentServiceImpl" />
 	<bean id="pruefungService" class="de.nak.iaa.server.business.impl.PruefungServiceImpl" />
-	<bean id="dozentService" class="de.nak.iaa.server.business.impl.DozentServiceImpl"/>
+	<bean id="dozentService" class="de.nak.iaa.server.business.impl.DozentServiceImpl" />
 
 	<!-- DAO layer -->
 	<bean id="studentDAO" class="de.nak.iaa.server.dao.impl.StudentDAOImpl" />
@@ -43,7 +42,6 @@
 	<bean id="pruefungsleistungDAO" class="de.nak.iaa.server.dao.impl.PruefungsleistungDAOImpl" />
 	<bean id="pruefungDAO" class="de.nak.iaa.server.dao.impl.PruefungDAOImpl" />
 
-	<tx:annotation-driven />
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
@@ -51,13 +49,13 @@
 
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="*" propagation="REQUIRED" />
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="IllegalUpdateException" />
+			<tx:method name="update*" propagation="REQUIRED"
+				rollback-for="IllegalUpdateException" />
 		</tx:attributes>
 	</tx:advice>
-	
 	<aop:config>
-		<aop:pointcut id="serviceMethods"
-			expression="execution(* bean(*Service))" />
+		<aop:pointcut id="serviceMethods" expression="bean(*Service)" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods" />
 	</aop:config>
 
