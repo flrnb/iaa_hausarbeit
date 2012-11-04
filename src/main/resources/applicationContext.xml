@@ -33,9 +33,11 @@
 	<!-- Service classes -->
 	<bean id="studentService" class="de.nak.iaa.server.business.impl.StudentServiceImpl" />
 	<bean id="pruefungService" class="de.nak.iaa.server.business.impl.PruefungServiceImpl" />
+	<bean id="dozentService" class="de.nak.iaa.server.business.impl.DozentServiceImpl"/>
 
 	<!-- DAO layer -->
 	<bean id="studentDAO" class="de.nak.iaa.server.dao.impl.StudentDAOImpl" />
+	<bean id="dozentDAO" class="de.nak.iaa.server.dao.impl.DozentDAOImpl" />
 	<bean id="manipelDAO" class="de.nak.iaa.server.dao.impl.ManipelDAOImpl" />
 	<bean id="pruefungsfachDAO" class="de.nak.iaa.server.dao.impl.PruefungsfachDAOImpl" />
 	<bean id="pruefungsleistungDAO" class="de.nak.iaa.server.dao.impl.PruefungsleistungDAOImpl" />
@@ -55,7 +57,7 @@
 	
 	<aop:config>
 		<aop:pointcut id="serviceMethods"
-			expression="bean(*Service)" />
+			expression="execution(* bean(*Service))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods" />
 	</aop:config>
 

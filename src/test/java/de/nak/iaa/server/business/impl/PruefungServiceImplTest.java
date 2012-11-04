@@ -250,13 +250,21 @@ public class PruefungServiceImplTest {
 		assertThat(leistung2.getVersuch(), is(equalTo(Versuch.Zwei)));
 	}
 
-	@Test(expected = IllegalUpdateException.class)
-	public void testAddPruefungsleistungenNichtZulaessigBestanden() throws IllegalUpdateException {
+	@Test
+	public void testAddPruefungsleistungenNichtZulaessigBestanden() {
 		Pruefung pruefung = new Pruefung(TODAY, fach1, dozent);
 		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
 		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung, student1, Note.Drei));
 		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung, student1, Note.Vier));
-		service.addPruefungsleistungen(leistungen);
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung, student2, Note.Drei));
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung, student2, Note.Vier));
+		try {
+			service.addPruefungsleistungen(leistungen);
+			fail("Exception expected.");
+		} catch (IllegalUpdateException e) {
+			assertTrue(e.getNestedExceptions().isPresent());
+			assertThat(e.getNestedExceptions().get().size(), is(2));
+		}
 	}
 
 	@Test(expected = IllegalUpdateException.class)
@@ -298,12 +306,12 @@ public class PruefungServiceImplTest {
 		// Student 1 hat schon bestanden
 		service.addPruefungsleistungen(leistungen);
 
-		leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
+		leistungen.clear();
 
 		// Student 1 darf eigentlich nicht nochmal schreiben
 		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung, student1, Note.Zwei));
 		// Student 2 schon
-		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung, student1, Note.EinsDrei));
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung, student2, Note.EinsDrei));
 
 		try {
 			service.addPruefungsleistungen(leistungen);
@@ -314,6 +322,21 @@ public class PruefungServiceImplTest {
 			assertThat(list.size(), is(1));
 			assertThat(list.get(0).getStudent(), is(equalTo(student1)));
 		}
+	}
+
+	@Test(expected = IllegalUpdateException.class)
+	public void testAddPruefungsleistungenZukunft() throws IllegalUpdateException {
+		// Morgen schon geschrieben
+		Pruefung pruefungMorgen = new Pruefung(TOMORROW, fach1, dozent);
+		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefungMorgen, student1, Note.Fuenf));
+		service.addPruefungsleistungen(leistungen);
+
+		// Darf heute nicht schreiben
+		Pruefung pruefungHeute = new Pruefung(TODAY, fach1, dozent);
+		leistungen.clear();
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefungHeute, student1, Note.Drei));
+		service.addPruefungsleistungen(leistungen);
 	}
 
 	@Test
