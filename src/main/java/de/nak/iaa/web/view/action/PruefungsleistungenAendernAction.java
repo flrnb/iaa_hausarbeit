@@ -122,7 +122,7 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 		if (getParameters().containsKey("deleteId")) {
 			List<PruefungsleistungAenderung> aenderungen = new ArrayList<PruefungsleistungAenderung>();
 			aenderungen.add(new PruefungsleistungAenderung.Delete(Long
-					.getLong(DataHelper.stringArrayToString(getParameters()
+					.valueOf(DataHelper.stringArrayToString(getParameters()
 							.get("deleteId")))));
 			try {
 				getPruefungService().updatePruefungsleistungen(aenderungen);
