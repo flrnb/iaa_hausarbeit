@@ -5,6 +5,7 @@
 		"http://struts.apache.org/dtds/struts-2.1.dtd">
 
 <struts>
+	<constant name="struts.devMode" value="true" />
 	<constant name="struts.ui.theme" value="iaa" />
 	<constant name="struts.ui.templateDir" value="template" />
 
@@ -14,7 +15,16 @@
 		</action>
 	</package>
 
-	<package name="manipelSelection" extends="tiles-default">
+	<package name="exceptionsBase" extends="tiles-default">
+		<global-results>
+			<result type="tiles" name="exception">errorPage</result>
+		</global-results>
+		<global-exception-mappings>
+	        <exception-mapping exception="java.lang.Exception" result="exception" />
+	   	</global-exception-mappings>
+	</package>
+
+	<package name="manipelSelection" extends="exceptionsBase">
 		<global-results>
 			<result name="noManipelSelected" type="redirectAction">
 				<param name="actionName">noSelectedError</param>
@@ -24,7 +34,7 @@
 		</global-results>
 	</package>
 
-	<package name="manipel" extends="tiles-default" namespace="/manipel">
+	<package name="manipel" extends="exceptionsBase" namespace="/manipel">
 		<action name="show" class="de.nak.iaa.web.view.action.ManipelAendernAction"
 			method="show">
 			<result type="tiles">showChangeManipel</result>
@@ -87,8 +97,7 @@
 		</action>
 	</package>
 
-	<package name="editExams" extends="pruefungSelection"
-		namespace="/editExams">
+	<package name="editExams" extends="modulSelection" namespace="/editExams">
 		<action name="show"
 			class="de.nak.iaa.web.view.action.PruefungsleistungenAendernAction"
 			method="show">
@@ -97,7 +106,12 @@
 		<action name="save"
 			class="de.nak.iaa.web.view.action.PruefungsleistungenAendernAction"
 			method="save">
-			<result name="success" type="tiles">saveEditExams</result>
+			<result name="success" type="redirectAction">
+				<param name="actionName">show</param>
+				<param name="namespace">/editExams</param>
+				<param name="pruefungsfach">${getSelectedPruefungsfach().getId()}</param>
+			</result>
+			<!-- <result name="success" type="tiles">saveEditExams</result> -->
 			<result name="input" type="tiles">showEditExams</result>
 		</action>
 		<action name="delete"
@@ -107,7 +121,6 @@
 				<param name="actionName">show</param>
 				<param name="namespace">/editExams</param>
 				<param name="pruefungsfach">${getSelectedPruefungsfach().getId()}</param>
-				<param name="pruefung">${getSelectedPruefung().getId()}</param>
 			</result>
 		</action>
 	</package>
