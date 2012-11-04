@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.common.base.Function;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableList.Builder;
 
 import de.nak.iaa.server.entity.Student;
 
@@ -26,8 +27,8 @@ public class IllegalUpdateException extends Exception {
 				new Function<List<IllegalPruefungsleistungException>, List<IllegalPruefungsleistungException>>() {
 					@Override
 					public List<IllegalPruefungsleistungException> apply(List<IllegalPruefungsleistungException> input) {
-						ImmutableList.builder().addAll(input).add(exc).build();
-						return input;
+						Builder<IllegalPruefungsleistungException> builder = ImmutableList.builder();
+						return builder.addAll(input).add(exc).build();
 					}
 				}).or(Optional.of(Arrays.asList(exc)));
 	}
