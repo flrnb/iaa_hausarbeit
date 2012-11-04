@@ -18,7 +18,7 @@
 	<s:iterator value="pruefungsfaecher" var="pruefungsfach">
 		<a
 			href="
-			<s:if test="getCurrentNamespace() == '/oralExams'">
+			<s:if test="getCurrentNamespace() == '/oralExams' || getCurrentNamespace() == '/editExams'">
 				<s:url action="show"/>
 			</s:if><s:else>
 				<s:url action="pruefungSelection"/>

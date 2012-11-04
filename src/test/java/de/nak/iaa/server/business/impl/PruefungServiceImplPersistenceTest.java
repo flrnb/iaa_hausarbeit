@@ -2,11 +2,14 @@ package de.nak.iaa.server.business.impl;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.javatuples.Triplet;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,11 +82,18 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 	public void testIsPruefungsleistungEditableNachfolgerGeloescht() throws IllegalPruefungsleistungException,
 			IllegalUpdateException {
 		Pruefung pruefung1 = service.addPruefung(fach, datum, dozent);
-		Pruefungsleistung leistung1 = service.addPruefungsleistung(pruefung1, student, Note.Sechs);
+		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung1, student, Note.Sechs));
+		service.addPruefungsleistungen(leistungen);
+		Pruefungsleistung leistung1 = service.getAllPruefungsleistungen(fach, student).get(0);
 		assertTrue(service.isPruefungsleistungEditable(leistung1.getId()));
 
 		Pruefung pruefung2 = service.addPruefung(fach, datum, dozent);
-		Pruefungsleistung leistung2 = service.addPruefungsleistung(pruefung2, student, Note.DreiDrei);
+		leistungen.clear();
+
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung2, student, Note.DreiDrei));
+		service.addPruefungsleistungen(leistungen);
+		Pruefungsleistung leistung2 = service.getAllPruefungsleistungen(fach, student).get(1);
 		assertFalse(service.isPruefungsleistungEditable(leistung1.getId()));
 		assertTrue(service.isPruefungsleistungEditable(leistung2.getId()));
 
@@ -92,5 +102,4 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 		// nicht editierbar
 		assertFalse(service.isPruefungsleistungEditable(leistung1.getId()));
 	}
-
 }

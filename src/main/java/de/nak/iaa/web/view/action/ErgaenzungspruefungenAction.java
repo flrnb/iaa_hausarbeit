@@ -6,18 +6,13 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.apache.struts2.interceptor.ParameterAware;
-import org.apache.struts2.interceptor.SessionAware;
-
 import com.opensymphony.xwork2.Action;
-import com.opensymphony.xwork2.Preparable;
 
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.web.view.formbean.ErgaenzungspruefungsFormBean;
 
 @SuppressWarnings("serial")
-public class ErgaenzungspruefungenAction extends AbstractFormAction implements
-		SessionAware, ParameterAware, Preparable {
+public class ErgaenzungspruefungenAction extends AbstractFormAction {
 
 	private List<ErgaenzungspruefungsFormBean> pruefungenBeans;
 
@@ -32,12 +27,9 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 		for (Entry<Student, Date> ergaenzungspruefung : getPruefungService()
 				.getAllErgaenzungsPruefungsStudenten(getSelectedManipel(),
 						getSelectedPruefungsfach()).entrySet()) {
-			System.out.println("hier bin ich");
 			if (ergaenzungspruefung == null)
 				continue;
 			else {
-				// TODO logik einbauen, damit der service benutzt wird
-
 				getPruefungenBeans()
 						.add(new ErgaenzungspruefungsFormBean(
 								ergaenzungspruefung.getKey(),
@@ -71,9 +63,9 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction implements
 					&& (p.getErgDatum() == null || p.getErgDatum().equals("")))
 				continue;
 
-			if (!p.getResultPercent().matches("\n{1,2}|100")) {
+			if (!p.getResultPercent().matches("^((100)|(\\d{1,2}))$")) {
 				addFieldError("pruefungenBeans[" + i + "].resultPercent",
-						"Keine gültige Note");
+						"Keine gültige Prozentzahl");
 			}
 			if (p.getErgDatum() == null || p.getErgDatum().equals("")) {
 				addFieldError("pruefungenBeans[" + i + "].ergDatum",

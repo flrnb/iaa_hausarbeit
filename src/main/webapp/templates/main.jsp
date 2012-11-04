@@ -7,7 +7,6 @@
 <head>
 <title><tiles:insertAttribute name="title" /></title>
 <link rel="stylesheet" href="/styles/style.css" />
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 <script type="text/javascript" src="/scripts/script.js"></script>
 <s:head />
 <sx:head />

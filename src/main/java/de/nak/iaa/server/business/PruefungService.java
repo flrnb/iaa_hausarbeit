@@ -8,7 +8,6 @@ import org.javatuples.Triplet;
 
 import com.google.common.base.Optional;
 
-import de.nak.iaa.server.business.IllegalUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.entity.Dozent;
 import de.nak.iaa.server.entity.ErgaenzungsPruefung;
 import de.nak.iaa.server.entity.Manipel;
@@ -79,18 +78,6 @@ public interface PruefungService {
 	boolean isPruefungsleistungEditable(Long id);
 
 	/**
-	 * @require isPruefungsleistungEditable(id)
-	 * @param id
-	 * @param note
-	 * @trows {@link IllegalStateException} wenn Prüfungsleistung nicht
-	 *        editierbar ist
-	 * @deprecated updatePruefungsleistungen(List<PruefungsAenderung>
-	 *             aenderungen) benutzen
-	 */
-	@Deprecated
-	void updatePruefungsleistung(Long id, Note note);
-
-	/**
 	 * führt die Liste der übergebenen Änderungsaufgaben durch
 	 * 
 	 * @param aenderungen
@@ -99,21 +86,6 @@ public interface PruefungService {
 	 */
 	void updatePruefungsleistungen(List<? extends PruefungsleistungAenderung> aenderungen)
 			throws IllegalUpdateException;
-
-	/**
-	 * Für einen Studenten eine neue Prüfungsleistung erfassen
-	 * 
-	 * @param pruefung
-	 * @param student
-	 * @param note
-	 * @return neu angelegte Prüfungsleistung
-	 * @throws IllegalUpdateException
-	 *             wenn die Prüfungsleistung nicht zulässig ist
-	 * @deprecated diese Methode ist nicht transaktionssicher,
-	 */
-	@Deprecated
-	Pruefungsleistung addPruefungsleistung(Pruefung pruefung, Student student, Note note)
-			throws IllegalPruefungsleistungException;
 
 	/**
 	 * legt alle übergebenen Prüfungsleistungen in einer Transaktion an

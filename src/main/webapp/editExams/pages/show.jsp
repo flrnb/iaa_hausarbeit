@@ -14,8 +14,7 @@
 <s:if test="pruefungenBeans.size() > 0">
 	<form action="<s:url action="save"/>">
 		<input type="hidden" name="pruefungsfach"
-			value="<s:property value="pruefungsfach"/>" /> <input type="hidden"
-			name="pruefung" value="<s:property value="pruefung"/>" />
+			value="<s:property value="pruefungsfach"/>" />
 		<table class="notenTabelle" border="1">
 			<tr>
 				<th>Matrikel Nr.</th>
@@ -44,7 +43,7 @@
 								cssErrorClass="fieldErrorCls" theme="simple"
 								value="%{#current.note.getNote()}"
 								disabled="%{!isWriteable(#current.id)}" /> <a
-							href="<s:url action="delete"/>?pruefungsfach=<s:property value="%{getSelectedPruefungsfach().getId()}"/>&pruefung=<s:property value="%{getSelectedPruefung().getId()}"/>&deleteId=<s:property value="%{#current.id}"/>"
+							href="<s:url action="delete"/>?pruefungsfach=<s:property value="%{getSelectedPruefungsfach().getId()}"/>&deleteId=<s:property value="%{#current.id}"/>"
 							class="linkButton" title="Eintrag löschen">X</a> <s:fielderror
 								theme="iaa">
 								<s:param>pruefungenBeans[${stat.index}].pruefungsleistungen[${stat1.index}].note</s:param>
