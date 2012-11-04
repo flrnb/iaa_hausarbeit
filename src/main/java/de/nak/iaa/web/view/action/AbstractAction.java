@@ -1,10 +1,12 @@
 package de.nak.iaa.web.view.action;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.ParameterAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.springframework.context.MessageSource;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -48,6 +50,17 @@ public abstract class AbstractAction extends ActionSupport implements
 	 */
 	public String getRequestUrl() {
 		return ServletActionContext.getRequest().getRequestURL().toString();
+	}
+
+	/**
+	 * Hole die Message zu dem übergebenen key
+	 * 
+	 * @param key
+	 * @return
+	 */
+	public String getMsg(String key) {
+		return getMessageSource().getMessage(key, new Object[] {},
+				Locale.getDefault());
 	}
 
 	/* Custom Logik Ende */
@@ -115,4 +128,17 @@ public abstract class AbstractAction extends ActionSupport implements
 	}
 
 	/* Service Management Ende */
+	/* Messages Start */
+
+	private MessageSource messageSource;
+
+	public MessageSource getMessageSource() {
+		return messageSource;
+	}
+
+	public void setMessageSource(MessageSource messageSource) {
+		this.messageSource = messageSource;
+	}
+
+	/* Messages Ende */
 }

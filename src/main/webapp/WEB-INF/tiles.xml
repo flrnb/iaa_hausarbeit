@@ -78,4 +78,14 @@
 		<put-attribute name="content" value="/pages/error.jsp"></put-attribute>
 	</definition>
 
+	<definition name="showPruefungAnlegen" extends="mainLayout">
+		<put-attribute name="title" value="NoDaBa - Prüfung anlegen"></put-attribute>
+		<put-attribute name="content" value="/createExams/pages/show.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="savePruefungAnlegen" extends="mainLayout">
+		<put-attribute name="title" value="NoDaBa - Prüfung anlegen erfolgreich"></put-attribute>
+		<put-attribute name="content" value="/createExams/pages/save.jsp"></put-attribute>
+	</definition>
+
 </tiles-definitions>

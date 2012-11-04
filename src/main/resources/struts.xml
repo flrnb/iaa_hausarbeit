@@ -20,8 +20,9 @@
 			<result type="tiles" name="exception">errorPage</result>
 		</global-results>
 		<global-exception-mappings>
-	        <exception-mapping exception="java.lang.Exception" result="exception" />
-	   	</global-exception-mappings> -->
+			<exception-mapping exception="java.lang.Exception"
+				result="exception" />
+		</global-exception-mappings> -->
 	</package>
 
 	<package name="manipelSelection" extends="exceptionsBase">
@@ -122,6 +123,19 @@
 				<param name="namespace">/editExams</param>
 				<param name="pruefungsfach">${getSelectedPruefungsfach().getId()}</param>
 			</result>
+		</action>
+	</package>
+
+	<package name="pruefungAnlegen" extends="manipelSelection"
+		namespace="/pruefungAnlegen">
+		<action name="show" class="de.nak.iaa.web.view.action.PruefungAnlegenAction"
+			method="show">
+			<result type="tiles" name="success">showPruefungAnlegen</result>
+		</action>
+		<action name="save" class="de.nak.iaa.web.view.action.PruefungAnlegenAction"
+			method="save">
+			<result type="tiles" name="success">savePruefungAnlegen</result>
+			<result type="tiles" name="input">showPruefungAnlegen</result>
 		</action>
 	</package>
 
