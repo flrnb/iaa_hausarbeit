@@ -324,6 +324,21 @@ public class PruefungServiceImplTest {
 		}
 	}
 
+	@Test(expected = IllegalUpdateException.class)
+	public void testAddPruefungsleistungenZukunft() throws IllegalUpdateException {
+		// Morgen schon geschrieben
+		Pruefung pruefungMorgen = new Pruefung(TOMORROW, fach1, dozent);
+		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefungMorgen, student1, Note.Fuenf));
+		service.addPruefungsleistungen(leistungen);
+
+		// Darf heute nicht schreiben
+		Pruefung pruefungHeute = new Pruefung(TODAY, fach1, dozent);
+		leistungen.clear();
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefungHeute, student1, Note.Drei));
+		service.addPruefungsleistungen(leistungen);
+	}
+
 	@Test
 	public void testAddPruefungsleistung() throws IllegalPruefungsleistungException {
 		Pruefung pruefung = new Pruefung(TODAY, fach1, dozent);

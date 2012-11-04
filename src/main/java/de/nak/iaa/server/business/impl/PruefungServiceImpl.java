@@ -86,6 +86,8 @@ public class PruefungServiceImpl implements PruefungService {
 			Versuch versuch = leistung.get().getVersuch();
 			if (isBestanden(leistung.get()) || !versuch.next().isPresent())
 				throw new IllegalPruefungsleistungException(student, getMsg(ZU_OFT));
+			if (pruefung.getDatum().before(leistung.get().getPruefung().getDatum()))
+				throw new IllegalPruefungsleistungException(student, getMsg(PRUEFUNG_ZUKUNFT));
 			nextVersuch = versuch.next().get();
 		} else {
 			nextVersuch = Versuch.Eins;
@@ -320,4 +322,5 @@ public class PruefungServiceImpl implements PruefungService {
 
 	private static final String KEINE_ERGAENZUNGSPRUEFUNG = "pruefung.keineErgaenzung";
 
+	private static final String PRUEFUNG_ZUKUNFT = "pruefung.zukunftVorhanden";
 }

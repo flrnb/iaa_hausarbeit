@@ -26,23 +26,21 @@ public class PruefungPersistenceTest extends ApplicationContextAwareTest {
 	@Resource
 	private ManipelDAO manipelDAO;
 	@Resource
-	private DozentDAO dozentDOA;
+	private DozentDAO dozentDAO;
 
 	@Before
 	public void setUp() {
 		Dozent d = new Dozent("B", "A");
-		dozentDOA.makePersistent(d);
+		dozentDAO.makePersistent(d);
 	}
 
 	@Test
 	public void testPersist() {
 		Manipel manipel = manipelDAO.findAll().get(0);
 		Pruefungsfach pruefungsfach = pruefungsfachDAO
-				.makePersistent(new Pruefungsfach("Fach", "Beschreibung",
-						manipel));
+				.makePersistent(new Pruefungsfach("Fach", "Beschreibung", manipel));
 		int countBefore = pruefungDAO.findAll().size();
-		Pruefung pruefung = new Pruefung(new Date(), pruefungsfach, dozentDOA
-				.findAll().get(0));
+		Pruefung pruefung = new Pruefung(new Date(), pruefungsfach, dozentDAO.findAll().get(0));
 		pruefungDAO.makePersistent(pruefung);
 		int countAfter = pruefungDAO.findAll().size();
 		assertThat(countBefore + 1, is(equalTo(countAfter)));
