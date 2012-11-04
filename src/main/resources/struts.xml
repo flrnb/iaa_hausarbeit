@@ -16,12 +16,12 @@
 	</package>
 
 	<package name="exceptionsBase" extends="tiles-default">
-		<global-results>
+		<!-- <global-results>
 			<result type="tiles" name="exception">errorPage</result>
 		</global-results>
 		<global-exception-mappings>
 	        <exception-mapping exception="java.lang.Exception" result="exception" />
-	   	</global-exception-mappings>
+	   	</global-exception-mappings> -->
 	</package>
 
 	<package name="manipelSelection" extends="exceptionsBase">

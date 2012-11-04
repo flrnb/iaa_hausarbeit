@@ -27,12 +27,9 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 		for (Entry<Student, Date> ergaenzungspruefung : getPruefungService()
 				.getAllErgaenzungsPruefungsStudenten(getSelectedManipel(),
 						getSelectedPruefungsfach()).entrySet()) {
-			System.out.println("hier bin ich");
 			if (ergaenzungspruefung == null)
 				continue;
 			else {
-				// TODO logik einbauen, damit der service benutzt wird
-
 				getPruefungenBeans()
 						.add(new ErgaenzungspruefungsFormBean(
 								ergaenzungspruefung.getKey(),
@@ -66,9 +63,9 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 					&& (p.getErgDatum() == null || p.getErgDatum().equals("")))
 				continue;
 
-			if (!p.getResultPercent().matches("\n{1,2}|100")) {
+			if (!p.getResultPercent().matches("^((100)|(\\d{1,2}))$")) {
 				addFieldError("pruefungenBeans[" + i + "].resultPercent",
-						"Keine gültige Note");
+						"Keine gültige Prozentzahl");
 			}
 			if (p.getErgDatum() == null || p.getErgDatum().equals("")) {
 				addFieldError("pruefungenBeans[" + i + "].ergDatum",
