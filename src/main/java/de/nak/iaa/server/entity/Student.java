@@ -9,7 +9,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "MATRIKEL_NR" }))
-public class Student extends Person {
+public class Student extends Person implements Comparable<Student> {
 
 	@Column(name = "MATRIKEL_NR")
 	private int matrikelNr;
@@ -63,5 +63,10 @@ public class Student extends Person {
 
 	public void setManipel(Manipel manipel) {
 		this.manipel = manipel;
+	}
+
+	@Override
+	public int compareTo(Student student) {
+		return this.getName().compareTo(student.getName());
 	}
 }
