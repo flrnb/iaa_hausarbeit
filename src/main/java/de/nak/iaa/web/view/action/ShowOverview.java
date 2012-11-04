@@ -3,6 +3,7 @@ package de.nak.iaa.web.view.action;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import com.google.common.base.Optional;
 import com.opensymphony.xwork2.Action;
@@ -28,18 +29,15 @@ public class ShowOverview extends AbstractAction {
 				getSelectedManipel()));
 		setStudenten(getStudentService().getAllStudenten(getSelectedManipel()));
 
-		System.out.println(getStudenten().size());
-
 		ergebnisse = new HashMap<Pruefungsfach, Map<Student, Note>>();
 
 		for (Pruefungsfach pf : getFaecher()) {
-			Map<Student, Note> stpMap = new HashMap<Student, Note>();
+			Map<Student, Note> stpMap = new TreeMap<Student, Note>();
 			for (Student st : getStudenten()) {
 				Optional<Note> note = getPruefungService().getAktuelleNote(st,
 						pf);
 				stpMap.put(st, (note.isPresent()) ? note.get() : null);
 			}
-			System.out.println(stpMap.size());
 			ergebnisse.put(pf, stpMap);
 		}
 
