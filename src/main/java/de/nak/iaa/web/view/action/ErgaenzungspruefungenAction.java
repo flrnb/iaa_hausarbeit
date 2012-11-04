@@ -56,15 +56,14 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 		int i = 0;
 		for (ErgaenzungspruefungsFormBean p : pruefungenBeans) {
 			// TODO hier validieren
-			if (p.getResultPercent().isEmpty()
-					&& (p.getErgDatum() == null || p.getErgDatum().equals("")))
-				continue;
+			// if (p.getResultPercent().isEmpty()
+			// && (p.getErgDatum() == null || p.getErgDatum().equals("")))
+			// continue;
 
 			if (!p.getResultPercent().matches("^((100)|(\\d{1,2}))$")) {
 				addFieldError("pruefungenBeans[" + i + "].resultPercent",
 						"Keine gültige Prozentzahl");
 			}
-			// TODO
 			if (p.getErgDatum() == null || p.getErgDatum().equals("")) {
 				addFieldError("pruefungenBeans[" + i + "].ergDatum",
 						"Kein Datum angegeben");
