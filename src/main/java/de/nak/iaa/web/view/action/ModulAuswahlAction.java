@@ -3,8 +3,6 @@ package de.nak.iaa.web.view.action;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.ParameterAware;
-import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.Action;
 
@@ -13,8 +11,7 @@ import de.nak.iaa.server.entity.Pruefung;
 import de.nak.iaa.server.entity.Pruefungsfach;
 
 @SuppressWarnings("serial")
-public class ModulAuswahlAction extends AbstractFormAction implements
-		ParameterAware, SessionAware {
+public class ModulAuswahlAction extends AbstractFormAction {
 	private static final String NO_MANIPEL_SELECTED = "noManipelSelected";
 
 	private List<Pruefungsfach> pruefungsfaecher;

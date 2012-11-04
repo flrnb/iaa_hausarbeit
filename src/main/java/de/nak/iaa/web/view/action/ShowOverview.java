@@ -19,6 +19,8 @@ public class ShowOverview extends AbstractAction {
 	private List<Student> studenten;
 	private Map<Pruefungsfach, Map<Student, Note>> ergebnisse;
 
+	/* Actions Start */
+
 	public String show() {
 		if (isManipelSelected()) {
 			setTargetUrl(getRequestUrl());
@@ -44,6 +46,7 @@ public class ShowOverview extends AbstractAction {
 		return Action.SUCCESS;
 	}
 
+	/* Actions Ende */
 	/* Properties */
 
 	public List<Pruefungsfach> getFaecher() {

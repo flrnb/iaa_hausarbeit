@@ -43,10 +43,6 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 	/* Custom Logik Ende */
 	/* Logik Start */
 
-	@Override
-	public void validate() {
-	}
-
 	/* Logik Ende */
 	/* Actions Start */
 

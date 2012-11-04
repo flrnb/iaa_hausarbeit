@@ -7,14 +7,10 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
 
-import org.apache.struts2.interceptor.ParameterAware;
-import org.apache.struts2.interceptor.SessionAware;
 import org.javatuples.Triplet;
 
 import com.google.common.base.Optional;
 import com.opensymphony.xwork2.Action;
-import com.opensymphony.xwork2.Preparable;
-import com.opensymphony.xwork2.ValidationAware;
 
 import de.nak.iaa.server.business.IllegalUpdateException;
 import de.nak.iaa.server.business.IllegalUpdateException.IllegalPruefungsleistungException;
@@ -26,8 +22,7 @@ import de.nak.iaa.web.entity.Protokollzeile;
 import de.nak.iaa.web.view.formbean.PruefungsleistungFormBean;
 
 @SuppressWarnings("serial")
-public class PruefungsleistungenEintragenAction extends AbstractFormAction
-		implements SessionAware, ParameterAware, Preparable, ValidationAware {
+public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 
 	private List<PruefungsleistungFormBean> pruefungenBeans;
 

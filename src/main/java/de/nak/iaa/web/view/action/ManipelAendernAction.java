@@ -3,20 +3,16 @@ package de.nak.iaa.web.view.action;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
-import org.apache.struts2.interceptor.ParameterAware;
-import org.apache.struts2.interceptor.SessionAware;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.Preparable;
 
-import de.nak.iaa.server.business.mock.MockStudentService;
 import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 import de.nak.iaa.web.util.DataHelper;
 
 @SuppressWarnings("serial")
-public class ManipelAendernAction extends AbstractAction implements
-		SessionAware, ParameterAware, Preparable {
+public class ManipelAendernAction extends AbstractAction implements Preparable {
 
 	private String selectedManipel;
 	private List<Manipel> manipel;
@@ -28,12 +24,6 @@ public class ManipelAendernAction extends AbstractAction implements
 	@Override
 	public void prepare() throws Exception {
 		setManipel(getStudentService().getAllManipel());
-	}
-
-	@Override
-	public String execute() throws Exception {
-		setStudentService(new MockStudentService());
-		return super.execute();
 	}
 
 	@Override
@@ -65,6 +55,7 @@ public class ManipelAendernAction extends AbstractAction implements
 	}
 
 	public String save() {
+		// speicher den aktuell gewählten manipel in der session
 		String[] manipelParts = selectedManipel.split(" ", 2);
 		getSession().put(
 				"selectedManipel",
