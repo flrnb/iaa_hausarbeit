@@ -23,7 +23,7 @@ public class ShowOverview extends AbstractAction {
 	/* Actions Start */
 
 	public String show() {
-		if (isManipelSelected()) {
+		if (isManipelNotSelected()) {
 			setTargetUrl(getRequestUrl());
 			return NO_MANIPEL_SELECTED;
 		}

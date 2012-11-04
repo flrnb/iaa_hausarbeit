@@ -29,7 +29,7 @@ public class ModulAuswahlAction extends AbstractFormAction {
 	/* Actions Start */
 
 	public String showSelectModul() {
-		if (isManipelSelected()) {
+		if (isManipelNotSelected()) {
 			setTargetUrl(ServletActionContext.getRequest().getRequestURL()
 					.toString());
 			return NO_MANIPEL_SELECTED;
@@ -40,7 +40,7 @@ public class ModulAuswahlAction extends AbstractFormAction {
 	}
 
 	public String showSelectPruefung() {
-		if (isManipelSelected()) {
+		if (isManipelNotSelected()) {
 			setTargetUrl("/");
 			return NO_MANIPEL_SELECTED;
 		}

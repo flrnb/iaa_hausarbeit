@@ -60,7 +60,7 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 	/* Actions Start */
 
 	public String show() {
-		if (isManipelSelected()) {
+		if (isManipelNotSelected()) {
 			setTargetUrl(getRequestUrl());
 			return NO_MANIPEL_SELECTED;
 		}
@@ -70,7 +70,7 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 	}
 
 	public String save() {
-		if (isManipelSelected()) {
+		if (isManipelNotSelected()) {
 			setTargetUrl(getRequestUrl());
 			return NO_MANIPEL_SELECTED;
 		}

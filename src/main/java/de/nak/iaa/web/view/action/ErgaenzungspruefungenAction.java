@@ -48,7 +48,7 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 	/* Actions Start */
 
 	public String save() throws Exception {
-		if (isManipelSelected()) {
+		if (isManipelNotSelected()) {
 			setTargetUrl(getRequestUrl());
 			return NO_MANIPEL_SELECTED;
 		}
@@ -56,15 +56,14 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 		int i = 0;
 		for (ErgaenzungspruefungsFormBean p : pruefungenBeans) {
 			// TODO hier validieren
-			if (p.getResultPercent().isEmpty()
-					&& (p.getErgDatum() == null || p.getErgDatum().equals("")))
-				continue;
+			// if (p.getResultPercent().isEmpty()
+			// && (p.getErgDatum() == null || p.getErgDatum().equals("")))
+			// continue;
 
 			if (!p.getResultPercent().matches("^((100)|(\\d{1,2}))$")) {
 				addFieldError("pruefungenBeans[" + i + "].resultPercent",
 						"Keine gültige Prozentzahl");
 			}
-			// TODO
 			if (p.getErgDatum() == null || p.getErgDatum().equals("")) {
 				addFieldError("pruefungenBeans[" + i + "].ergDatum",
 						"Kein Datum angegeben");
@@ -87,7 +86,7 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 	}
 
 	public String show() throws Exception {
-		if (isManipelSelected()) {
+		if (isManipelNotSelected()) {
 			setTargetUrl(getRequestUrl());
 			return NO_MANIPEL_SELECTED;
 		}

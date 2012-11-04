@@ -71,7 +71,7 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 	/* Actions Start */
 
 	public String save() {
-		if (isManipelSelected()) {
+		if (isManipelNotSelected()) {
 			setTargetUrl(getRequestUrl());
 			return NO_MANIPEL_SELECTED;
 		}
@@ -146,7 +146,7 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 
 	// TODO fehlerbehandlung hinzufügen
 	public String show() {
-		if (isManipelSelected()) {
+		if (isManipelNotSelected()) {
 			setTargetUrl(getRequestUrl());
 			return NO_MANIPEL_SELECTED;
 		}
