@@ -21,12 +21,14 @@ import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.web.entity.Protokollzeile;
 import de.nak.iaa.web.view.formbean.PruefungsleistungFormBean;
 
-@SuppressWarnings("serial")
 public class PruefungsleistungenEintragenAction extends AbstractFormAction {
+
+	private static final long serialVersionUID = 1L;
 
 	private List<PruefungsleistungFormBean> pruefungenBeans;
 
 	private Map<Student, Protokollzeile> protokoll;
+	private boolean hasErrors = false;
 	private boolean protokollHasErrors;
 
 	/* Custom Logik Start */
@@ -44,10 +46,6 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 							.equals(getSelectedManipel()))
 				continue;
 			else {
-				// Optional<Note> alteNote =
-				// getPruefungService().getAktuelleNote(
-				// student, getSelectedPruefungsfach());
-
 				Note alteNote = null;
 				if (student.getValue().isPresent()) {
 					alteNote = student.getValue().get().getNote();
@@ -72,7 +70,6 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 	/* Logik Ende */
 	/* Actions Start */
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public String save() {
 		if (isManipelSelected()) {
 			setTargetUrl(getRequestUrl());
@@ -116,8 +113,8 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 
 				}
 
-				leistungen.add(new Triplet(getSelectedPruefung(), st, Note
-						.getNote(p.getNote())));
+				leistungen.add(new Triplet<Pruefung, Student, Note>(
+						getSelectedPruefung(), st, Note.getNote(p.getNote())));
 				getProtokoll().put(
 						st,
 						new Protokollzeile(Protokollzeile.NACHRICHT, "Note "
@@ -129,7 +126,7 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 			try {
 				getPruefungService().addPruefungsleistungen(leistungen);
 			} catch (IllegalUpdateException e) {
-
+				setHasErrors(true);
 				for (IllegalPruefungsleistungException ipe : e
 						.getNestedExceptions().get()) {
 					getProtokoll()
@@ -141,8 +138,6 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 													+ " konnte nicht eingetragen werden ("
 													+ ipe.getMessage() + ")"));
 				}
-				e.getMessage();
-				e.printStackTrace();
 			}
 		}
 
@@ -186,5 +181,13 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 
 	public void setProtokollHasErrors(boolean protokollHasErrors) {
 		this.protokollHasErrors = protokollHasErrors;
+	}
+
+	public boolean isHasErrors() {
+		return hasErrors;
+	}
+
+	public void setHasErrors(boolean hasErrors) {
+		this.hasErrors = hasErrors;
 	}
 }

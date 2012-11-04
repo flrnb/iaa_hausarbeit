@@ -12,9 +12,10 @@ import de.nak.iaa.server.business.PruefungService;
 import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.entity.Manipel;
 
-@SuppressWarnings("serial")
 public abstract class AbstractAction extends ActionSupport implements
 		SessionAware, ParameterAware {
+
+	private static final long serialVersionUID = 1L;
 
 	protected static final String NO_MANIPEL_SELECTED = "noManipelSelected";
 

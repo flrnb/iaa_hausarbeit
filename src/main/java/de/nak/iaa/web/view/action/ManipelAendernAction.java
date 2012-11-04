@@ -11,8 +11,9 @@ import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 import de.nak.iaa.web.util.DataHelper;
 
-@SuppressWarnings("serial")
 public class ManipelAendernAction extends AbstractAction implements Preparable {
+
+	private static final long serialVersionUID = 1L;
 
 	private String selectedManipel;
 	private List<Manipel> manipel;

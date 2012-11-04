@@ -12,8 +12,9 @@ import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;
 
-@SuppressWarnings("serial")
 public class ShowOverview extends AbstractAction {
+
+	private static final long serialVersionUID = 1L;
 
 	private List<Pruefungsfach> faecher;
 	private List<Student> studenten;

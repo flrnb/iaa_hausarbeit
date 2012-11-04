@@ -9,9 +9,10 @@ import de.nak.iaa.server.entity.Pruefung;
 import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.web.util.DataHelper;
 
-@SuppressWarnings("serial")
 public abstract class AbstractFormAction extends AbstractAction implements
 		SessionAware, ParameterAware, Preparable {
+
+	private static final long serialVersionUID = 1L;
 
 	private Pruefungsfach selectedPruefungsfach;
 	private Pruefung selectedPruefung;

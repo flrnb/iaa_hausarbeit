@@ -11,8 +11,9 @@ import com.opensymphony.xwork2.Action;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.web.view.formbean.ErgaenzungspruefungsFormBean;
 
-@SuppressWarnings("serial")
 public class ErgaenzungspruefungenAction extends AbstractFormAction {
+
+	private static final long serialVersionUID = 1L;
 
 	private List<ErgaenzungspruefungsFormBean> pruefungenBeans;
 
@@ -63,6 +64,7 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 				addFieldError("pruefungenBeans[" + i + "].resultPercent",
 						"Keine gültige Prozentzahl");
 			}
+			// TODO
 			if (p.getErgDatum() == null || p.getErgDatum().equals("")) {
 				addFieldError("pruefungenBeans[" + i + "].ergDatum",
 						"Kein Datum angegeben");

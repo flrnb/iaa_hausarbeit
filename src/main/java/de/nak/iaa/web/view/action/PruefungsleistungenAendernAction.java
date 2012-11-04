@@ -14,8 +14,9 @@ import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.web.util.DataHelper;
 import de.nak.iaa.web.view.formbean.PruefungsleistungAendernFormBean;
 
-@SuppressWarnings("serial")
 public class PruefungsleistungenAendernAction extends AbstractFormAction {
+
+	private static final long serialVersionUID = 1L;
 
 	private List<PruefungsleistungAendernFormBean> pruefungenBeans;
 

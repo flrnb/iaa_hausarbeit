@@ -10,8 +10,10 @@ import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Pruefung;
 import de.nak.iaa.server.entity.Pruefungsfach;
 
-@SuppressWarnings("serial")
 public class ModulAuswahlAction extends AbstractFormAction {
+
+	private static final long serialVersionUID = 1L;
+
 	private static final String NO_MANIPEL_SELECTED = "noManipelSelected";
 
 	private List<Pruefungsfach> pruefungsfaecher;
