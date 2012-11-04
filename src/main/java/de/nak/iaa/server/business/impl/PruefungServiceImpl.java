@@ -231,6 +231,7 @@ public class PruefungServiceImpl implements PruefungService {
 		Note note = (prozent >= 80) ? Note.Vier : Note.Fuenf;
 		ErgaenzungsPruefung ergaenzungsPruefung = new ErgaenzungsPruefung(note, datum);
 		letzterVersuch.get().setErgaenzungsPruefung(ergaenzungsPruefung);
+		pruefungsleistungDAO.makePersistent(letzterVersuch.get());
 		return ergaenzungsPruefung;
 	}
 
