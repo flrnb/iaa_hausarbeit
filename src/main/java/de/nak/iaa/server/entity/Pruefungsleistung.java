@@ -1,5 +1,6 @@
 package de.nak.iaa.server.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -27,7 +28,7 @@ public class Pruefungsleistung {
 	@Enumerated(EnumType.STRING)
 	private Versuch versuch;
 
-	@OneToOne(optional = true, fetch = FetchType.EAGER)
+	@OneToOne(optional = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinColumn(name = "ERGAENZUNGSPRUEFUNG_ID")
 	private ErgaenzungsPruefung ergaenzungsPruefung;
 
