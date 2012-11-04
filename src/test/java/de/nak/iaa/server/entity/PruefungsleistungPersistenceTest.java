@@ -76,8 +76,9 @@ public class PruefungsleistungPersistenceTest extends
 				Note.EinsDrei, student);
 		pl.setErgaenzungsPruefung(new ErgaenzungsPruefung(Note.Drei, new Date()));
 		pl = pruefungsleistungDAO.makePersistent(pl);
-		assertThat(pl.getErgaenzungsPruefung(),
-				is(notNullValue(ErgaenzungsPruefung.class)));
+		Long id = pl.getId();
+		pl = pruefungsleistungDAO.findById(id, false);
+		assertThat(pl.getErgaenzungsPruefung().getId(), is(notNullValue()));
 	}
 
 }
