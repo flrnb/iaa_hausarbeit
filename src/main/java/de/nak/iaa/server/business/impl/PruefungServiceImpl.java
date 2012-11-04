@@ -78,17 +78,6 @@ public class PruefungServiceImpl implements PruefungService {
 			throw exc;
 	}
 
-	@Override
-	@Deprecated
-	public void updatePruefungsleistung(Long id, Note note) {
-		if (!isPruefungsleistungEditable(id))
-			throw new IllegalStateException(getMsg(NICHT_EDITIERBAR));
-		Pruefungsleistung leistung = pruefungsleistungDAO.findById(id, false);
-		leistung.setNote(note);
-		pruefungsleistungDAO.makePersistent(leistung);
-	}
-
-	@Override
 	public Pruefungsleistung addPruefungsleistung(Pruefung pruefung, Student student, Note note)
 			throws IllegalPruefungsleistungException {
 		Optional<Pruefungsleistung> leistung = getLetzterVersuch(pruefung.getPruefungsfach(), student);
