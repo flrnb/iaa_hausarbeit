@@ -24,6 +24,6 @@
 		</s:iterator>
 	</table>
 </div>
-<s:if test="protokoll.size() > 0">
+<s:if test="isHasErrors()">
 	<br /><a class="dontPrint" href="javascript:window.history.back()">Zurück</a>
 </s:if>
