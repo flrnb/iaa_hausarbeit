@@ -48,7 +48,7 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 	/* Actions Start */
 
 	public String save() throws Exception {
-		if (isManipelSelected()) {
+		if (isManipelNotSelected()) {
 			setTargetUrl(getRequestUrl());
 			return NO_MANIPEL_SELECTED;
 		}
@@ -86,7 +86,7 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 	}
 
 	public String show() throws Exception {
-		if (isManipelSelected()) {
+		if (isManipelNotSelected()) {
 			setTargetUrl(getRequestUrl());
 			return NO_MANIPEL_SELECTED;
 		}

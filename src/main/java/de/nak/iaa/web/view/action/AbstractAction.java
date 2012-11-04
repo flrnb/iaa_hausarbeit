@@ -35,7 +35,7 @@ public abstract class AbstractAction extends ActionSupport implements
 	 * 
 	 * @return
 	 */
-	public boolean isManipelSelected() {
+	public boolean isManipelNotSelected() {
 		return (!getSession().containsKey("selectedManipel")
 				|| getSession().get("selectedManipel") == null || getSession()
 				.get("selectedManipel").equals(""));
