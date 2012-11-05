@@ -23,8 +23,7 @@ import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Versuch;
 
 @Repository
-public class PruefungsleistungDAOImpl extends
-		GenericHibernateDAOImpl<Pruefungsleistung, Long> implements
+public class PruefungsleistungDAOImpl extends GenericHibernateDAOImpl<Pruefungsleistung, Long> implements
 		PruefungsleistungDAO {
 
 	@Override
@@ -33,37 +32,22 @@ public class PruefungsleistungDAOImpl extends
 		return auditReader.find(Pruefungsleistung.class, primaryKey, revision);
 	}
 
-	@Override
-	@Deprecated
-	public List<Pruefungsleistung> getAlteRevisionenFuerVersuch(
-			Long primaryKey, Versuch versuch) {
-		AuditReader auditReader = AuditReaderFactory.get(getSession());
-		AuditQuery query = auditReader.createQuery()
-				.forRevisionsOfEntity(Pruefungsleistung.class, true, true)
-				.add(AuditEntity.property("versuch").eq(versuch))
-				.add(AuditEntity.id().eq(primaryKey));
-		return query.getResultList();
-	}
-
 	/**
 	 * Sucht für den Studenten, das Prüfungsfach und den Versuch die
 	 * Prüfungsleistungen raus, falls vorhanden. Falls nicht, wird eine leere
 	 * Liste zurück geliefert.
 	 */
 	@Override
-	public List<Pruefungsleistung> getVersuchFallsVorhanden(Student student,
-			Pruefungsfach pruefungsfach, Versuch versuch) {
+	public List<Pruefungsleistung> getVersuchFallsVorhanden(Student student, Pruefungsfach pruefungsfach,
+			Versuch versuch) {
 		AuditReader auditReader = AuditReaderFactory.get(getSession());
-		AuditQuery query = auditReader.createQuery()
-				.forRevisionsOfEntity(Pruefungsleistung.class, true, true)
-				.add(AuditEntity.property("versuch").eq(versuch))
-				.add(AuditEntity.property("student").eq(student));
+		AuditQuery query = auditReader.createQuery().forRevisionsOfEntity(Pruefungsleistung.class, true, true)
+				.add(AuditEntity.property("versuch").eq(versuch)).add(AuditEntity.property("student").eq(student));
 		@SuppressWarnings("unchecked")
 		List<Pruefungsleistung> resultList = query.getResultList();
 		// Pruefungsfach ist leider nicht direkt mit der Versionierung
 		// assoziiert
-		return filterePruefungsleistungNachPruefungsfach(resultList,
-				pruefungsfach);
+		return filterePruefungsleistungNachPruefungsfach(resultList, pruefungsfach);
 	}
 
 	/**
@@ -73,17 +57,14 @@ public class PruefungsleistungDAOImpl extends
 	 * @param pruefungsfach
 	 * @return
 	 */
-	private List<Pruefungsleistung> filterePruefungsleistungNachPruefungsfach(
-			List<Pruefungsleistung> resultList,
+	private List<Pruefungsleistung> filterePruefungsleistungNachPruefungsfach(List<Pruefungsleistung> resultList,
 			final Pruefungsfach pruefungsfach) {
-		return ImmutableList.copyOf(Collections2.filter(resultList,
-				new Predicate<Pruefungsleistung>() {
-					@Override
-					public boolean apply(Pruefungsleistung p) {
-						return p.getPruefung().getPruefungsfach()
-								.equals(pruefungsfach);
-					}
-				}));
+		return ImmutableList.copyOf(Collections2.filter(resultList, new Predicate<Pruefungsleistung>() {
+			@Override
+			public boolean apply(Pruefungsleistung p) {
+				return p.getPruefung().getPruefungsfach().equals(pruefungsfach);
+			}
+		}));
 	}
 
 	/**
@@ -93,8 +74,7 @@ public class PruefungsleistungDAOImpl extends
 	@Override
 	public Map<Pruefungsleistung, Date> getAltePruefungsleistungen(Long id) {
 		AuditReader auditReader = AuditReaderFactory.get(getSession());
-		AuditQuery query = auditReader.createQuery()
-				.forRevisionsOfEntity(Pruefungsleistung.class, false, true)
+		AuditQuery query = auditReader.createQuery().forRevisionsOfEntity(Pruefungsleistung.class, false, true)
 				.add(AuditEntity.id().eq(id));
 		/*
 		 * siehe Methodenkommentar

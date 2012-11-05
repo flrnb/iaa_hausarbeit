@@ -19,16 +19,11 @@ import de.nak.iaa.server.fachwert.Versuch;
  * @author Ronny Bräunlich
  * 
  */
-public interface PruefungsleistungDAO extends
-		GenericDAO<Pruefungsleistung, Long> {
+public interface PruefungsleistungDAO extends GenericDAO<Pruefungsleistung, Long> {
 
 	Pruefungsleistung getAlteRevision(int revision, Long primaryKey);
 
-	List<Pruefungsleistung> getAlteRevisionenFuerVersuch(Long primaryKey,
-			Versuch versuch);
-
-	List<Pruefungsleistung> getVersuchFallsVorhanden(Student student,
-			Pruefungsfach pruefungsfach, Versuch versuch);
+	List<Pruefungsleistung> getVersuchFallsVorhanden(Student student, Pruefungsfach pruefungsfach, Versuch versuch);
 
 	Map<Pruefungsleistung, Date> getAltePruefungsleistungen(Long id);
 }
