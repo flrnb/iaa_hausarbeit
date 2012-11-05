@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
@@ -32,14 +33,6 @@ public class StudentServiceImpl implements StudentService {
 		return ImmutableList.copyOf(manipelDAO.findAll());
 	}
 
-	public void setManipelDAO(ManipelDAO manipelDAO) {
-		this.manipelDAO = manipelDAO;
-	}
-
-	public void setStudentDAO(StudentDAO studentDAO) {
-		this.studentDAO = studentDAO;
-	}
-
 	@Override
 	public List<Student> getAllStudenten(Predicate<Student> filter) {
 		return ImmutableList.copyOf(Iterables.filter(getAllStudenten(), filter));
@@ -51,6 +44,11 @@ public class StudentServiceImpl implements StudentService {
 	}
 
 	@Override
+	public Optional<Student> getStudentById(Long id) {
+		return Optional.fromNullable(studentDAO.findById(id, false));
+	}
+
+	@Override
 	public List<Student> getAllStudenten(final Manipel manipel) {
 		return getAllStudenten(new Predicate<Student>() {
 			@Override
@@ -58,5 +56,13 @@ public class StudentServiceImpl implements StudentService {
 				return s.getManipel().equals(manipel);
 			}
 		});
+	}
+
+	public void setManipelDAO(ManipelDAO manipelDAO) {
+		this.manipelDAO = manipelDAO;
+	}
+
+	public void setStudentDAO(StudentDAO studentDAO) {
+		this.studentDAO = studentDAO;
 	}
 }

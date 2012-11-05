@@ -2,6 +2,7 @@ package de.nak.iaa.server.business;
 
 import java.util.List;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 
 import de.nak.iaa.server.entity.Manipel;
@@ -35,6 +36,12 @@ public interface StudentService {
 	 * @return Liste aller Studenten
 	 */
 	List<Student> getAllStudenten();
+
+	/**
+	 * @param id
+	 * @return Studenten mit der übergebenen ID, falls vorhanden
+	 */
+	Optional<Student> getStudentById(Long id);
 
 	/**
 	 * liefert eine Liste aller Studenten des übergebenen Manipels

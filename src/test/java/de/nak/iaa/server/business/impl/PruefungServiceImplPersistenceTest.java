@@ -104,6 +104,39 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 	}
 
 	@Test
+	public void testIsPruefungsleistungNotEditable() throws IllegalUpdateException {
+		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung1, student, Note.Fuenf));
+		service.addPruefungsleistungen(leistungen);
+		Pruefungsleistung leistung1 = service.getAllPruefungsleistungen(fach, student).get(0);
+
+		leistungen.clear();
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung2, student, Note.Fuenf));
+		service.addPruefungsleistungen(leistungen);
+
+		assertFalse(service.isPruefungsleistungEditable(leistung1.getId()));
+	}
+
+	@Test(expected = IllegalUpdateException.class)
+	public void testUpdatePruefungsleistungNotEditableIllegalState() throws IllegalUpdateException,
+			IllegalPruefungsleistungException {
+
+		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung1, student, Note.Fuenf));
+
+		service.addPruefungsleistungen(leistungen);
+		Pruefungsleistung leistung = service.getAllPruefungsleistungen(fach, student).get(0);
+
+		leistungen.clear();
+
+		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung2, student, Note.ZweiDrei));
+
+		service.addPruefungsleistungen(leistungen);
+
+		service.updatePruefungsleistungen(Arrays.asList(new Update(leistung.getId(), Note.Vier)));
+	}
+
+	@Test
 	public void testIsPruefungsleistungEditableNachfolgerGeloescht() throws IllegalPruefungsleistungException,
 			IllegalUpdateException {
 		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();

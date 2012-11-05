@@ -18,10 +18,12 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Iterables;
 
+import de.nak.iaa.server.business.ErgaenzungspruefungStrategie;
 import de.nak.iaa.server.business.IllegalUpdateException;
 import de.nak.iaa.server.business.IllegalUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.business.PruefungService;
 import de.nak.iaa.server.business.PruefungsleistungAenderung;
+import de.nak.iaa.server.business.PruefungsleistungStrategie;
 import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.dao.PruefungDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
@@ -58,6 +60,12 @@ public class PruefungServiceImpl implements PruefungService {
 	@Autowired
 	private PruefungsleistungDAO pruefungsleistungDAO;
 
+	@Autowired
+	private ErgaenzungspruefungStrategie ergaenzungspruefungStrategie;
+
+	@Autowired
+	private PruefungsleistungStrategie pruefungsleistungStrategie;
+
 	@Override
 	public List<Pruefungsfach> getAllPruefungsfaecher(final Manipel manipel) {
 		return pruefungsfachDAO.findePruefungsfaecherFuerManipel(manipel);
@@ -81,15 +89,15 @@ public class PruefungServiceImpl implements PruefungService {
 
 	public Pruefungsleistung addPruefungsleistung(Pruefung pruefung, Student student, Note note)
 			throws IllegalPruefungsleistungException {
-		Optional<Pruefungsleistung> leistung = getLetzterVersuch(pruefung.getPruefungsfach(), student);
+		Optional<Pruefungsleistung> optleistung = getLetzterVersuch(pruefung.getPruefungsfach(), student);
 		Versuch nextVersuch = null;
-		if (leistung.isPresent()) {
-			Versuch versuch = leistung.get().getVersuch();
-			if (isBestanden(leistung.get()) || !versuch.next().isPresent())
+		if (optleistung.isPresent()) {
+			Pruefungsleistung leistung = optleistung.get();
+			if (!pruefungsleistungStrategie.isWeitererVersuchZulaessig(leistung))
 				throw new IllegalPruefungsleistungException(student, getMsg(ZU_OFT));
-			if (pruefung.getDatum().before(leistung.get().getPruefung().getDatum()))
+			if (pruefung.getDatum().before(leistung.getPruefung().getDatum()))
 				throw new IllegalPruefungsleistungException(student, getMsg(PRUEFUNG_ZUKUNFT));
-			nextVersuch = versuch.next().get();
+			nextVersuch = leistung.getVersuch().next().get();
 		} else {
 			nextVersuch = Versuch.Eins;
 		}
@@ -154,23 +162,12 @@ public class PruefungServiceImpl implements PruefungService {
 		return pruefungDAO.makePersistent(pruefung);
 	}
 
-	/**
-	 * FIXME Wenn es in der fachlichen Zukunft eine gelöschte Prüfungsleistung
-	 * gibt, sollten die Vorgänger nicht editierbar sein
-	 */
 	@Override
 	public boolean isPruefungsleistungEditable(Long id) {
 		Pruefungsleistung leistung = pruefungsleistungDAO.findById(id, false);
 		if (leistung == null)
 			throw new IllegalArgumentException();
-		List<Pruefungsleistung> leistungen = getAllPruefungsleistungen(leistung.getPruefung().getPruefungsfach(),
-				leistung.getStudent());
-		for (Pruefungsleistung eachLeistung : leistungen)
-			if (eachLeistung.getVersuch().toInt() > leistung.getVersuch().toInt())
-				return false;
-		if (leistung.getErgaenzungsPruefung() != null || hasFachlichenNachfolger(leistung))
-			return false;
-		return true;
+		return pruefungsleistungStrategie.isPruefungsleistungEditable(leistung, hasFachlichenNachfolger(leistung));
 	}
 
 	@Override
@@ -186,11 +183,7 @@ public class PruefungServiceImpl implements PruefungService {
 		return getLetzterVersuch(fach, student).transform(new Function<Pruefungsleistung, Note>() {
 			@Override
 			public Note apply(Pruefungsleistung leistung) {
-				ErgaenzungsPruefung ergPruefung = leistung.getErgaenzungsPruefung();
-				if (ergPruefung == null)
-					return leistung.getNote();
-				else
-					return ergPruefung.getNote();
+				return pruefungsleistungStrategie.getAktuelleNote(leistung);
 			}
 		});
 	}
@@ -202,7 +195,7 @@ public class PruefungServiceImpl implements PruefungService {
 			getLetzterVersuch(fach, student).transform(new Function<Pruefungsleistung, Pruefungsleistung>() {
 				@Override
 				public Pruefungsleistung apply(Pruefungsleistung leistung) {
-					if (isErgaenzungsPruefungZulaessig(leistung))
+					if (ergaenzungspruefungStrategie.isErgaenzungsPruefungZulaessig(leistung))
 						result.put(student, leistung.getPruefung().getDatum());
 					return leistung;
 				}
@@ -212,26 +205,12 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
-	public boolean isErgaenzungsPruefungZulaessig(final Pruefungsleistung pruefungsleistung) {
-		Pruefungsfach fach = pruefungsleistung.getPruefung().getPruefungsfach();
-		Student student = pruefungsleistung.getStudent();
-		Boolean isLetzterVersuch = getLetzterVersuch(fach, student).transform(
-				new Function<Pruefungsleistung, Boolean>() {
-					@Override
-					public Boolean apply(Pruefungsleistung leistung) {
-						return leistung.equals(pruefungsleistung);
-					}
-				}).or(false);
-		return isLetzterVersuch && pruefungsleistung.getNote().equals(Note.Fuenf)
-				&& pruefungsleistung.getErgaenzungsPruefung() == null;
-	}
-
-	@Override
 	public ErgaenzungsPruefung addErgaenzungsPruefung(Student student, Pruefungsfach fach, Date datum, int prozent) {
 		Optional<Pruefungsleistung> letzterVersuch = getLetzterVersuch(fach, student);
-		if (!letzterVersuch.isPresent() || !isErgaenzungsPruefungZulaessig(letzterVersuch.get()))
+		if (!letzterVersuch.isPresent()
+				|| !ergaenzungspruefungStrategie.isErgaenzungsPruefungZulaessig(letzterVersuch.get()))
 			throw new IllegalStateException(KEINE_ERGAENZUNGSPRUEFUNG);
-		Note note = (prozent >= 80) ? Note.Vier : Note.Fuenf;
+		Note note = ergaenzungspruefungStrategie.getNoteErgaenzungspruefung(prozent);
 		ErgaenzungsPruefung ergaenzungsPruefung = new ErgaenzungsPruefung(note, datum);
 		letzterVersuch.get().setErgaenzungsPruefung(ergaenzungsPruefung);
 		pruefungsleistungDAO.makePersistent(letzterVersuch.get());
@@ -286,20 +265,6 @@ public class PruefungServiceImpl implements PruefungService {
 		}).or(false);
 	}
 
-	private boolean isBestanden(Pruefungsleistung leistung) {
-		switch (leistung.getNote()) {
-		case Sechs:
-			return false;
-		case Fuenf:
-			ErgaenzungsPruefung ergaenzungsPruefung = leistung.getErgaenzungsPruefung();
-			if (ergaenzungsPruefung == null)
-				return false;
-			return ergaenzungsPruefung.getNote().getNote() <= Note.Vier.getNote();
-		default:
-			return true;
-		}
-	}
-
 	private String getMsg(String code) {
 		return messageSource.getMessage(code, new Object[] {}, Locale.getDefault());
 	}
@@ -322,6 +287,14 @@ public class PruefungServiceImpl implements PruefungService {
 
 	public void setMessageSource(MessageSource messageSource) {
 		this.messageSource = messageSource;
+	}
+
+	public void setErgaenzungspruefungStrategie(ErgaenzungspruefungStrategie ergaenzungspruefungStrategie) {
+		this.ergaenzungspruefungStrategie = ergaenzungspruefungStrategie;
+	}
+
+	public void setPruefungsleistungStrategie(PruefungsleistungStrategie pruefungsleistungStrategie) {
+		this.pruefungsleistungStrategie = pruefungsleistungStrategie;
 	}
 
 	private static final String ZU_OFT = "pruefung.zuOft";

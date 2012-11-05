@@ -124,13 +124,6 @@ public interface PruefungService {
 	Optional<Note> getAktuelleNote(Student student, Pruefungsfach fach);
 
 	/**
-	 * @param pruefungsleistung
-	 * @return true, falls aktuelle eine {@link ErgaenzungsPruefung} für die
-	 *         {@link Pruefungsleistung} zulässig ist
-	 */
-	boolean isErgaenzungsPruefungZulaessig(Pruefungsleistung pruefungsleistung);
-
-	/**
 	 * für eine Prüfungsleistung eine Ergänzungsprüfung erfassen
 	 * 
 	 * @require isErgaenzungsPruefungZulaessig(pruefungsleistung)

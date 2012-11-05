@@ -34,6 +34,9 @@
 	<bean id="pruefungService" class="de.nak.iaa.server.business.impl.PruefungServiceImpl" />
 	<bean id="dozentService" class="de.nak.iaa.server.business.impl.DozentServiceImpl" />
 
+	<bean id="pruefungsleistungStrategie" class="de.nak.iaa.server.business.impl.DefaultPruefungsleistungStrategie" />
+	<bean id="ergaenzungspruefungStrategie" class="de.nak.iaa.server.business.impl.DefaultErgaenzungspruefungStrategie" />
+	
 	<!-- DAO layer -->
 	<bean id="studentDAO" class="de.nak.iaa.server.dao.impl.StudentDAOImpl" />
 	<bean id="dozentDAO" class="de.nak.iaa.server.dao.impl.DozentDAOImpl" />
