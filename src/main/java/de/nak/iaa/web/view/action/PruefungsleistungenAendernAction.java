@@ -28,37 +28,61 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 	public void fuellePruefungsBeans() {
 		setPruefungenBeans(new ArrayList<PruefungsleistungAendernFormBean>());
 
-		for (Student student : getStudentService().getAllStudenten(
-				getSelectedManipel())) {
+		for (Student student : getStudentService().getAllStudenten(getSelectedManipel())) {
 			if (student == null)
 				continue;
 			else {
-				// TODO logik einbauen, damit der service benutzt wird
-
-				List<Pruefungsleistung> leistungen = getPruefungService()
-						.getAllPruefungsleistungen(getSelectedPruefungsfach(),
-								student);
+				List<Pruefungsleistung> leistungen = getPruefungService().getAllPruefungsleistungen(
+						getSelectedPruefungsfach(), student);
 
 				if (!leistungen.isEmpty())
-					getPruefungenBeans().add(
-							new PruefungsleistungAendernFormBean(student,
-									leistungen));
+					getPruefungenBeans().add(new PruefungsleistungAendernFormBean(student, leistungen));
 			}
 		}
 
 		Collections.sort(getPruefungenBeans());
 	}
 
+	/**
+	 * Hilfsmethode für die View (jsp) um zu prüfen, ob eine Prüfungsleistung editierbar ist
+	 * 
+	 * @param id
+	 * @return
+	 */
 	public boolean isWriteable(Long id) {
 		return getPruefungService().isPruefungsleistungEditable(id);
 	}
 
-	/* Custom Logik Ende */
-	/* Logik Start */
+	/**
+	 * Validiere die Eingabedaten für die Zeilen, wo mindestens eines der Felder gefüllt ist<br>
+	 * Fügt bei einem Problem, dem Feld einen FieldError hinzu
+	 */
+	private void validateForm() {
+		int i = 0;
+		for (PruefungsleistungAendernFormBean p : pruefungenBeans) {
+			// TODO hier validieren
+			int k = 0;
+			for (Pruefungsleistung pl : p.getPruefungsleistungen()) {
+				if (pl.getNote() == null)
+					continue;
+				if ((isWriteable(pl.getId()) && !Note.isValid(String.valueOf(pl.getNote().getNote())))) {
+					addFieldError("pruefungenBeans[" + i + "].pruefungsleistungen[" + k + "].note",
+							"Keine gültige Note");
+				}
+				k++;
+			}
+			i++;
+		}
+	}
 
-	/* Logik Ende */
+	/* Custom Logik Ende */
 	/* Actions Start */
 
+	/**
+	 * Zeige das Formular
+	 * 
+	 * @return
+	 */
 	public String show() {
 		if (isManipelNotSelected()) {
 			setTargetUrl(getRequestUrl());
@@ -69,29 +93,18 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 		return Action.SUCCESS;
 	}
 
+	/**
+	 * Speichere die Eingabedaten nachdem sie validiert wurden
+	 * 
+	 * @return
+	 */
 	public String save() {
 		if (isManipelNotSelected()) {
 			setTargetUrl(getRequestUrl());
 			return NO_MANIPEL_SELECTED;
 		}
 
-		int i = 0;
-		for (PruefungsleistungAendernFormBean p : pruefungenBeans) {
-			// TODO hier validieren
-			int k = 0;
-			for (Pruefungsleistung pl : p.getPruefungsleistungen()) {
-				if (pl.getNote() == null)
-					continue;
-				if ((isWriteable(pl.getId()) && !Note.isValid(String.valueOf(pl
-						.getNote().getNote())))) {
-					addFieldError("pruefungenBeans[" + i
-							+ "].pruefungsleistungen[" + k + "].note",
-							"Keine gültige Note");
-				}
-				k++;
-			}
-			i++;
-		}
+		validateForm();
 
 		if (getFieldErrors().size() > 0) {
 			fuellePruefungsBeans();
@@ -100,10 +113,8 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 			List<PruefungsleistungAenderung> aenderungen = new ArrayList<PruefungsleistungAenderung>();
 			for (PruefungsleistungAendernFormBean p : pruefungenBeans) {
 				for (Pruefungsleistung pl : p.getPruefungsleistungen()) {
-					if (getPruefungService().isPruefungsleistungEditable(
-							pl.getId())) {
-						aenderungen.add(new PruefungsleistungAenderung.Update(
-								pl.getId(), pl.getNote()));
+					if (getPruefungService().isPruefungsleistungEditable(pl.getId())) {
+						aenderungen.add(new PruefungsleistungAenderung.Update(pl.getId(), pl.getNote()));
 					}
 				}
 			}
@@ -111,20 +122,23 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 				try {
 					getPruefungService().updatePruefungsleistungen(aenderungen);
 				} catch (IllegalUpdateException e) {
-					// TODO und was soll ich hiermit bitte machen??!!
-					e.printStackTrace();
+					// TODO hier muss iwie ne fehlerseite hin
 				}
 			}
 			return Action.SUCCESS;
 		}
 	}
 
+	/**
+	 * Lösche eine Prüfungsleistung, die per deleteId als Parameter übergeben wird
+	 * 
+	 * @return
+	 */
 	public String delete() {
 		if (getParameters().containsKey("deleteId")) {
 			List<PruefungsleistungAenderung> aenderungen = new ArrayList<PruefungsleistungAenderung>();
-			aenderungen.add(new PruefungsleistungAenderung.Delete(Long
-					.valueOf(DataHelper.stringArrayToString(getParameters()
-							.get("deleteId")))));
+			aenderungen.add(new PruefungsleistungAenderung.Delete(Long.valueOf(DataHelper
+					.stringArrayToString(getParameters().get("deleteId")))));
 			try {
 				getPruefungService().updatePruefungsleistungen(aenderungen);
 			} catch (IllegalUpdateException e) {
@@ -146,8 +160,7 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 		return pruefungenBeans;
 	}
 
-	public void setPruefungenBeans(
-			List<PruefungsleistungAendernFormBean> pruefungenBeans) {
+	public void setPruefungenBeans(List<PruefungsleistungAendernFormBean> pruefungenBeans) {
 		this.pruefungenBeans = pruefungenBeans;
 	}
 }

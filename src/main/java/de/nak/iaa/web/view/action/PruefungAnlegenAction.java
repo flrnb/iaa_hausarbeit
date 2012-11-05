@@ -6,6 +6,7 @@ import java.util.List;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.Preparable;
 
+import de.nak.iaa.server.business.DozentService;
 import de.nak.iaa.server.entity.Dozent;
 import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.web.util.DataHelper;
@@ -15,6 +16,16 @@ public class PruefungAnlegenAction extends AbstractAction implements Preparable 
 
 	private static final long serialVersionUID = 1L;
 
+	private DozentService dozentService;
+
+	public DozentService getDozentService() {
+		return dozentService;
+	}
+
+	public void setDozentService(DozentService dozentService) {
+		this.dozentService = dozentService;
+	}
+
 	private List<Pruefungsfach> pruefungsfaecher;
 	private String formPruefungsfach;
 	private List<Dozent> dozenten;
@@ -23,12 +34,41 @@ public class PruefungAnlegenAction extends AbstractAction implements Preparable 
 
 	@Override
 	public void prepare() throws Exception {
-		setPruefungsfaecher(getPruefungService().getAllPruefungsfaecher(
-				getSelectedManipel()));
+		// Fülle die mit den Formularfeldern korrespondierenden Attribute
+		setPruefungsfaecher(getPruefungService().getAllPruefungsfaecher(getSelectedManipel()));
+		setDozenten(getDozentService().getAllDozenten());
+	}
+
+	/**
+	 * Validiere die Eingabedaten und gebe zurück, ob ein Fehler aufgetreten ist <br>
+	 * Fügt bei einem Problem, dem Feld einen FieldError hinzu
+	 * 
+	 * @return
+	 */
+	private boolean validateForm() {
+		boolean hasError = false;
+		if (getFormDate() == null) {
+			addFieldError("formDate", getMsg(MessageKey.ERR_EMP_DATUM));
+			hasError = true;
+		}
+		if (getFormDozent() == null || getFormDozent().equals("")) {
+			addFieldError("formDozent", getMsg(MessageKey.ERR_EMP_DOZENT));
+			hasError = true;
+		}
+		if (getFormPruefungsfach() == null || getFormPruefungsfach().equals("")) {
+			addFieldError("formPruefungsfach", getMsg(MessageKey.ERR_EMP_PRUEFUNGSFACH));
+			hasError = true;
+		}
+		return hasError;
 	}
 
 	/* Actions Start */
 
+	/**
+	 * Zeige das Formular an
+	 * 
+	 * @return
+	 */
 	public String show() {
 		if (isManipelNotSelected()) {
 			setTargetUrl(getRequestUrl());
@@ -38,30 +78,20 @@ public class PruefungAnlegenAction extends AbstractAction implements Preparable 
 		return Action.SUCCESS;
 	}
 
+	/**
+	 * Validiere (und speichere) die Eingabedaten via Service
+	 * 
+	 * @return
+	 */
 	public String save() {
-		boolean hasError = false;
-		if (getFormDate() == null || getFormDate().equals("")) {
-			addFieldError("formDate", getMsg(MessageKey.ERR_EMP_DATUM));
-			hasError = true;
-		}
-		if (getFormDozent() == null || getFormDozent().equals("")) {
-			addFieldError("formDozent", getMsg(MessageKey.ERR_EMP_DOZENT));
-			hasError = true;
-		}
-		if (getFormPruefungsfach() == null || getFormPruefungsfach().equals("")) {
-			addFieldError("formPruefungsfach",
-					getMsg(MessageKey.ERR_EMP_PRUEFUNGSFACH));
-			hasError = true;
-		}
-
-		if (!hasError) {
-			// TODO dozenten holen
+		if (!validateForm()) {
 			getPruefungService().addPruefung(
 					getPruefungService().getPruefungsfachById(
-							Long.valueOf(DataHelper
-									.stringArrayToString(getParameters().get(
-											"formPruefungsfachKey")))).get(),
-					getFormDate(), null);
+							Long.valueOf(DataHelper.stringArrayToString(getParameters().get("formPruefungsfachKey"))))
+							.get(),
+					getFormDate(),
+					getDozentService().getDozentById(
+							Long.valueOf(DataHelper.stringArrayToString(getParameters().get("formDozentKey")))).get());
 
 			return Action.SUCCESS;
 		}
@@ -111,5 +141,4 @@ public class PruefungAnlegenAction extends AbstractAction implements Preparable 
 	public void setFormDate(Date formDate) {
 		this.formDate = formDate;
 	}
-
 }

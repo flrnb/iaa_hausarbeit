@@ -10,6 +10,13 @@ import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Pruefung;
 import de.nak.iaa.server.entity.Pruefungsfach;
 
+/**
+ * Actionklasse, die die Auswahl des Prüfungsfachs und der konkreten Prüfung steuert
+ * 
+ * Das speichern der gewählten Werte erfolgt über die Parentklasse "AbstractFormAction"
+ * 
+ * @author Christopher Biel <christopher.biel89@gmail.com>
+ */
 public class ModulAuswahlAction extends AbstractFormAction {
 
 	private static final long serialVersionUID = 1L;
@@ -28,25 +35,33 @@ public class ModulAuswahlAction extends AbstractFormAction {
 	/* Custom Logik Ende */
 	/* Actions Start */
 
+	/**
+	 * Zeige die Module(Prüfungsfächer) auf Basis des gewählten Manipels
+	 * 
+	 * @return
+	 */
 	public String showSelectModul() {
 		if (isManipelNotSelected()) {
-			setTargetUrl(ServletActionContext.getRequest().getRequestURL()
-					.toString());
+			setTargetUrl(ServletActionContext.getRequest().getRequestURL().toString());
 			return NO_MANIPEL_SELECTED;
 		}
-		setPruefungsfaecher(getPruefungService().getAllPruefungsfaecher(
-				(Manipel) getSession().get("selectedManipel")));
+
+		setPruefungsfaecher(getPruefungService().getAllPruefungsfaecher((Manipel) getSession().get("selectedManipel")));
 		return Action.SUCCESS;
 	}
 
+	/**
+	 * Zeige die Prüfungen auf Basis des gewählten Prüfungsfachs und des gewählten Manipels
+	 * 
+	 * @return
+	 */
 	public String showSelectPruefung() {
 		if (isManipelNotSelected()) {
 			setTargetUrl("/");
 			return NO_MANIPEL_SELECTED;
 		}
 
-		setPruefungen(getPruefungService().getAllPruefungen(
-				getSelectedPruefungsfach()));
+		setPruefungen(getPruefungService().getAllPruefungen(getSelectedPruefungsfach()));
 		return Action.SUCCESS;
 	}
 
