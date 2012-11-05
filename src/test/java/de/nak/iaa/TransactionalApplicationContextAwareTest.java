@@ -15,6 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  * <b>angepasst von Archetyp http://code.google.com/p/spring-archetypes/</b>
  * 
+ * @author flrnb
+ * 
  * @see org.springframework.test.context.transaction.TransactionConfiguration
  * @see org.springframework.transaction.annotation.Transactional
  * @see org.hibernate.Session#setFlushMode(org.hibernate.FlushMode)

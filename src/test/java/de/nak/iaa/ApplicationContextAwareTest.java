@@ -25,6 +25,9 @@ public abstract class ApplicationContextAwareTest {
 	@Autowired
 	public ApplicationContext applicationContext;
 
+	/**
+	 * vor jedem Test einmal das komplette Schema der Datenbank löschen
+	 */
 	@Before
 	public void beforeMethod() {
 		LocalSessionFactoryBean sessionFactoryBean = (LocalSessionFactoryBean) applicationContext
