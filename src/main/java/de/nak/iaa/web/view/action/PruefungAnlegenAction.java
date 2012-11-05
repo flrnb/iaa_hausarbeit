@@ -40,7 +40,7 @@ public class PruefungAnlegenAction extends AbstractAction implements Preparable 
 
 	public String save() {
 		boolean hasError = false;
-		if (getFormDate() == null || getFormDate().equals("")) {
+		if (getFormDate() == null) {
 			addFieldError("formDate", getMsg(MessageKey.ERR_EMP_DATUM));
 			hasError = true;
 		}

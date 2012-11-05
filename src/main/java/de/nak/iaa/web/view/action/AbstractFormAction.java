@@ -32,13 +32,15 @@ public abstract class AbstractFormAction extends AbstractAction implements
 				"pruefungsfach")));
 
 		if (getParameters().containsKey("pruefungsfach")
-				&& !getParameters().get("pruefungsfach").equals("")) {
+				&& !DataHelper.stringArrayToString(
+						getParameters().get("pruefungsfach")).equals("")) {
 			selectedPruefungsfach = getPruefungService().getPruefungsfachById(
 					Long.valueOf(DataHelper.stringArrayToString(getParameters()
 							.get("pruefungsfach")))).get();
 		}
 		if (getParameters().containsKey("pruefung")
-				&& !getParameters().get("pruefung").equals("")) {
+				&& !DataHelper.stringArrayToString(
+						getParameters().get("pruefung")).equals("")) {
 			selectedPruefung = getPruefungService().getPruefungById(
 					Long.valueOf(DataHelper.stringArrayToString(getParameters()
 							.get("pruefung")))).get();

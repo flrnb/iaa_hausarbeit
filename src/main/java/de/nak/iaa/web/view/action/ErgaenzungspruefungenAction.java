@@ -64,7 +64,7 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 				addFieldError("pruefungenBeans[" + i + "].resultPercent",
 						"Keine gültige Prozentzahl");
 			}
-			if (p.getErgDatum() == null || p.getErgDatum().equals("")) {
+			if (p.getErgDatum() == null) {
 				addFieldError("pruefungenBeans[" + i + "].ergDatum",
 						"Kein Datum angegeben");
 			}

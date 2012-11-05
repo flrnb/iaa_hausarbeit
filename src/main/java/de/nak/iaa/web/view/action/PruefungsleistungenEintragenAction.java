@@ -113,6 +113,9 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 
 				}
 
+				if (st == null)
+					continue;
+
 				leistungen.add(new Triplet<Pruefung, Student, Note>(
 						getSelectedPruefung(), st, Note.getNote(p.getNote())));
 				getProtokoll().put(
