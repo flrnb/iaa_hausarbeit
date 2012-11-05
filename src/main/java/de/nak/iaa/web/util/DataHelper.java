@@ -1,10 +1,12 @@
 package de.nak.iaa.web.util;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import org.apache.commons.lang.xwork.StringUtils;
 
+/**
+ * Statische Klasse zum Auslagern von häufig genutzen Operationen auf den Daten
+ * 
+ * @author Christopher Biel <christopher.biel89@gmail.com>
+ */
 public class DataHelper {
 
 	/**
@@ -15,25 +17,5 @@ public class DataHelper {
 	 */
 	public static String stringArrayToString(String[] stringArray) {
 		return StringUtils.join(stringArray);
-	}
-
-	/**
-	 * Prüfe ob das übergebene Datum ein valides Datum ist (dd-mm-yyyy) Source:
-	 * http://www.rgagnon.com/javadetails/java-0099.html
-	 * 
-	 * @param date
-	 * @return
-	 */
-	public static boolean isValidDateStr(String date) {
-		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-			sdf.setLenient(false);
-			sdf.parse(date);
-		} catch (ParseException e) {
-			return false;
-		} catch (IllegalArgumentException e) {
-			return false;
-		}
-		return true;
 	}
 }
