@@ -167,7 +167,7 @@ public class PruefungServiceImpl implements PruefungService {
 		Pruefungsleistung leistung = pruefungsleistungDAO.findById(id, false);
 		if (leistung == null)
 			throw new IllegalArgumentException();
-		return pruefungsleistungStrategie.isPruefungsleistungEditable(leistung, hasFachlichenNachfolger(leistung));
+		return pruefungsleistungStrategie.isPruefungsleistungEditable(leistung) && !hasFachlichenNachfolger(leistung);
 	}
 
 	@Override

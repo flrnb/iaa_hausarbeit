@@ -14,10 +14,8 @@ import de.nak.iaa.server.fachwert.Versuch;
 public class DefaultPruefungsleistungStrategie implements PruefungsleistungStrategie {
 
 	@Override
-	public boolean isPruefungsleistungEditable(Pruefungsleistung leistung, boolean hasFachlichenNachfolger) {
-		if (leistung.getErgaenzungsPruefung() != null || hasFachlichenNachfolger)
-			return false;
-		return true;
+	public boolean isPruefungsleistungEditable(Pruefungsleistung leistung) {
+		return leistung.getErgaenzungsPruefung() == null;
 	}
 
 	@Override

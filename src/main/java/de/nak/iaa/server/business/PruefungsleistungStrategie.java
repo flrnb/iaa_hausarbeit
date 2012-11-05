@@ -10,7 +10,7 @@ import de.nak.iaa.server.fachwert.Note;
  */
 public interface PruefungsleistungStrategie {
 
-	boolean isPruefungsleistungEditable(Pruefungsleistung leistung, boolean hasFachlichenNachfolger);
+	boolean isPruefungsleistungEditable(Pruefungsleistung leistung);
 
 	Note getAktuelleNote(Pruefungsleistung leistung);
 
