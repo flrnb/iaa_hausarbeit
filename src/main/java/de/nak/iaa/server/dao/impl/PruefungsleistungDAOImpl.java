@@ -1,6 +1,5 @@
 package de.nak.iaa.server.dao.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +11,10 @@ import org.hibernate.envers.DefaultRevisionEntity;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
 import org.springframework.stereotype.Repository;
+
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.ImmutableList;
 
 import de.nak.iaa.server.dao.PruefungsleistungDAO;
 import de.nak.iaa.server.entity.Pruefungsfach;
@@ -42,6 +45,11 @@ public class PruefungsleistungDAOImpl extends
 		return query.getResultList();
 	}
 
+	/**
+	 * Sucht für den Studenten, das Prüfungsfach und den Versuch die
+	 * Prüfungsleistungen raus, falls vorhanden. Falls nicht, wird eine leere
+	 * Liste zurück geliefert.
+	 */
 	@Override
 	public List<Pruefungsleistung> getVersuchFallsVorhanden(Student student,
 			Pruefungsfach pruefungsfach, Versuch versuch) {
@@ -58,18 +66,30 @@ public class PruefungsleistungDAOImpl extends
 				pruefungsfach);
 	}
 
+	/**
+	 * Filtert die Prüfungsleistungen nach dem entsprechenden Prüfungsfach.
+	 * 
+	 * @param resultList
+	 * @param pruefungsfach
+	 * @return
+	 */
 	private List<Pruefungsleistung> filterePruefungsleistungNachPruefungsfach(
-			List<Pruefungsleistung> resultList, Pruefungsfach pruefungsfach) {
-		List<Pruefungsleistung> ergebnis = new ArrayList<Pruefungsleistung>();
-		for (Pruefungsleistung pruefungsleistung : resultList) {
-			if (pruefungsleistung.getPruefung().getPruefungsfach()
-					.equals(pruefungsfach))
-				ergebnis.add(pruefungsleistung);
-		}
-		return ergebnis;
+			List<Pruefungsleistung> resultList,
+			final Pruefungsfach pruefungsfach) {
+		return ImmutableList.copyOf(Collections2.filter(resultList,
+				new Predicate<Pruefungsleistung>() {
+					@Override
+					public boolean apply(Pruefungsleistung p) {
+						return p.getPruefung().getPruefungsfach()
+								.equals(pruefungsfach);
+					}
+				}));
 	}
 
-	// http://docs.jboss.org/envers/docs/index.html#revisionlog
+	/**
+	 * Sucht für eine Prüfungsleistung alle alten Revisionen raus mit deren
+	 * Änderungsdatum.
+	 */
 	@Override
 	public Map<Pruefungsleistung, Date> getAltePruefungsleistungen(Long id) {
 		AuditReader auditReader = AuditReaderFactory.get(getSession());
