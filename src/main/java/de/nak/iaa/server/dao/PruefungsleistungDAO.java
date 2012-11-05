@@ -1,6 +1,8 @@
 package de.nak.iaa.server.dao;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import de.nak.iaa.server.entity.ErgaenzungsPruefung;
 import de.nak.iaa.server.entity.Pruefungsfach;
@@ -25,6 +27,8 @@ public interface PruefungsleistungDAO extends
 	List<Pruefungsleistung> getAlteRevisionenFuerVersuch(Long primaryKey,
 			Versuch versuch);
 
-	Pruefungsleistung getNachfolgendenVersuchFallsVorhanden(Student student,
+	List<Pruefungsleistung> getVersuchFallsVorhanden(Student student,
 			Pruefungsfach pruefungsfach, Versuch versuch);
+
+	Map<Pruefungsleistung, Date> getAltePruefungsleistungen(Long id);
 }

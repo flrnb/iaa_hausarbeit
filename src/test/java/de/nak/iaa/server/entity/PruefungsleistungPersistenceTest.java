@@ -56,7 +56,6 @@ public class PruefungsleistungPersistenceTest extends
 		manipel = manipelDAO.makePersistent(manipel);
 		student = new Student(1, manipel, "Name", "Vorname");
 		student = studentDAO.makePersistent(student);
-
 	}
 
 	@Test

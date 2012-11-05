@@ -1,5 +1,6 @@
 package de.nak.iaa.server.dao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -42,39 +43,34 @@ public class PruefungsleistungDAOImpl extends
 	}
 
 	@Override
-	public Pruefungsleistung getNachfolgendenVersuchFallsVorhanden(
-			Student student, Pruefungsfach pruefungsfach, Versuch versuch) {
-		if (versuch.next().isPresent()) {
-			AuditReader auditReader = AuditReaderFactory.get(getSession());
-			AuditQuery query = auditReader
-					.createQuery()
-					.forRevisionsOfEntity(Pruefungsleistung.class, true, true)
-					.add(AuditEntity.property("versuch").eq(
-							versuch.next().get()))
-					.add(AuditEntity.property("student").eq(student));
-			@SuppressWarnings("unchecked")
-			List<Pruefungsleistung> resultList = query.getResultList();
-			// Pruefungsfach ist leider nicht direkt mit der Versionierung
-			// assoziiert
-			return filterePruefungsleistungNachPruefungsfach(resultList,
-					pruefungsfach);
-		} else
-			throw new IllegalArgumentException(
-					"Es kann keinen Nachfolgeversuch für einen 3. Versuch geben");
-
+	public List<Pruefungsleistung> getVersuchFallsVorhanden(Student student,
+			Pruefungsfach pruefungsfach, Versuch versuch) {
+		AuditReader auditReader = AuditReaderFactory.get(getSession());
+		AuditQuery query = auditReader.createQuery()
+				.forRevisionsOfEntity(Pruefungsleistung.class, true, true)
+				.add(AuditEntity.property("versuch").eq(versuch))
+				.add(AuditEntity.property("student").eq(student));
+		@SuppressWarnings("unchecked")
+		List<Pruefungsleistung> resultList = query.getResultList();
+		// Pruefungsfach ist leider nicht direkt mit der Versionierung
+		// assoziiert
+		return filterePruefungsleistungNachPruefungsfach(resultList,
+				pruefungsfach);
 	}
 
-	private Pruefungsleistung filterePruefungsleistungNachPruefungsfach(
+	private List<Pruefungsleistung> filterePruefungsleistungNachPruefungsfach(
 			List<Pruefungsleistung> resultList, Pruefungsfach pruefungsfach) {
+		List<Pruefungsleistung> ergebnis = new ArrayList<Pruefungsleistung>();
 		for (Pruefungsleistung pruefungsleistung : resultList) {
 			if (pruefungsleistung.getPruefung().getPruefungsfach()
 					.equals(pruefungsfach))
-				return pruefungsleistung;
+				ergebnis.add(pruefungsleistung);
 		}
-		return null;
+		return ergebnis;
 	}
 
 	// http://docs.jboss.org/envers/docs/index.html#revisionlog
+	@Override
 	public Map<Pruefungsleistung, Date> getAltePruefungsleistungen(Long id) {
 		AuditReader auditReader = AuditReaderFactory.get(getSession());
 		AuditQuery query = auditReader.createQuery()
