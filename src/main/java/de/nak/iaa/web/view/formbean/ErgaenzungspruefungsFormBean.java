@@ -4,6 +4,12 @@ import java.util.Date;
 
 import de.nak.iaa.server.entity.Student;
 
+/**
+ * FormBean, die einerseits Daten für das Erfassen von Ergänzungsprüfungen bereitstellt aber auch
+ * zur Auswertung der Eingaben verwendet wird
+ * 
+ * @author Christopher Biel <christopher.biel89@gmail.com>
+ */
 public class ErgaenzungspruefungsFormBean extends AbstractFormBean {
 
 	private String resultPercent;
@@ -13,8 +19,7 @@ public class ErgaenzungspruefungsFormBean extends AbstractFormBean {
 	public ErgaenzungspruefungsFormBean() {
 	}
 
-	public ErgaenzungspruefungsFormBean(Student student, Date datum,
-			String resultPercent) {
+	public ErgaenzungspruefungsFormBean(Student student, Date datum, String resultPercent) {
 		this.student = student;
 		this.datum = datum;
 		this.resultPercent = resultPercent;
