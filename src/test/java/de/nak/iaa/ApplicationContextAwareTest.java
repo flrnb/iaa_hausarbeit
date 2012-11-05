@@ -34,7 +34,7 @@ public abstract class ApplicationContextAwareTest {
 
 	@Before
 	public void beforeMethod() {
-		sessionFactory.getCurrentSession().setFlushMode(FlushMode.ALWAYS);
+		sessionFactory.getCurrentSession().setFlushMode(FlushMode.COMMIT);
 	}
 
 	@After
