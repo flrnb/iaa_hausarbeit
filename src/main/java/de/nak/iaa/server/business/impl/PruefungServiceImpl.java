@@ -72,8 +72,8 @@ public class PruefungServiceImpl implements PruefungService {
 			if (!isPruefungsleistungEditable(id)) {
 				Student student = pruefungsleistungDAO.findById(id, false).getStudent();
 				exc.addNestedException(new IllegalPruefungsleistungException(student, getMsg(NICHT_EDITIERBAR)));
-			}
-			aenderung.perform(pruefungsleistungDAO);
+			} else
+				aenderung.perform(pruefungsleistungDAO);
 		}
 		if (exc.getNestedExceptions().isPresent())
 			throw exc;
@@ -279,8 +279,8 @@ public class PruefungServiceImpl implements PruefungService {
 		return leistung.getVersuch().next().transform(new Function<Versuch, Boolean>() {
 			@Override
 			public Boolean apply(Versuch nextVersuch) {
-				List<Pruefungsleistung> alteRevs = pruefungsleistungDAO.getAlteRevisionenFuerVersuch(leistung.getId(),
-						nextVersuch);
+				List<Pruefungsleistung> alteRevs = pruefungsleistungDAO.getVersuchFallsVorhanden(leistung.getStudent(),
+						leistung.getPruefung().getPruefungsfach(), nextVersuch);
 				return !alteRevs.isEmpty();
 			}
 		}).or(false);

@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import org.easymock.EasyMock;
 
+import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.server.entity.Pruefungsleistung;
+import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Versuch;
 
 public class PruefungsleistungDAOMockBuilder extends DAOMockBuilder<Pruefungsleistung, PruefungsleistungDAO> {
@@ -15,7 +17,9 @@ public class PruefungsleistungDAOMockBuilder extends DAOMockBuilder<Pruefungslei
 
 	@Override
 	public PruefungsleistungDAO build() {
-		EasyMock.expect(getMock().getAlteRevisionenFuerVersuch(EasyMock.anyLong(), EasyMock.anyObject(Versuch.class)))
+		EasyMock.expect(
+				getMock().getVersuchFallsVorhanden(EasyMock.anyObject(Student.class),
+						EasyMock.anyObject(Pruefungsfach.class), EasyMock.anyObject(Versuch.class)))
 				.andReturn(new ArrayList<Pruefungsleistung>()).anyTimes();
 		return super.build();
 	}
