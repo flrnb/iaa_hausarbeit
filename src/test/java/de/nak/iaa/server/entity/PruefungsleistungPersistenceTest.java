@@ -81,4 +81,9 @@ public class PruefungsleistungPersistenceTest extends
 		assertThat(pl.getErgaenzungsPruefung().getId(), is(notNullValue()));
 	}
 
+	@Test
+	public void testDings() {
+		pruefungsleistungDAO.getNachfolgendenVersuchFallsVorhanden(student,
+				pruefungsfach, Versuch.Eins);
+	}
 }

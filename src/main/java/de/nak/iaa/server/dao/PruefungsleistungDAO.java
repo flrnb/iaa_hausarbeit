@@ -20,7 +20,7 @@ import de.nak.iaa.server.fachwert.Versuch;
 public interface PruefungsleistungDAO extends
 		GenericDAO<Pruefungsleistung, Long> {
 
-	Pruefungsleistung getOldRevision(int revision, Long primaryKey);
+	Pruefungsleistung getAlteRevision(int revision, Long primaryKey);
 
 	List<Pruefungsleistung> getAlteRevisionenFuerVersuch(Long primaryKey,
 			Versuch versuch);

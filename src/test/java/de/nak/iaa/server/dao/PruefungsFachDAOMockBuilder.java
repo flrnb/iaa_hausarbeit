@@ -20,7 +20,7 @@ public class PruefungsFachDAOMockBuilder extends DAOMockBuilder<Pruefungsfach, P
 
 	@Override
 	public PruefungsfachDAO build() {
-		EasyMock.expect(getMock().findByManipel(EasyMock.anyObject(Manipel.class)))
+		EasyMock.expect(getMock().findePruefungsfaecherFuerManipel(EasyMock.anyObject(Manipel.class)))
 				.andAnswer(new IAnswer<List<Pruefungsfach>>() {
 					@Override
 					public List<Pruefungsfach> answer() throws Throwable {

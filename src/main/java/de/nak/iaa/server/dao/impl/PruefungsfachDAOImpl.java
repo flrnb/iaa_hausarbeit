@@ -16,7 +16,7 @@ public class PruefungsfachDAOImpl extends
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Pruefungsfach> findByManipel(Manipel manipel) {
+	public List<Pruefungsfach> findePruefungsfaecherFuerManipel(Manipel manipel) {
 		Query query = getSession()
 				.createQuery(
 						"SELECT DISTINCT p FROM Pruefungsfach p WHERE p.manipel = :manipel");

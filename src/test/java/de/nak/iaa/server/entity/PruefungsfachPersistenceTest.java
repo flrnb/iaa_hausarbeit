@@ -69,7 +69,7 @@ public class PruefungsfachPersistenceTest extends ApplicationContextAwareTest {
 		pruefungsfachDAO.makePersistent(p2);
 		pruefungsfachDAO.makePersistent(p3);
 
-		List<Pruefungsfach> list = pruefungsfachDAO.findByManipel(einManipel);
+		List<Pruefungsfach> list = pruefungsfachDAO.findePruefungsfaecherFuerManipel(einManipel);
 		assertThat(list.size(), is(equalTo(2)));
 		assertThat(list.contains(p3), is(Boolean.FALSE));
 	}

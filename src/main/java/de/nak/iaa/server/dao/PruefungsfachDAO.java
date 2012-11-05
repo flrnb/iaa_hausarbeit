@@ -13,6 +13,6 @@ import de.nak.iaa.server.entity.Pruefungsfach;
  */
 public interface PruefungsfachDAO extends GenericDAO<Pruefungsfach, Long> {
 
-	List<Pruefungsfach> findByManipel(Manipel manipel);
+	List<Pruefungsfach> findePruefungsfaecherFuerManipel(Manipel manipel);
 
 }

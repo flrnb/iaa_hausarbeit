@@ -60,7 +60,7 @@ public class PruefungServiceImpl implements PruefungService {
 
 	@Override
 	public List<Pruefungsfach> getAllPruefungsfaecher(final Manipel manipel) {
-		return pruefungsfachDAO.findByManipel(manipel);
+		return pruefungsfachDAO.findePruefungsfaecherFuerManipel(manipel);
 	}
 
 	@Override

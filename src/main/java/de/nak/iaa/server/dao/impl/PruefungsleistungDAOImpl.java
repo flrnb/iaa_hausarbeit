@@ -1,11 +1,13 @@
 package de.nak.iaa.server.dao.impl;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
+import org.hibernate.envers.DefaultRevisionEntity;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
 import org.springframework.stereotype.Repository;
@@ -22,7 +24,7 @@ public class PruefungsleistungDAOImpl extends
 		PruefungsleistungDAO {
 
 	@Override
-	public Pruefungsleistung getOldRevision(int revision, Long primaryKey) {
+	public Pruefungsleistung getAlteRevision(int revision, Long primaryKey) {
 		AuditReader auditReader = AuditReaderFactory.get(getSession());
 		return auditReader.find(Pruefungsleistung.class, primaryKey, revision);
 	}
@@ -73,8 +75,25 @@ public class PruefungsleistungDAOImpl extends
 	}
 
 	// http://docs.jboss.org/envers/docs/index.html#revisionlog
-	public Map<Date, Pruefungsleistung> getAltePruefungsleistungen(Long id) {
-		return null;
+	public Map<Pruefungsleistung, Date> getAltePruefungsleistungen(Long id) {
+		AuditReader auditReader = AuditReaderFactory.get(getSession());
+		AuditQuery query = auditReader.createQuery()
+				.forRevisionsOfEntity(Pruefungsleistung.class, false, true)
+				.add(AuditEntity.id().eq(id));
+		/*
+		 * siehe Methodenkommentar
+		 * org.hibernate.envers.query.AuditQueryCreator.forRevisionsOfEntity
+		 * (Class<?>, boolean, boolean) bzgl. des Object Arrays usw.
+		 */
+		@SuppressWarnings("unchecked")
+		List<Object[]> result = query.getResultList();
+		Map<Pruefungsleistung, Date> ergebnis = new HashMap<Pruefungsleistung, Date>();
+		for (Object[] objects : result) {
+			Pruefungsleistung pl = (Pruefungsleistung) objects[0];
+			DefaultRevisionEntity revEntity = (DefaultRevisionEntity) objects[1];
+			ergebnis.put(pl, new Date(revEntity.getTimestamp()));
+		}
+		return ergebnis;
 
 	}
 }
