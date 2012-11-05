@@ -72,8 +72,8 @@ public class PruefungServiceImpl implements PruefungService {
 			if (!isPruefungsleistungEditable(id)) {
 				Student student = pruefungsleistungDAO.findById(id, false).getStudent();
 				exc.addNestedException(new IllegalPruefungsleistungException(student, getMsg(NICHT_EDITIERBAR)));
-			}
-			aenderung.perform(pruefungsleistungDAO);
+			} else
+				aenderung.perform(pruefungsleistungDAO);
 		}
 		if (exc.getNestedExceptions().isPresent())
 			throw exc;

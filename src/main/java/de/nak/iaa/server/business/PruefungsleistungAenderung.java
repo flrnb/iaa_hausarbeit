@@ -12,7 +12,7 @@ import de.nak.iaa.server.fachwert.Note;
  */
 public interface PruefungsleistungAenderung {
 
-	void perform(PruefungsleistungDAO dao) throws IllegalStateException;
+	void perform(PruefungsleistungDAO dao);
 
 	Long getId();
 
