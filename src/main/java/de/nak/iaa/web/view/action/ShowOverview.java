@@ -22,14 +22,18 @@ public class ShowOverview extends AbstractAction {
 
 	/* Actions Start */
 
+	/**
+	 * Stelle alle benötigten Daten für die Übersicht bereit
+	 * 
+	 * @return
+	 */
 	public String show() {
 		if (isManipelNotSelected()) {
 			setTargetUrl(getRequestUrl());
 			return NO_MANIPEL_SELECTED;
 		}
 
-		setFaecher(getPruefungService().getAllPruefungsfaecher(
-				getSelectedManipel()));
+		setFaecher(getPruefungService().getAllPruefungsfaecher(getSelectedManipel()));
 		setStudenten(getStudentService().getAllStudenten(getSelectedManipel()));
 
 		ergebnisse = new HashMap<Pruefungsfach, Map<Student, Note>>();
@@ -37,8 +41,7 @@ public class ShowOverview extends AbstractAction {
 		for (Pruefungsfach pf : getFaecher()) {
 			Map<Student, Note> stpMap = new TreeMap<Student, Note>();
 			for (Student st : getStudenten()) {
-				Optional<Note> note = getPruefungService().getAktuelleNote(st,
-						pf);
+				Optional<Note> note = getPruefungService().getAktuelleNote(st, pf);
 				stpMap.put(st, (note.isPresent()) ? note.get() : null);
 			}
 			ergebnisse.put(pf, stpMap);

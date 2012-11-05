@@ -1,16 +1,22 @@
 package de.nak.iaa.web.view.action;
 
-import org.apache.struts2.interceptor.ParameterAware;
-import org.apache.struts2.interceptor.SessionAware;
-
 import com.opensymphony.xwork2.Preparable;
 
 import de.nak.iaa.server.entity.Pruefung;
 import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.web.util.DataHelper;
 
-public abstract class AbstractFormAction extends AbstractAction implements
-		SessionAware, ParameterAware, Preparable {
+/**
+ * Abstrakte Action Klasse für Formulare, die die Vorauswahl von Prüfungen und Prüfungsfach
+ * verarbeitet und für die Kind-Actions nutzbar macht.
+ * 
+ * (Ignoriert hierbei die Tatsache, dass nicht immer eine Prüfung ausgewählt werden muss. Mit
+ * Technologien wie Mixins oder Traits wäre der Inhalt dieser Klasse besser umgesetzt gewesen. Diese
+ * Technologien sind in Java aber nicht ohne weiteres vorhanden.)
+ * 
+ * @author Christopher Biel <christopher.biel89@gmail.com>
+ */
+public abstract class AbstractFormAction extends AbstractAction implements Preparable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,24 +32,18 @@ public abstract class AbstractFormAction extends AbstractAction implements
 
 	@Override
 	public void prepare() throws Exception {
-		setPruefung(DataHelper.stringArrayToString(getParameters().get(
-				"pruefung")));
-		setPruefungsfach(DataHelper.stringArrayToString(getParameters().get(
-				"pruefungsfach")));
+		setPruefung(DataHelper.stringArrayToString(getParameters().get("pruefung")));
+		setPruefungsfach(DataHelper.stringArrayToString(getParameters().get("pruefungsfach")));
 
 		if (getParameters().containsKey("pruefungsfach")
-				&& !DataHelper.stringArrayToString(
-						getParameters().get("pruefungsfach")).equals("")) {
+				&& !DataHelper.stringArrayToString(getParameters().get("pruefungsfach")).equals("")) {
 			selectedPruefungsfach = getPruefungService().getPruefungsfachById(
-					Long.valueOf(DataHelper.stringArrayToString(getParameters()
-							.get("pruefungsfach")))).get();
+					Long.valueOf(DataHelper.stringArrayToString(getParameters().get("pruefungsfach")))).get();
 		}
 		if (getParameters().containsKey("pruefung")
-				&& !DataHelper.stringArrayToString(
-						getParameters().get("pruefung")).equals("")) {
+				&& !DataHelper.stringArrayToString(getParameters().get("pruefung")).equals("")) {
 			selectedPruefung = getPruefungService().getPruefungById(
-					Long.valueOf(DataHelper.stringArrayToString(getParameters()
-							.get("pruefung")))).get();
+					Long.valueOf(DataHelper.stringArrayToString(getParameters().get("pruefung")))).get();
 		}
 	}
 

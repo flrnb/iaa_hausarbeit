@@ -1,9 +1,16 @@
 package de.nak.iaa.web.util;
 
+/**
+ * Keine "wirkliche" Klasse. Hält nur die Messagekeys
+ * 
+ * @author Christopher Biel <christopher.biel89@gmail.com>
+ */
 public class MessageKey {
 
 	public static final String ERR_EMP_DATUM = "error.leeresDatum";
 	public static final String ERR_EMP_DOZENT = "error.leererDozent";
 	public static final String ERR_EMP_PRUEFUNGSFACH = "error.leeresPruefungsfach";
+	public static final String ERR_ZU_FRUEH = "error.zuFruehesDatum";
+	public static final String ERR_KEIN_PROZENT = "error.keinProzent";
 
 }

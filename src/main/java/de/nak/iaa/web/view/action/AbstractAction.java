@@ -14,8 +14,13 @@ import de.nak.iaa.server.business.PruefungService;
 import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.entity.Manipel;
 
-public abstract class AbstractAction extends ActionSupport implements
-		SessionAware, ParameterAware {
+/**
+ * Abstrakte Action. Implementiert um Schicht zwischen ActionSupport und eigenen Actions zu
+ * ermöglichen. Bietet funktionalitäten an, die in jeder Action in dieser Anwendung benötigt werden
+ * 
+ * @author Christopher Biel <christopher.biel89@gmail.com>
+ */
+public abstract class AbstractAction extends ActionSupport implements SessionAware, ParameterAware {
 
 	private static final long serialVersionUID = 1L;
 
@@ -38,8 +43,7 @@ public abstract class AbstractAction extends ActionSupport implements
 	 * @return
 	 */
 	public boolean isManipelNotSelected() {
-		return (!getSession().containsKey("selectedManipel")
-				|| getSession().get("selectedManipel") == null || getSession()
+		return (!getSession().containsKey("selectedManipel") || getSession().get("selectedManipel") == null || getSession()
 				.get("selectedManipel").equals(""));
 	}
 
@@ -59,8 +63,7 @@ public abstract class AbstractAction extends ActionSupport implements
 	 * @return
 	 */
 	public String getMsg(String key) {
-		return getMessageSource().getMessage(key, new Object[] {},
-				Locale.getDefault());
+		return getMessageSource().getMessage(key, new Object[] {}, Locale.getDefault());
 	}
 
 	/* Custom Logik Ende */

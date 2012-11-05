@@ -11,6 +11,11 @@ import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 import de.nak.iaa.web.util.DataHelper;
 
+/**
+ * Aktionklasse, die die Auswahl des Manipels steuert
+ * 
+ * @author Christopher Biel <christopher.biel89@gmail.com>
+ */
 public class ManipelAendernAction extends AbstractAction implements Preparable {
 
 	private static final long serialVersionUID = 1L;
@@ -31,45 +36,54 @@ public class ManipelAendernAction extends AbstractAction implements Preparable {
 	public void validate() {
 		if (selectedManipel != null)
 			if (selectedManipel.equals("-1"))
-				addFieldError("selectedManipel",
-						"Sie müssen einen Manipel auswählen");
+				addFieldError("selectedManipel", "Sie müssen einen Manipel auswählen");
 	}
 
 	/* Logik Ende */
 	/* Actions Start */
 
+	/**
+	 * Zeige die Manipelauswahl
+	 * 
+	 * @return
+	 */
 	public String show() {
 		// Wechsle nur zur "show" action, wenn noch kein manipel ausgewählt war
 		// sonst zurück auf die startseite, damit keine falschen daten angezeigt
 		// werden
-		if (ServletActionContext.getRequest().getHeader("referer") == null
-				&& getSelectedManipel() == null) {
+		if (ServletActionContext.getRequest().getHeader("referer") == null && getSelectedManipel() == null) {
 			setRefererUrl("show");
 		} else {
-			setRefererUrl(ServletActionContext.getRequest()
-					.getHeader("referer"));
+			setRefererUrl(ServletActionContext.getRequest().getHeader("referer"));
 		}
-		if (getSession().containsKey("selectedManipel")
-				&& getSession().get("selectedManipel") != null)
+		if (getSession().containsKey("selectedManipel") && getSession().get("selectedManipel") != null)
 			selectedManipel = getSession().get("selectedManipel").toString();
 		return Action.SUCCESS;
 	}
 
+	/**
+	 * Speichere die Manipelauswahl in der Session
+	 * 
+	 * @return
+	 */
 	public String save() {
 		// speicher den aktuell gewählten manipel in der session
 		String[] manipelParts = selectedManipel.split(" ", 2);
 		getSession().put(
 				"selectedManipel",
-				manipel.get(manipel.indexOf(new Manipel(Integer
-						.valueOf(manipelParts[0]), Studienrichtung
+				manipel.get(manipel.indexOf(new Manipel(Integer.valueOf(manipelParts[0]), Studienrichtung
 						.valueOf(manipelParts[1])))));
 		return Action.SUCCESS;
 	}
 
+	/**
+	 * Setzte die referrerUrl, sodass nach der Manipeleingabe zu der Seite zurückgekehrt werden kann
+	 * 
+	 * @return
+	 */
 	public String error() {
 		if (getParameters().containsKey("target")) {
-			setRefererUrl(DataHelper.stringArrayToString(getParameters().get(
-					"target")));
+			setRefererUrl(DataHelper.stringArrayToString(getParameters().get("target")));
 		}
 		return Action.SUCCESS;
 	}

@@ -7,6 +7,11 @@ import org.apache.struts2.util.StrutsTypeConverter;
 import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.web.util.DataHelper;
 
+/**
+ * Konverterklasse um Note<->String nach einer Formulareingabe umwandeln zu können
+ * 
+ * @author Christopher Biel <christopher.biel89@gmail.com>
+ */
 public class StringNoteConverter extends StrutsTypeConverter {
 
 	@SuppressWarnings("rawtypes")
