@@ -8,10 +8,10 @@ import javax.annotation.Resource;
 
 import org.junit.Test;
 
-import de.nak.iaa.ApplicationContextAwareTest;
+import de.nak.iaa.TransactionalApplicationContextAwareTest;
 import de.nak.iaa.server.dao.DozentDAO;
 
-public class DozentPersistenceTest extends ApplicationContextAwareTest {
+public class DozentPersistenceTest extends TransactionalApplicationContextAwareTest {
 
 	@Resource
 	private DozentDAO dozentDAO;

@@ -17,11 +17,11 @@
 
         <property
             name="url"
-            value="jdbc:h2:db/notenverwaltung" />
+            value="jdbc:h2:mem" />
 
         <property
             name="username"
-            value="sa" />
+            value="" />
 
         <property
             name="password"

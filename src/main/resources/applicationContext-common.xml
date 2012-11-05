@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+
+	<context:annotation-config />
+	<context:component-scan base-package="de.nak.iaa" />
+
+	<context:property-placeholder
+		properties-ref="properties" />
+
+	<bean id="properties"
+		class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations">
+			<list>
+				<value>classpath:application.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages" />
+		<property name="defaultEncoding" value="${source.encoding}" />
+	</bean>
+
+
+	<!-- Service classes -->
+	<bean id="studentService" class="de.nak.iaa.server.business.impl.StudentServiceImpl" />
+	<bean id="pruefungService" class="de.nak.iaa.server.business.impl.PruefungServiceImpl" />
+	<bean id="dozentService" class="de.nak.iaa.server.business.impl.DozentServiceImpl" />
+
+	<!-- DAO layer -->
+	<bean id="studentDAO" class="de.nak.iaa.server.dao.impl.StudentDAOImpl" />
+	<bean id="dozentDAO" class="de.nak.iaa.server.dao.impl.DozentDAOImpl" />
+	<bean id="manipelDAO" class="de.nak.iaa.server.dao.impl.ManipelDAOImpl" />
+	<bean id="pruefungsfachDAO" class="de.nak.iaa.server.dao.impl.PruefungsfachDAOImpl" />
+	<bean id="pruefungsleistungDAO" class="de.nak.iaa.server.dao.impl.PruefungsleistungDAOImpl" />
+	<bean id="pruefungDAO" class="de.nak.iaa.server.dao.impl.PruefungDAOImpl" />
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="add*" propagation="REQUIRED" rollback-for="IllegalUpdateException" />
+			<tx:method name="update*" propagation="REQUIRED"
+				rollback-for="IllegalUpdateException" />
+		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<aop:pointcut id="serviceMethods" expression="bean(*Service)" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods" />
+	</aop:config>
+
+	<!-- Hibernate session factory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="de.nak.iaa.server.entity" />
+		<property name="schemaUpdate" value="true" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.hbm2ddl.import_files">/import.sql</prop>
+			</props>
+		</property>
+		<!-- Properties fuer Envers (Versionierung) -->
+		<property name="eventListeners">
+			<map>
+				<entry key="post-insert" value-ref="envers" />
+				<entry key="post-update" value-ref="envers" />
+				<entry key="post-delete" value-ref="envers" />
+				<entry key="post-collection-recreate" value-ref="envers" />
+				<entry key="pre-collection-remove" value-ref="envers" />
+				<entry key="pre-collection-update" value-ref="envers" />
+			</map>
+		</property>
+	</bean>
+	<!-- Envers Info -->
+	<bean id="envers" class="org.hibernate.envers.event.AuditEventListener" />
+
+</beans>

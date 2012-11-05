@@ -1,45 +1,41 @@
 package de.nak.iaa;
 
-import org.hibernate.FlushMode;
 import org.hibernate.SessionFactory;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.orm.hibernate3.LocalSessionFactoryBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Base class fo unit tests with spring context.
- * <p>
- * Each method is run within a transaction which is rolled back when method is
- * over. Hibernate sessions which used in tests are have
- * {@link org.hibernate.FlushMode#ALWAYS} <br/>
- * <b>aus dem Archetypen http://code.google.com/p/spring-archetypes/</b>
+ * Oberklasse für Testklassen, die den ApplicationContext brauchen
  * 
- * @see org.springframework.test.context.transaction.TransactionConfiguration
- * @see org.springframework.transaction.annotation.Transactional
- * @see org.hibernate.Session#setFlushMode(org.hibernate.FlushMode)
+ * @author flrnb
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:applicationContext.xml" })
-@TransactionConfiguration(defaultRollback = true, transactionManager = "transactionManager")
-@Transactional
+@ContextConfiguration(locations = { "classpath:applicationContext-test.xml" })
 public abstract class ApplicationContextAwareTest {
 
 	@Autowired
 	public SessionFactory sessionFactory;
 
+	@Autowired
+	public ApplicationContext applicationContext;
+
 	@Before
 	public void beforeMethod() {
-		sessionFactory.getCurrentSession().setFlushMode(FlushMode.COMMIT);
+		LocalSessionFactoryBean sessionFactoryBean = (LocalSessionFactoryBean) applicationContext
+				.getBean("&sessionFactory");
+		sessionFactoryBean.dropDatabaseSchema();
+		sessionFactoryBean.createDatabaseSchema();
 	}
 
 	@After
 	public void afterMethod() {
-		// nothing
+		sessionFactory.close();
 	}
 
 }

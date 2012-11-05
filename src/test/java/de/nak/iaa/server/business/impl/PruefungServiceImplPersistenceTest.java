@@ -2,6 +2,7 @@ package de.nak.iaa.server.business.impl;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
+import static org.junit.matchers.JUnitMatchers.hasItems;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,8 +11,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
-
-import javax.annotation.Resource;
 
 import org.javatuples.Triplet;
 import org.junit.Before;
@@ -49,16 +48,16 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 	@Autowired
 	public PruefungService service;
 
-	@Resource
+	@Autowired
 	public ManipelDAO manipelDAO;
 
-	@Resource
+	@Autowired
 	public DozentDAO dozentDAO;
 
-	@Resource
+	@Autowired
 	public StudentDAO studentDAO;
 
-	@Resource
+	@Autowired
 	public PruefungsfachDAO pruefungsfachDAO;
 
 	private Pruefungsfach fach;
@@ -81,6 +80,7 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 
 	@Before
 	public void setUp() {
+
 		manipel = new Manipel(2007, Studienrichtung.WInf);
 		manipelDAO.makePersistent(manipel);
 		fach = new Pruefungsfach("Fach1", "Fach1 Beschreibung", manipel);
@@ -123,6 +123,9 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 		service.updatePruefungsleistungen(Arrays.asList(new Delete(leistung2.getId())));
 		// das löschen einer zukünftigen Prüfungsleistung macht die Vorgänger
 		// nicht editierbar
+
+		assertThat(service.getAllPruefungsleistungen(fach, student).size(), is(1));
+		assertThat(service.getAllPruefungsleistungen(fach, student), hasItems(leistung1));
 		assertFalse(service.isPruefungsleistungEditable(leistung1.getId()));
 	}
 
@@ -194,4 +197,5 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 		assertThat(pruefungsleistungHistorie.get(Versuch.Zwei).size(), is(0));
 		assertThat(pruefungsleistungHistorie.get(Versuch.Drei).size(), is(0));
 	}
+
 }

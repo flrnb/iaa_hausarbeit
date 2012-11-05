@@ -13,12 +13,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import de.nak.iaa.ApplicationContextAwareTest;
+import de.nak.iaa.TransactionalApplicationContextAwareTest;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 
-public class PruefungsfachPersistenceTest extends ApplicationContextAwareTest {
+public class PruefungsfachPersistenceTest extends TransactionalApplicationContextAwareTest {
 
 	private static final String BESCHREIBUNG = "Die allerallerbeste Vorlesung überhaupt...";
 	private static final String TITEL = "Internetanwendungsarchitektur";
