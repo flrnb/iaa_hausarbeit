@@ -13,6 +13,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * Entity für eine Prüfung. Eine Prüfung wird von einem Prüfer an einem
+ * bestimmten Datum festgelegt und in einem entsprechenden Prüfungsfach
+ * abgelegt.
+ * 
+ * @author Ronny Bräunlich
+ * 
+ */
 @Entity
 public class Pruefung {
 	@Id

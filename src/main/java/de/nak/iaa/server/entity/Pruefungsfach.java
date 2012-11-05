@@ -10,6 +10,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+/**
+ * Entity eines Prüfungsfaches. Es ist eindeutig durch den Titel und das
+ * Manipel.
+ * 
+ * @author Ronny Bräunlich
+ * 
+ */
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "TITEL",
 		"MANIPEL_ID" }))

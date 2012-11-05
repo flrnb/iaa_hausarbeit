@@ -15,6 +15,14 @@ import org.hibernate.envers.Audited;
 
 import de.nak.iaa.server.fachwert.Note;
 
+/**
+ * Entity, welche eine Ergänzungsprüfung darstellt. Eine Ergänzungsprüfung
+ * gehört immer zu einer Prüfungsleistung und kann dadurch die Note noch
+ * verbessern.
+ * 
+ * @author Ronny Bräunlich
+ * 
+ */
 @Audited
 @Entity
 public class ErgaenzungsPruefung {

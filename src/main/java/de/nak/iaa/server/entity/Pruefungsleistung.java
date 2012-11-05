@@ -4,7 +4,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,6 +17,14 @@ import org.hibernate.envers.RelationTargetAuditMode;
 import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.server.fachwert.Versuch;
 
+/**
+ * Entity einer durch einen Studenten abgelegten Prüfungsleistung. Sie gehört zu
+ * einer Prüfung und einem Studenten. Entsprechend ist auch ein Versuch
+ * zugeordnet. Sie kann eine Ergänzungsprüfung enthalten.
+ * 
+ * @author Ronny Bräunlich
+ * 
+ */
 @Audited
 @Entity
 public class Pruefungsleistung {
@@ -28,11 +35,11 @@ public class Pruefungsleistung {
 	@Enumerated(EnumType.STRING)
 	private Versuch versuch;
 
-	@OneToOne(optional = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@OneToOne(optional = true, cascade = CascadeType.ALL)
 	@JoinColumn(name = "ERGAENZUNGSPRUEFUNG_ID")
 	private ErgaenzungsPruefung ergaenzungsPruefung;
 
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "PRUEFUNG_ID", nullable = false)
 	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 	private Pruefung pruefung;
@@ -40,7 +47,7 @@ public class Pruefungsleistung {
 	@Enumerated(EnumType.STRING)
 	private Note note;
 
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "STUDENT_ID", nullable = false)
 	@Audited(targetAuditMode = RelationTargetAuditMode.NOT_AUDITED)
 	private Student student;

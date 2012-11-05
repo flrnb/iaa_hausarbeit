@@ -11,6 +11,13 @@ import javax.persistence.UniqueConstraint;
 
 import de.nak.iaa.server.fachwert.Studienrichtung;
 
+/**
+ * Ein Manipel für Studenten. Es wird eindeutig definiert durch die Attribute
+ * Jahrgang und Studienrichtung.
+ * 
+ * @author Ronny Bräunlich
+ * 
+ */
 @Entity
 @Table(uniqueConstraints = @UniqueConstraint(columnNames = { "JAHRGANG",
 		"STUDIENRICHTUNG" }))
