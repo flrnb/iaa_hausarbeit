@@ -29,7 +29,7 @@ public abstract class ApplicationContextAwareTest {
 	 * vor jedem Test einmal das komplette Schema der Datenbank löschen
 	 */
 	@Before
-	public void earlyBeforeMethod() {
+	public void beforeMethod() {
 		LocalSessionFactoryBean sessionFactoryBean = (LocalSessionFactoryBean) applicationContext
 				.getBean("&sessionFactory");
 		sessionFactoryBean.dropDatabaseSchema();
@@ -37,7 +37,7 @@ public abstract class ApplicationContextAwareTest {
 	}
 
 	@After
-	public void lateAfterMethod() {
+	public void afterMethod() {
 		sessionFactory.close();
 	}
 

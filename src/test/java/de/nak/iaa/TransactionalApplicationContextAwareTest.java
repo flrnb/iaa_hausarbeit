@@ -29,11 +29,13 @@ public abstract class TransactionalApplicationContextAwareTest extends
 	@Autowired
 	public SessionFactory sessionFactory;
 
+	@Override
 	@Before
 	public void beforeMethod() {
 		sessionFactory.getCurrentSession().setFlushMode(FlushMode.ALWAYS);
 	}
 
+	@Override
 	@After
 	public void afterMethod() {
 
