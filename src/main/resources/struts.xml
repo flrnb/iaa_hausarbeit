@@ -15,9 +15,20 @@
 		</action>
 	</package>
 
+	<package name="error" extends="exceptionsBase" namespace="/error">
+		<action name="show" class="de.nak.iaa.web.view.action.ErrorAction" method="show">
+			<result name="success" type="tiles">errorPage</result>
+		</action>
+	</package>
+
 	<package name="exceptionsBase" extends="tiles-default">
 		<global-results>
-			<result type="tiles" name="exception">errorPage</result>
+			<result type="tiles" name="exception">unknownError</result>
+			<result type="redirectAction" name="specException">
+				<param name="actionName">show</param>
+				<param name="namespace">/error</param>
+				<param name="errorCode">${occuredErrorCode}</param>
+			</result>
 		</global-results>
 		<global-exception-mappings>
 			<exception-mapping exception="java.lang.Exception"

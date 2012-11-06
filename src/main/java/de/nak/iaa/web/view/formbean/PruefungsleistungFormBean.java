@@ -1,7 +1,6 @@
 package de.nak.iaa.web.view.formbean;
 
 import de.nak.iaa.server.entity.Student;
-import de.nak.iaa.server.fachwert.Note;
 
 /**
  * FormBean für das Formular zum Erfassen neuer Prüfungsleistungen<br>
@@ -11,23 +10,23 @@ import de.nak.iaa.server.fachwert.Note;
  */
 public class PruefungsleistungFormBean extends AbstractFormBean {
 
-	private Note alteNote;
+	private String alteNote;
 	private String note;
 
 	public PruefungsleistungFormBean() {
 	}
 
-	public PruefungsleistungFormBean(Student student, Note alteNote, String note) {
+	public PruefungsleistungFormBean(Student student, String alteNote, String note) {
 		this.student = student;
 		this.alteNote = alteNote;
 		this.note = note;
 	}
 
-	public Note getAlteNote() {
+	public String getAlteNote() {
 		return alteNote;
 	}
 
-	public void setAlteNote(Note alteNote) {
+	public void setAlteNote(String alteNote) {
 		this.alteNote = alteNote;
 	}
 

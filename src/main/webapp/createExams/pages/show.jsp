@@ -5,7 +5,7 @@
 
 <h3>Neue Prüfung anlegen</h3>
 
-<s:form action="save">
+<s:form action="save" method="post">
 	<sx:autocompleter name="formPruefungsfach" autoComplete="false"
 		forceValidOption="true" label="Prüfungsfach" list="pruefungsfaecher"
 		listKey="id" listValue="titel" />
@@ -18,6 +18,5 @@
 	<sx:datetimepicker name="formDate" displayFormat="dd-MM-yyyy"
 		label="Datum der Prüfung" />
 	<br />
-
 	<s:submit />
 </s:form>

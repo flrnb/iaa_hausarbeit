@@ -13,7 +13,7 @@ Aktuell ausgewählt:
 </s:else>
 <br />
 
-<s:form action="save" namespace="/manipel">
+<s:form action="save" namespace="/manipel" method="post">
 	<s:select list="manipel" name="selectedManipel" label="Manipel wählen"
 		headerKey="-1" headerValue="--- Select ---" />
 	<s:submit value="Ändern"></s:submit>

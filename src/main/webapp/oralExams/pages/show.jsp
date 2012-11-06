@@ -14,11 +14,9 @@
 	Ergänzungsprüfungen eintragen.</p>
 
 <s:if test="pruefungenBeans.size() > 0">
-	<s:form action="save">
+	<s:form action="save" method="post">
 		<input type="hidden" name="pruefungsfach"
 			value="<s:property value="pruefungsfach"/>" />
-		<%-- <input type="hidden" name="pruefung"
-			value="<s:property value="pruefung"/>" /> --%>
 		<table class="notenTabelle" border="1">
 			<tr>
 				<th>Datum der<br />Prüfung
@@ -60,5 +58,5 @@
 	</s:form>
 </s:if>
 <s:else>
-	<h4>Keine Studenten für diese Auswahl gepflegt!</h4>
+	<h4>Es gibt keine Studenten für die eine Ergänzungsprüfung in diesem Fach eingetragen werden kann!</h4>
 </s:else>

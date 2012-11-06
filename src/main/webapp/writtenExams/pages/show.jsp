@@ -12,7 +12,7 @@
 <p>Hier können Sie die erreichten Noten von dem Modul eingetragen.</p>
 
 <s:if test="pruefungenBeans.size() > 0">
-	<form action="<s:url action="save"/>">
+	<form action="<s:url action="save"/>" method="post">
 		<input type="hidden" name="pruefungsfach"
 			value="<s:property value="pruefungsfach"/>" /> <input type="hidden"
 			name="pruefung" value="<s:property value="pruefung"/>" />

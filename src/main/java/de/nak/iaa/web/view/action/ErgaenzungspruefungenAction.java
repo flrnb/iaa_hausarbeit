@@ -89,6 +89,7 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 			setTargetUrl(getRequestUrl());
 			return NO_MANIPEL_SELECTED;
 		}
+
 		fuellePruefungsBeans();
 		return Action.SUCCESS;
 	}

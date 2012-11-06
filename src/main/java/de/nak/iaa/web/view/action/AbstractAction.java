@@ -25,6 +25,10 @@ public abstract class AbstractAction extends ActionSupport implements SessionAwa
 	private static final long serialVersionUID = 1L;
 
 	protected static final String NO_MANIPEL_SELECTED = "noManipelSelected";
+	protected static final String EXCEPTION_OCCURED = "exception";
+	protected static final String SPECIFIC_EXCEPTION_OCCURED = "specException";
+
+	private int occuredErrorCode;
 
 	/* Custom Logik Start */
 
@@ -141,6 +145,14 @@ public abstract class AbstractAction extends ActionSupport implements SessionAwa
 
 	public void setMessageSource(MessageSource messageSource) {
 		this.messageSource = messageSource;
+	}
+
+	public int getOccuredErrorCode() {
+		return occuredErrorCode;
+	}
+
+	public void setOccuredErrorCode(int occuredErrorCode) {
+		this.occuredErrorCode = occuredErrorCode;
 	}
 
 	/* Messages Ende */
