@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 
+import com.google.common.base.Optional;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.Preparable;
 
@@ -30,7 +31,8 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 
 	@Override
 	public void prepare() throws Exception {
-		setPruefungsfaecher(getPruefungService().getAllPruefungsfaecher(getSelectedManipel()));
+		setPruefungsfaecher(getPruefungService().getAllPruefungsfaecher(
+				getSelectedManipel()));
 		setStudenten(getStudentService().getAllStudenten(getSelectedManipel()));
 	}
 
@@ -47,7 +49,8 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 			hasError = true;
 		}
 		if (getFormPruefungsfach() == null || getFormPruefungsfach().equals("")) {
-			addFieldError("formPruefungsfach", getMsg(MessageKey.ERR_EMP_PRUEFUNGSFACH));
+			addFieldError("formPruefungsfach",
+					getMsg(MessageKey.ERR_EMP_PRUEFUNGSFACH));
 			hasError = true;
 		}
 		return hasError;
@@ -69,20 +72,43 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 		}
 
 		if (!validateForm()) {
-			// TODO prüfe ob die parameter leer sind bzw nutze die optional methode "isPresent()"
-			setSelectedPruefungsfach(getPruefungService().getPruefungsfachById(
-					Long.valueOf(DataHelper.stringArrayToString(getParameters().get("formPruefungsfachKey")))).get());
+			// TODO prüfe ob die parameter leer sind bzw nutze die optional
+			// methode "isPresent()" jez?^^ das musst auch für selectedStudent
+			// gemacht werden
 
-			setSelectedStudent(getStudentService().getStudentById(
-					Long.valueOf(DataHelper.stringArrayToString(getParameters().get("formStudentKey")))).get());
+			Optional<Pruefungsfach> fach = getPruefungService()
+					.getPruefungsfachById(
+							Long.valueOf(DataHelper
+									.stringArrayToString(getParameters().get(
+											"formPruefungsfachKey"))));
 
-			setHistory(getPruefungService().getPruefungsleistungHistorie(getSelectedStudent(),
-					getSelectedPruefungsfach()));
+			if (fach.isPresent()) {
+				setSelectedPruefungsfach(fach.get());
+			} else {
+				addActionError("Prüfungsfach nicht bekannt");
+				return Action.INPUT;
+			}
 
-			return Action.SUCCESS;
+			// also hier
+			Optional<Student> student = getStudentService().getStudentById(
+					Long.valueOf(DataHelper.stringArrayToString(getParameters()
+							.get("formStudentKey"))));
+
+			if (student.isPresent()) {
+				setSelectedStudent(student.get());
+			} else {
+				addActionError("Student nicht bekannt");
+				return Action.INPUT;
+			}
+
 		}
 
-		return Action.INPUT;
+		// hier füllt er die history. du musst also im endeffekt nur die
+		// tabelle füllen
+		setHistory(getPruefungService().getPruefungsleistungHistorie(
+				getSelectedStudent(), getSelectedPruefungsfach()));
+
+		return Action.SUCCESS;
 	}
 
 	public List<Pruefungsfach> getPruefungsfaecher() {
@@ -137,7 +163,8 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 		return history;
 	}
 
-	public void setHistory(Map<Versuch, SortedMap<Date, Pruefungsleistung>> history) {
+	public void setHistory(
+			Map<Versuch, SortedMap<Date, Pruefungsleistung>> history) {
 		this.history = history;
 	}
 
