@@ -21,7 +21,8 @@
 			value="<s:property value="pruefung"/>" /> --%>
 		<table class="notenTabelle" border="1">
 			<tr>
-				<th>Datum der<br />Prüfung</th>
+				<th>Datum der<br />Prüfung
+				</th>
 				<th>Datum der<br />Ergänzungsprüfung
 				</th>
 				<th>Matrikelnummer</th>
@@ -31,6 +32,8 @@
 			<s:iterator value="pruefungenBeans" var="pruefung" status="stat">
 				<s:hidden name="pruefungenBeans[%{#stat.index}].student.matrikelNr"
 					value="%{#pruefung.student.matrikelNr}" />
+				<s:hidden name="pruefungenBeans[%{#stat.index}].datum"
+					value="%{#pruefung.datum}" />
 				<tr>
 					<td><s:property value="#pruefung.datum" /></td>
 					<td><sx:datetimepicker cssErrorClass="fieldErrorCls"
