@@ -55,6 +55,7 @@
 			<tx:method name="add*" propagation="REQUIRED" rollback-for="IllegalUpdateException" />
 			<tx:method name="update*" propagation="REQUIRED"
 				rollback-for="IllegalUpdateException" />
+			<tx:method name="*" propagation="REQUIRED"/>
 		</tx:attributes>
 	</tx:advice>
 	<aop:config>

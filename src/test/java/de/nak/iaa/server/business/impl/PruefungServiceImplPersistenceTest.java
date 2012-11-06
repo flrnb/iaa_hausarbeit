@@ -40,7 +40,8 @@ import de.nak.iaa.server.fachwert.Versuch;
  * PersistenceTest für PruefungService-Implementierung. Einige Funktionalitäten
  * des Persistence-Layers waren nicht sinnvoll zu mocken.
  * 
- * @author flrnb
+ * @author Florian Borchert
+ * @version 06.11.2012
  */
 public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareTest {
 

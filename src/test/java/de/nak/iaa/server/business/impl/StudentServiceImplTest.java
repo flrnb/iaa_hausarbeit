@@ -16,7 +16,8 @@ import de.nak.iaa.server.entity.Student;
 /**
  * Junit-Test für StudentService-Implementierung
  * 
- * @author flrnb
+ * @author Florian Borchert
+ * @version 06.11.2012
  */
 public class StudentServiceImplTest {
 

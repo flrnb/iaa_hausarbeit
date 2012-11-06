@@ -8,7 +8,8 @@ import de.nak.iaa.server.fachwert.Note;
  * Hier werden alle Änderungsoperationen an Prüfungen zusammengefasst.<br/>
  * <i>Orientiert sich am GOF-Command-Pattern.</i>
  * 
- * @author flrnb
+ * @author Florian Borchert
+ * @version 06.11.2012
  */
 public interface PruefungsleistungAenderung {
 
@@ -19,7 +20,8 @@ public interface PruefungsleistungAenderung {
 	/**
 	 * Eine vorhandene Prüfungsleistung ändern
 	 * 
-	 * @author flrnb
+	 * @author Florian Borchert
+	 * @version 06.11.2012
 	 */
 	public static class Update implements PruefungsleistungAenderung {
 
@@ -53,7 +55,8 @@ public interface PruefungsleistungAenderung {
 	/**
 	 * Eine vorhandene Prüfungsleistung ändern
 	 * 
-	 * @author flrnb
+	 * @author Florian Borchert
+	 * @version 06.11.2012
 	 */
 	public static class Delete implements PruefungsleistungAenderung {
 

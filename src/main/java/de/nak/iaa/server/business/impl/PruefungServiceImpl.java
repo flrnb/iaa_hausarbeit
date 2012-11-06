@@ -41,7 +41,8 @@ import de.nak.iaa.server.fachwert.Versuch;
 /**
  * Implementierung von {@link PruefungService}
  * 
- * @author flrnb
+ * @author Florian Borchert
+ * @version 06.11.2012
  */
 public class PruefungServiceImpl implements PruefungService {
 
