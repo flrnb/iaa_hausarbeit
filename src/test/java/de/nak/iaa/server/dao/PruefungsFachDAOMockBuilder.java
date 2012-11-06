@@ -12,6 +12,10 @@ import com.google.common.collect.Iterables;
 import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Pruefungsfach;
 
+/**
+ * @author Florian Borchert
+ * @version 06.11.2012
+ */
 public class PruefungsFachDAOMockBuilder extends DAOMockBuilder<Pruefungsfach, PruefungsfachDAO> {
 
 	public PruefungsFachDAOMockBuilder() {

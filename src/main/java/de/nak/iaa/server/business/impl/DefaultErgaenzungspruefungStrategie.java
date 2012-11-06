@@ -7,7 +7,8 @@ import de.nak.iaa.server.fachwert.Note;
 /**
  * Standardimplementierung für {@link ErgaenzungspruefungStrategie}
  * 
- * @author flrnb
+ * @author Florian Borchert
+ * @version 06.11.2012
  */
 public class DefaultErgaenzungspruefungStrategie implements ErgaenzungspruefungStrategie {
 

@@ -6,7 +6,8 @@ import de.nak.iaa.server.fachwert.Note;
 /**
  * Fachlogik für Ergänzungsprüfungen
  * 
- * @author flrnb
+ * @author Florian Borchert
+ * @version 06.11.2012
  */
 public interface ErgaenzungspruefungStrategie {
 

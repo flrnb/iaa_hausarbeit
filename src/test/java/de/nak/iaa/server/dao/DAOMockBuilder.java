@@ -13,7 +13,8 @@ import org.easymock.IAnswer;
  * Generischer Mockbuilder für DAOs <br/>
  * Wird zum Testen der Serviceklassen benötigt.
  * 
- * @author flrnb
+ * @author Florian Borchert
+ * @version 06.11.2012
  */
 public class DAOMockBuilder<E, T extends GenericDAO<E, Long>> {
 

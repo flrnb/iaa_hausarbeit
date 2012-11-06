@@ -6,7 +6,8 @@ import de.nak.iaa.server.fachwert.Note;
 /**
  * Fachlogik für Prüfungsleistungen
  * 
- * @author flrnb
+ * @author Florian Borchert
+ * @version 06.11.2012
  */
 public interface PruefungsleistungStrategie {
 

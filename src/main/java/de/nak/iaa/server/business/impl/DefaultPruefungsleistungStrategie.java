@@ -9,7 +9,8 @@ import de.nak.iaa.server.fachwert.Versuch;
 /**
  * Standardimplementierung für {@link PruefungsleistungStrategie}
  * 
- * @author flrnb
+ * @author Florian Borchert
+ * @version 06.11.2012
  */
 public class DefaultPruefungsleistungStrategie implements PruefungsleistungStrategie {
 

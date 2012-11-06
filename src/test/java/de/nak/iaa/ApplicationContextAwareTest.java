@@ -18,7 +18,8 @@ import org.springframework.transaction.support.TransactionTemplate;
 /**
  * Oberklasse für Testklassen, die den ApplicationContext brauchen
  * 
- * @author flrnb
+ * @author Florian Borchert
+ * @version 06.11.2012
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:applicationContext-test.xml" })
