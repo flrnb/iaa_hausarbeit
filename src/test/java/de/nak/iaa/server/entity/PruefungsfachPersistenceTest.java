@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -18,7 +17,8 @@ import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 
-public class PruefungsfachPersistenceTest extends TransactionalApplicationContextAwareTest {
+public class PruefungsfachPersistenceTest extends
+		TransactionalApplicationContextAwareTest {
 
 	private static final String BESCHREIBUNG = "Die allerallerbeste Vorlesung überhaupt...";
 	private static final String TITEL = "Internetanwendungsarchitektur";
@@ -30,8 +30,8 @@ public class PruefungsfachPersistenceTest extends TransactionalApplicationContex
 
 	@Before
 	public void setUp() {
-		// einfach mal Manipel Nr. 1 nehmen
-		testManipel = manipelDAO.findById(Long.valueOf(1), false);
+		testManipel = new Manipel(2007, Studienrichtung.WInf);
+		testManipel = manipelDAO.makePersistent(testManipel);
 	}
 
 	@Test
@@ -69,14 +69,10 @@ public class PruefungsfachPersistenceTest extends TransactionalApplicationContex
 		pruefungsfachDAO.makePersistent(p2);
 		pruefungsfachDAO.makePersistent(p3);
 
-		List<Pruefungsfach> list = pruefungsfachDAO.findePruefungsfaecherFuerManipel(einManipel);
+		List<Pruefungsfach> list = pruefungsfachDAO
+				.findePruefungsfaecherFuerManipel(einManipel);
 		assertThat(list.size(), is(equalTo(2)));
 		assertThat(list.contains(p3), is(Boolean.FALSE));
-	}
-
-	@After
-	public void tearDown() {
-		manipelDAO.makeTransient(testManipel);
 	}
 
 }

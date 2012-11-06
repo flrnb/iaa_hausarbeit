@@ -45,15 +45,14 @@ public class PruefungsleistungPersistenceTest extends
 
 	@Before
 	public void setUp() {
+		Manipel manipel = new Manipel(2007, Studienrichtung.BWL);
+		manipel = manipelDAO.makePersistent(manipel);
 		dozent = new Dozent("b", "a");
 		dozent = dozentDAO.makePersistent(dozent);
-		pruefungsfach = new Pruefungsfach("Titel", "beschreibung", manipelDAO
-				.findAll().get(0));
+		pruefungsfach = new Pruefungsfach("Titel", "beschreibung", manipel);
 		pruefungsfach = pruefungsfachDAO.makePersistent(pruefungsfach);
 		pruefung = new Pruefung(new Date(), pruefungsfach, dozent);
 		pruefung = pruefungDAO.makePersistent(pruefung);
-		Manipel manipel = new Manipel(2007, Studienrichtung.BWL);
-		manipel = manipelDAO.makePersistent(manipel);
 		student = new Student(1, manipel, "Name", "Vorname");
 		student = studentDAO.makePersistent(student);
 	}
