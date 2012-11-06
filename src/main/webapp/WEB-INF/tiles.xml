@@ -82,10 +82,20 @@
 		<put-attribute name="title" value="NoDaBa - Prüfung anlegen"></put-attribute>
 		<put-attribute name="content" value="/createExams/pages/show.jsp"></put-attribute>
 	</definition>
-	
+
 	<definition name="savePruefungAnlegen" extends="mainLayout">
-		<put-attribute name="title" value="NoDaBa - Prüfung anlegen erfolgreich"></put-attribute>
+		<put-attribute name="title"
+			value="NoDaBa - Prüfung anlegen erfolgreich"></put-attribute>
 		<put-attribute name="content" value="/createExams/pages/save.jsp"></put-attribute>
 	</definition>
 
+
+	<definition name="showHistory" extends="mainLayout">
+		<put-attribute name="title" value="NoDaBa - Historie anzeigen"></put-attribute>
+		<put-attribute name="content" value="/history/pages/show.jsp"></put-attribute>
+	</definition>
+	<definition name="historySelect" extends="mainLayout">
+		<put-attribute name="title" value="NoDaBa - Historie anzeigen"></put-attribute>
+		<put-attribute name="content" value="/history/pages/select.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>

@@ -145,4 +145,15 @@
 			<result name="success" type="tiles">showOverview</result>
 		</action>
 	</package>
+
+	<package name="history" extends="manipelSelection" namespace="/history">
+		<action name="show" class="de.nak.iaa.web.view.action.ShowHistoryAction"
+			method="show">
+			<result type="tiles" name="success">showHistory</result>
+		</action>
+		<action name="select" class="de.nak.iaa.web.view.action.ShowHistoryAction"
+			method="select">
+			<result type="tiles" name="success">historySelect</result>
+		</action>
+	</package>
 </struts>
