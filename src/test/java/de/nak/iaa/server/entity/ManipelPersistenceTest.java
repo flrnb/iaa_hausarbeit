@@ -10,11 +10,11 @@ import javax.annotation.Resource;
 import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import de.nak.iaa.TransactionalApplicationContextAwareTest;
+import de.nak.iaa.ApplicationContextAwareTest;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 
-public class ManipelPersistenceTest extends TransactionalApplicationContextAwareTest {
+public class ManipelPersistenceTest extends ApplicationContextAwareTest {
 
 	private final int jahrgang = 2007;
 	private final Studienrichtung studienrichtung = Studienrichtung.WInf;

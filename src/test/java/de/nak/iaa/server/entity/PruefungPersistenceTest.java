@@ -11,15 +11,14 @@ import javax.annotation.Resource;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.nak.iaa.TransactionalApplicationContextAwareTest;
+import de.nak.iaa.ApplicationContextAwareTest;
 import de.nak.iaa.server.dao.DozentDAO;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.dao.PruefungDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 
-public class PruefungPersistenceTest extends
-		TransactionalApplicationContextAwareTest {
+public class PruefungPersistenceTest extends ApplicationContextAwareTest {
 
 	@Resource
 	private PruefungDAO pruefungDAO;
