@@ -12,12 +12,12 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import de.nak.iaa.ApplicationContextAwareTest;
+import de.nak.iaa.TransactionalApplicationContextAwareTest;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 
-public class PruefungsfachPersistenceTest extends ApplicationContextAwareTest {
+public class PruefungsfachPersistenceTest extends TransactionalApplicationContextAwareTest {
 
 	private static final String BESCHREIBUNG = "Die allerallerbeste Vorlesung überhaupt...";
 	private static final String TITEL = "Internetanwendungsarchitektur";
@@ -46,8 +46,7 @@ public class PruefungsfachPersistenceTest extends ApplicationContextAwareTest {
 	@Test(expected = DataIntegrityViolationException.class)
 	public void testUniqueContraints() {
 		Pruefungsfach fach = new Pruefungsfach(TITEL, BESCHREIBUNG, testManipel);
-		Pruefungsfach fach2 = new Pruefungsfach(TITEL,
-				"Beschreibung ist irrelevant", testManipel);
+		Pruefungsfach fach2 = new Pruefungsfach(TITEL, "Beschreibung ist irrelevant", testManipel);
 		pruefungsfachDAO.makePersistent(fach);
 		pruefungsfachDAO.makePersistent(fach2);
 	}
@@ -59,17 +58,14 @@ public class PruefungsfachPersistenceTest extends ApplicationContextAwareTest {
 		manipelDAO.makePersistent(einManipel);
 		manipelDAO.makePersistent(anderesManipel);
 		Pruefungsfach p1 = new Pruefungsfach(TITEL, BESCHREIBUNG, einManipel);
-		Pruefungsfach p2 = new Pruefungsfach("Anderer Titel",
-				"Andere Beschreibung", einManipel);
-		Pruefungsfach p3 = new Pruefungsfach("Anderes Manipel", "Beschreibung",
-				anderesManipel);
+		Pruefungsfach p2 = new Pruefungsfach("Anderer Titel", "Andere Beschreibung", einManipel);
+		Pruefungsfach p3 = new Pruefungsfach("Anderes Manipel", "Beschreibung", anderesManipel);
 
 		pruefungsfachDAO.makePersistent(p1);
 		pruefungsfachDAO.makePersistent(p2);
 		pruefungsfachDAO.makePersistent(p3);
 
-		List<Pruefungsfach> list = pruefungsfachDAO
-				.findePruefungsfaecherFuerManipel(einManipel);
+		List<Pruefungsfach> list = pruefungsfachDAO.findePruefungsfaecherFuerManipel(einManipel);
 		assertThat(list.size(), is(equalTo(2)));
 		assertThat(list.contains(p3), is(Boolean.FALSE));
 	}

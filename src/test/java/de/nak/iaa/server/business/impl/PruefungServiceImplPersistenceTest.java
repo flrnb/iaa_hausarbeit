@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.SortedMap;
 
 import org.javatuples.Triplet;
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -78,9 +77,8 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 	private Pruefung pruefung2;
 	private Pruefung pruefung3;
 
-	@Before
-	public void setUp() {
-
+	@Override
+	public void doSetUp() {
 		manipel = new Manipel(2007, Studienrichtung.WInf);
 		manipelDAO.makePersistent(manipel);
 		fach = new Pruefungsfach("Fach1", "Fach1 Beschreibung", manipel);
