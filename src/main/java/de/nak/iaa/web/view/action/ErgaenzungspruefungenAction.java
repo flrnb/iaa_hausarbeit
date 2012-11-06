@@ -58,9 +58,10 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 				}
 				if (p.getErgDatum() == null) {
 					addFieldError("pruefungenBeans[" + i + "].ergDatum", getMsg(MessageKey.ERR_EMP_DATUM));
-				}
-				if (!p.getDatum().before(p.getErgDatum())) {
-					addFieldError("pruefungenBeans[" + i + "].ergDatum", getMsg(MessageKey.ERR_ZU_FRUEH));
+				} else {
+					if (!p.getDatum().before(p.getErgDatum())) {
+						addFieldError("pruefungenBeans[" + i + "].ergDatum", getMsg(MessageKey.ERR_ZU_FRUEH));
+					}
 				}
 			}
 			i++;
