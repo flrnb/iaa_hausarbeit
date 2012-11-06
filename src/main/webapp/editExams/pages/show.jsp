@@ -41,7 +41,7 @@
 								name="pruefungenBeans[%{#stat.index}].pruefungsleistungen[%{#stat1.index}].note"
 								cssClass="changeNote notenInputField"
 								cssErrorClass="fieldErrorCls" theme="simple"
-								value="%{#current.note.getNote()}"
+								value="%{#current.note}"
 								disabled="%{!isWriteable(#current.id)}" /> <a
 							href="<s:url action="delete"/>?pruefungsfach=<s:property value="%{getSelectedPruefungsfach().getId()}"/>&deleteId=<s:property value="%{#current.id}"/>"
 							class="linkButton" title="Eintrag löschen">X</a> <s:fielderror

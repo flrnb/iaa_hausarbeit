@@ -51,4 +51,9 @@ public enum Note {
 	public Double getNote() {
 		return note;
 	}
+
+	@Override
+	public String toString() {
+		return getNote().toString();
+	}
 }

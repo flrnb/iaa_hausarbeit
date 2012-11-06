@@ -29,7 +29,7 @@
 					<s:iterator value="#ergebnis.value" var="row">
 					<tr>
 						<td><s:property value="#row.key"/></td>
-						<td align="center"><s:property value="#row.value.getNote()"/></td>
+						<td align="center"><s:property value="#row.value"/></td>
 					</tr>
 					</s:iterator>
 				</table>
