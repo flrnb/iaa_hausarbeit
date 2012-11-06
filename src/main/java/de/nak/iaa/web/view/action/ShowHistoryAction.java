@@ -14,8 +14,8 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 
 	private List<Pruefungsfach> pruefungsfaecher;
 	private List<Student> studenten;
-	private Long formStudent;
-	private Long formPruefungsfach;
+	private String formStudent;
+	private String formPruefungsfach;
 	private Student selectedStudent;
 	private Pruefungsfach selectedPruefungsfach;
 
@@ -75,19 +75,19 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 		this.selectedPruefungsfach = selectedPruefungsfach;
 	}
 
-	public Long getFormStudent() {
+	public String getFormStudent() {
 		return formStudent;
 	}
 
-	public void setFormStudent(Long formStudent) {
+	public void setFormStudent(String formStudent) {
 		this.formStudent = formStudent;
 	}
 
-	public Long getFormPruefungsfach() {
+	public String getFormPruefungsfach() {
 		return formPruefungsfach;
 	}
 
-	public void setFormPruefungsfach(Long formPruefungsfach) {
+	public void setFormPruefungsfach(String formPruefungsfach) {
 		this.formPruefungsfach = formPruefungsfach;
 	}
 
