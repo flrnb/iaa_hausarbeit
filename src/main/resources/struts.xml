@@ -23,7 +23,7 @@
 
 	<package name="exceptionsBase" extends="tiles-default">
 		<global-results>
-			<result type="tiles" name="exception">errorPage</result>
+			<result type="tiles" name="exception">unknownError</result>
 			<result type="redirectAction" name="specException">
 				<param name="actionName">show</param>
 				<param name="namespace">/error</param>

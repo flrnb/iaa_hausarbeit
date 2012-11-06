@@ -100,8 +100,8 @@
 		<put-attribute name="content" value="/error/pages/show.jsp"></put-attribute>
 	</definition>
 	
-	<!-- <definition name="errorPage" extends="mainLayout">
+	<definition name="unknownError" extends="mainLayout">
 		<put-attribute name="title" value="NoDaBa - Fehler aufgetreten!"></put-attribute>
-		<put-attribute name="content" value="/pages/error.jsp"></put-attribute>
-	</definition> -->
+		<put-attribute name="content" value="/error/pages/default.jsp"></put-attribute>
+	</definition>
 </tiles-definitions>
