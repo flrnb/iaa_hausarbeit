@@ -60,7 +60,6 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 	private void validateForm() {
 		int i = 0;
 		for (PruefungsleistungAendernFormBean p : pruefungenBeans) {
-			// TODO hier validieren
 			int k = 0;
 			for (Pruefungsleistung pl : p.getPruefungsleistungen()) {
 				if (pl.getNote() == null)
@@ -103,7 +102,6 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 			setTargetUrl(getRequestUrl());
 			return NO_MANIPEL_SELECTED;
 		}
-
 		validateForm();
 
 		if (getFieldErrors().size() > 0) {
@@ -118,6 +116,7 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 					}
 				}
 			}
+
 			if (!aenderungen.isEmpty()) {
 				try {
 					getPruefungService().updatePruefungsleistungen(aenderungen);
@@ -135,20 +134,19 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 	 * @return
 	 */
 	public String delete() {
-		if (getParameters().containsKey("deleteId")) {
+		if (getParameters().containsKey("deleteId")
+				&& !DataHelper.stringArrayToString(getParameters().get("deleteId")).isEmpty()) {
 			List<PruefungsleistungAenderung> aenderungen = new ArrayList<PruefungsleistungAenderung>();
 			aenderungen.add(new PruefungsleistungAenderung.Delete(Long.valueOf(DataHelper
 					.stringArrayToString(getParameters().get("deleteId")))));
 			try {
 				getPruefungService().updatePruefungsleistungen(aenderungen);
 			} catch (IllegalUpdateException e) {
-				// TODO behandle, wenn keine prüfungsleistung vorhanden ist
-				// (fehlerseite)
-				// dafür referrer holen und an die fehlerseite übergeben
-				e.printStackTrace();
+				return EXCEPTION_OCCURED;
 			}
 		} else {
-			// TODO hier muss iwie ne fehlerseite hin
+			setOccuredErrorCode(ErrorAction.KEINE_ID_UEBERGEBEN);
+			return SPECIFIC_EXCEPTION_OCCURED;
 		}
 		return Action.SUCCESS;
 	}

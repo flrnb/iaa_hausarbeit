@@ -14,7 +14,7 @@
 	Ergänzungsprüfungen eintragen.</p>
 
 <s:if test="pruefungenBeans.size() > 0">
-	<s:form action="save">
+	<s:form action="save" method="post">
 		<input type="hidden" name="pruefungsfach"
 			value="<s:property value="pruefungsfach"/>" />
 		<%-- <input type="hidden" name="pruefung"
