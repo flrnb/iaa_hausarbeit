@@ -1,12 +1,18 @@
 package de.nak.iaa.web.view.action;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
 
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.Preparable;
 
 import de.nak.iaa.server.entity.Pruefungsfach;
+import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
+import de.nak.iaa.server.fachwert.Versuch;
+import de.nak.iaa.web.util.MessageKey;
 
 public class ShowHistoryAction extends AbstractAction implements Preparable {
 
@@ -19,10 +25,31 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 	private Student selectedStudent;
 	private Pruefungsfach selectedPruefungsfach;
 
+	private Map<Versuch, SortedMap<Date, Pruefungsleistung>> history;
+
 	@Override
 	public void prepare() throws Exception {
 		setPruefungsfaecher(getPruefungService().getAllPruefungsfaecher(getSelectedManipel()));
 		setStudenten(getStudentService().getAllStudenten(getSelectedManipel()));
+	}
+
+	/**
+	 * Validiere die Eingabedaten und gebe zurück, ob ein Fehler aufgetreten ist <br>
+	 * Fügt bei einem Problem, dem Feld einen FieldError hinzu
+	 * 
+	 * @return
+	 */
+	private boolean validateForm() {
+		boolean hasError = false;
+		if (getFormStudent() == null || getFormStudent().equals("")) {
+			addFieldError("formDozent", getMsg(MessageKey.ERR_EMP_STUDENT));
+			hasError = true;
+		}
+		if (getFormPruefungsfach() == null || getFormPruefungsfach().equals("")) {
+			addFieldError("formPruefungsfach", getMsg(MessageKey.ERR_EMP_PRUEFUNGSFACH));
+			hasError = true;
+		}
+		return hasError;
 	}
 
 	public String select() {
@@ -36,11 +63,18 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 
 	public String show() {
 		if (isManipelNotSelected()) {
-			setTargetUrl("/");
+			setTargetUrl("../history/select");
 			return NO_MANIPEL_SELECTED;
 		}
 
-		return Action.SUCCESS;
+		if (!validateForm()) {
+			setHistory(getPruefungService().getPruefungsleistungHistorie(getSelectedStudent(),
+					getSelectedPruefungsfach()));
+
+			return Action.SUCCESS;
+		}
+
+		return Action.INPUT;
 	}
 
 	public List<Pruefungsfach> getPruefungsfaecher() {
@@ -89,6 +123,14 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 
 	public void setFormPruefungsfach(String formPruefungsfach) {
 		this.formPruefungsfach = formPruefungsfach;
+	}
+
+	public Map<Versuch, SortedMap<Date, Pruefungsleistung>> getHistory() {
+		return history;
+	}
+
+	public void setHistory(Map<Versuch, SortedMap<Date, Pruefungsleistung>> history) {
+		this.history = history;
 	}
 
 }

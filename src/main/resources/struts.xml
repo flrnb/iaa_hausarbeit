@@ -150,6 +150,7 @@
 		<action name="show" class="de.nak.iaa.web.view.action.ShowHistoryAction"
 			method="show">
 			<result type="tiles" name="success">showHistory</result>
+			<result type="tiles" name="input">historySelect</result>
 		</action>
 		<action name="select" class="de.nak.iaa.web.view.action.ShowHistoryAction"
 			method="select">
