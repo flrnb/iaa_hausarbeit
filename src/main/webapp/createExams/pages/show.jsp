@@ -18,6 +18,5 @@
 	<sx:datetimepicker name="formDate" displayFormat="dd-MM-yyyy"
 		label="Datum der Prüfung" />
 	<br />
-
 	<s:submit />
 </s:form>
