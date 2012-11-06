@@ -6,13 +6,15 @@ import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
 
 import java.util.Date;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.transaction.annotation.Transactional;
 
-import de.nak.iaa.TransactionalApplicationContextAwareTest;
+import de.nak.iaa.ApplicationContextAwareTest;
 import de.nak.iaa.server.dao.DozentDAO;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.dao.PruefungDAO;
@@ -24,7 +26,7 @@ import de.nak.iaa.server.fachwert.Studienrichtung;
 import de.nak.iaa.server.fachwert.Versuch;
 
 public class PruefungsleistungPersistenceTest extends
-		TransactionalApplicationContextAwareTest {
+		ApplicationContextAwareTest {
 
 	@Resource
 	private PruefungsleistungDAO pruefungsleistungDAO;
@@ -79,4 +81,26 @@ public class PruefungsleistungPersistenceTest extends
 		assertThat(pl.getErgaenzungsPruefung().getId(), is(notNullValue()));
 	}
 
+	@Test
+	public void testGetAltePruefungsleistungen() {
+		Pruefungsleistung pl = erzeugePruefungsleistung();
+		veraenderePruefungsleistung(pl);
+		Map<Pruefungsleistung, Date> altePruefungsleistungen = pruefungsleistungDAO
+				.getAltePruefungsleistungen(pl.getId());
+		assertThat(altePruefungsleistungen.isEmpty(), is(Boolean.FALSE));
+	}
+
+	@Transactional
+	private void veraenderePruefungsleistung(Pruefungsleistung pl) {
+		pl.setNote(Note.Eins);
+		pruefungsleistungDAO.makePersistent(pl);
+
+	}
+
+	@Transactional
+	private Pruefungsleistung erzeugePruefungsleistung() {
+		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, pruefung,
+				Note.Drei, student);
+		return pruefungsleistungDAO.makePersistent(pl);
+	}
 }
