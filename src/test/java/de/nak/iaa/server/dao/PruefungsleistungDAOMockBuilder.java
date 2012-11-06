@@ -9,6 +9,11 @@ import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Versuch;
 
+/**
+ * 
+ * @author Florian Borchert
+ * @version 06.11.2012
+ */
 public class PruefungsleistungDAOMockBuilder extends DAOMockBuilder<Pruefungsleistung, PruefungsleistungDAO> {
 
 	public PruefungsleistungDAOMockBuilder() {

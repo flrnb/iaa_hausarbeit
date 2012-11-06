@@ -14,7 +14,8 @@ import de.nak.iaa.server.entity.Student;
  * Exception die geworfen wird, falls versucht wurde eine Prüfungsleistung
  * anzulegen oder zu ändern, obwohl die fachlich nicht (mehr) zulässig ist.
  * 
- * @author flrnb
+ * @author Florian Borchert
+ * @version 06.11.2012
  */
 public class IllegalUpdateException extends Exception {
 
@@ -41,7 +42,8 @@ public class IllegalUpdateException extends Exception {
 	 * Exception, die Auskunft über einen Fehler für eine studentenbezogene
 	 * Änderung an einer Prüfungsleistung gibt
 	 * 
-	 * @author flrnb
+	 * @author Florian Borchert
+	 * @version 06.11.2012
 	 */
 	public static class IllegalPruefungsleistungException extends Exception {
 

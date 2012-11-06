@@ -18,7 +18,8 @@ import de.nak.iaa.server.entity.Student;
 /**
  * Implementierung von {@link StudentService}
  * 
- * @author flrnb
+ * @author Florian Borchert
+ * @version 06.11.2012
  */
 public class StudentServiceImpl implements StudentService {
 

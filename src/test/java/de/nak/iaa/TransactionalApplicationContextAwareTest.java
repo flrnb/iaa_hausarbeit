@@ -15,7 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
  * 
  * <b>angepasst von Archetyp http://code.google.com/p/spring-archetypes/</b>
  * 
- * @author flrnb
+ * @author Florian Borchert
+ * @version 06.11.2012
  * 
  * @see org.springframework.test.context.transaction.TransactionConfiguration
  * @see org.springframework.transaction.annotation.Transactional

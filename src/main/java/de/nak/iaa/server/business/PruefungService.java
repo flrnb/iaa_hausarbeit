@@ -22,7 +22,8 @@ import de.nak.iaa.server.fachwert.Versuch;
 /**
  * Service für pruefungs- und pruefungsleistungsbezogene Aufgaben
  * 
- * @author flrnb
+ * @author Florian Borchert
+ * @version 06.11.2012
  */
 public interface PruefungService {
 
