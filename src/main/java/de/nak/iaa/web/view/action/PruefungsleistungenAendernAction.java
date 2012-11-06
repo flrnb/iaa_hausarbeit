@@ -54,6 +54,18 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 	}
 
 	/**
+	 * Hilfsmethode für die View (jsp) um zu prüfen, ob eine Prüfungsleistung eine Ergänzungsprüfung
+	 * hat<br>
+	 * Gib in dem Fall den auszugebenen String zurück
+	 * 
+	 * @param leistung
+	 * @return
+	 */
+	public String pruefungsleistungHasErgaenzungspruefung(Pruefungsleistung leistung) {
+		return (leistung.getErgaenzungsPruefung() != null) ? " > " + leistung.getErgaenzungsPruefung().getNote() : "";
+	}
+
+	/**
 	 * Validiere die Eingabedaten für die Zeilen, wo mindestens eines der Felder gefüllt ist<br>
 	 * Fügt bei einem Problem, dem Feld einen FieldError hinzu
 	 */

@@ -44,12 +44,16 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 			if (student == null || !student.getKey().getManipel().equals(getSelectedManipel()))
 				continue;
 			else {
-				Note alteNote = null;
+				StringBuilder alteNote = new StringBuilder();
 				if (student.getValue().isPresent()) {
-					alteNote = student.getValue().get().getNote();
+					alteNote.append(student.getValue().get().getNote());
+					if (student.getValue().get().getErgaenzungsPruefung() != null) {
+						alteNote.append(" > ");
+						alteNote.append(student.getValue().get().getErgaenzungsPruefung().getNote());
+					}
 				}
 
-				getPruefungenBeans().add(new PruefungsleistungFormBean(student.getKey(), alteNote, null));
+				getPruefungenBeans().add(new PruefungsleistungFormBean(student.getKey(), alteNote.toString(), null));
 			}
 		}
 

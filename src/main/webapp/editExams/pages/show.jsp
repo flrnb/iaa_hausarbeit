@@ -41,7 +41,7 @@
 								name="pruefungenBeans[%{#stat.index}].pruefungsleistungen[%{#stat1.index}].note"
 								cssClass="changeNote notenInputField"
 								cssErrorClass="fieldErrorCls" theme="simple"
-								value="%{#current.note}"
+								value="%{#current.note}%{pruefungsleistungHasErgaenzungspruefung(#current)}"
 								disabled="%{!isWriteable(#current.id)}" /> <a
 							href="<s:url action="delete"/>?pruefungsfach=<s:property value="%{getSelectedPruefungsfach().getId()}"/>&deleteId=<s:property value="%{#current.id}"/>"
 							class="linkButton" title="Eintrag löschen">X</a> <s:fielderror
@@ -61,5 +61,5 @@
 	</form>
 </s:if>
 <s:else>
-	<h4>Keine Studenten für diese Auswahl gepflegt!</h4>
+	<h4>Es gibt keine Studenten mit einer Note in diesem Fach!</h4>
 </s:else>
