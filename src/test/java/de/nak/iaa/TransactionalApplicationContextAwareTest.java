@@ -23,11 +23,14 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @TransactionConfiguration(defaultRollback = true, transactionManager = "transactionManager")
 @Transactional
-public abstract class TransactionalApplicationContextAwareTest extends
-		ApplicationContextAwareTest {
+public abstract class TransactionalApplicationContextAwareTest extends ApplicationContextAwareTest {
 
 	@Autowired
 	public SessionFactory sessionFactory;
+
+	@Override
+	protected void doSetUp() {
+	}
 
 	@Override
 	@Before

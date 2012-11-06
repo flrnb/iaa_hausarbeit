@@ -10,9 +10,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.junit.Before;
 import org.junit.Test;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
 
 import de.nak.iaa.ApplicationContextAwareTest;
 import de.nak.iaa.server.dao.DozentDAO;
@@ -25,8 +25,7 @@ import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 import de.nak.iaa.server.fachwert.Versuch;
 
-public class PruefungsleistungPersistenceTest extends
-		ApplicationContextAwareTest {
+public class PruefungsleistungPersistenceTest extends ApplicationContextAwareTest {
 
 	@Resource
 	private PruefungsleistungDAO pruefungsleistungDAO;
@@ -45,8 +44,8 @@ public class PruefungsleistungPersistenceTest extends
 	private Student student;
 	private Dozent dozent;
 
-	@Before
-	public void setUp() {
+	@Override
+	public void doSetUp() {
 		Manipel manipel = new Manipel(2007, Studienrichtung.BWL);
 		manipel = manipelDAO.makePersistent(manipel);
 		dozent = new Dozent("b", "a");
@@ -61,46 +60,68 @@ public class PruefungsleistungPersistenceTest extends
 
 	@Test
 	public void testPersistierung() {
-		int countBefore = pruefungsleistungDAO.findAll().size();
-		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, pruefung,
-				Note.Drei, student);
-		pruefungsleistungDAO.makePersistent(pl);
+		transactionTemplate.execute(new TransactionCallback<Void>() {
+			@Override
+			public Void doInTransaction(TransactionStatus status) {
+				int countBefore = pruefungsleistungDAO.findAll().size();
+				Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, pruefung, Note.Drei, student);
+				makePersistentInTransaction(pl);
 
-		int countAfter = pruefungsleistungDAO.findAll().size();
-		assertThat(countBefore + 1, is(equalTo(countAfter)));
+				int countAfter = pruefungsleistungDAO.findAll().size();
+				assertThat(countBefore + 1, is(equalTo(countAfter)));
+				return null;
+			}
+		});
 	}
 
 	@Test
 	public void testPersistierungMitErgaenzungspruefung() {
-		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, pruefung,
-				Note.EinsDrei, student);
-		pl.setErgaenzungsPruefung(new ErgaenzungsPruefung(Note.Drei, new Date()));
-		pl = pruefungsleistungDAO.makePersistent(pl);
-		Long id = pl.getId();
-		pl = pruefungsleistungDAO.findById(id, false);
-		assertThat(pl.getErgaenzungsPruefung().getId(), is(notNullValue()));
+		transactionTemplate.execute(new TransactionCallback<Void>() {
+			@Override
+			public Void doInTransaction(TransactionStatus status) {
+				Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, pruefung, Note.EinsDrei, student);
+				pl.setErgaenzungsPruefung(new ErgaenzungsPruefung(Note.Drei, new Date()));
+				makePersistentInTransaction(pl);
+				Long id = pl.getId();
+				pl = pruefungsleistungDAO.findById(id, false);
+				assertThat(pl.getErgaenzungsPruefung().getId(), is(notNullValue()));
+				return null;
+			}
+		});
 	}
 
 	@Test
 	public void testGetAltePruefungsleistungen() {
-		Pruefungsleistung pl = erzeugePruefungsleistung();
+		final Pruefungsleistung pl = erzeugePruefungsleistung();
 		veraenderePruefungsleistung(pl);
-		Map<Pruefungsleistung, Date> altePruefungsleistungen = pruefungsleistungDAO
-				.getAltePruefungsleistungen(pl.getId());
-		assertThat(altePruefungsleistungen.isEmpty(), is(Boolean.FALSE));
+		transactionTemplate.execute(new TransactionCallback<Void>() {
+			@Override
+			public Void doInTransaction(TransactionStatus status) {
+				Map<Pruefungsleistung, Date> altePruefungsleistungen = pruefungsleistungDAO
+						.getAltePruefungsleistungen(pl.getId());
+				assertThat(altePruefungsleistungen.isEmpty(), is(Boolean.FALSE));
+				return null;
+			}
+		});
 	}
 
-	@Transactional
 	private void veraenderePruefungsleistung(Pruefungsleistung pl) {
 		pl.setNote(Note.Eins);
-		pruefungsleistungDAO.makePersistent(pl);
-
+		makePersistentInTransaction(pl);
 	}
 
-	@Transactional
 	private Pruefungsleistung erzeugePruefungsleistung() {
-		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, pruefung,
-				Note.Drei, student);
-		return pruefungsleistungDAO.makePersistent(pl);
+		Pruefungsleistung pl = new Pruefungsleistung(Versuch.Eins, pruefung, Note.Drei, student);
+		return makePersistentInTransaction(pl);
 	}
+
+	public Pruefungsleistung makePersistentInTransaction(final Pruefungsleistung leistung) {
+		return transactionTemplate.execute(new TransactionCallback<Pruefungsleistung>() {
+
+			@Override
+			public Pruefungsleistung doInTransaction(TransactionStatus status) {
+				return pruefungsleistungDAO.makePersistent(leistung);
+			}
+		});
+	};
 }
