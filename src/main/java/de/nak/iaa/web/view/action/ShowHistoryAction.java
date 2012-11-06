@@ -12,6 +12,7 @@ import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Versuch;
+import de.nak.iaa.web.util.DataHelper;
 import de.nak.iaa.web.util.MessageKey;
 
 public class ShowHistoryAction extends AbstractAction implements Preparable {
@@ -68,6 +69,13 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 		}
 
 		if (!validateForm()) {
+			// TODO prüfe ob die parameter leer sind bzw nutze die optional methode "isPresent()"
+			setSelectedPruefungsfach(getPruefungService().getPruefungsfachById(
+					Long.valueOf(DataHelper.stringArrayToString(getParameters().get("formPruefungsfachKey")))).get());
+
+			setSelectedStudent(getStudentService().getStudentById(
+					Long.valueOf(DataHelper.stringArrayToString(getParameters().get("formStudentKey")))).get());
+
 			setHistory(getPruefungService().getPruefungsleistungHistorie(getSelectedStudent(),
 					getSelectedPruefungsfach()));
 
