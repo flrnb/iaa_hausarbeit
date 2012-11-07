@@ -8,7 +8,7 @@
 </p>
 
 <div class="printable">
-	<h3>Protokoll</h3>
+	<h3>Protokoll für <s:property value="%{getSelectedPruefungsfach()}"/> vom <s:date format="dd.MM.yyyy" name="dateToday" /></h3>
 
 	<table class="protokollTable">
 		<s:iterator value="protokoll" var="zeile">

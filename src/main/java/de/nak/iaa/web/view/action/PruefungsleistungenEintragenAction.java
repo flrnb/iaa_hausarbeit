@@ -2,6 +2,7 @@ package de.nak.iaa.web.view.action;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -30,6 +31,8 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 	private Map<Student, Protokollzeile> protokoll;
 	private boolean hasErrors = false;
 	private boolean protokollHasErrors;
+
+	private Date dateToday;
 
 	/* Custom Logik Start */
 
@@ -157,6 +160,7 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 			fuellePruefungsBeans();
 			return Action.INPUT;
 		} else {
+			setDateToday(new Date());
 			protokollHasErrors = false;
 			setProtokoll(new TreeMap<Student, Protokollzeile>());
 
@@ -170,7 +174,7 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 					getProtokoll().put(
 							ipe.getStudent(),
 							new Protokollzeile(Protokollzeile.FEHLER, "Note für " + ipe.getStudent()
-									+ " konnte nicht eingetragen werden (" + ipe.getMessage() + ")"));
+									+ " konnte nicht eingetragen werden (Grund: " + ipe.getMessage() + ")"));
 				}
 			}
 		}
@@ -211,5 +215,13 @@ public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 
 	public void setHasErrors(boolean hasErrors) {
 		this.hasErrors = hasErrors;
+	}
+
+	public Date getDateToday() {
+		return dateToday;
+	}
+
+	public void setDateToday(Date dateToday) {
+		this.dateToday = dateToday;
 	}
 }
