@@ -3,7 +3,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
 
-<s:if test="pruefungen == null">
+<s:if test="pruefungen == null || pruefungen.isEmpty()">
 	<h4>
 		Keine Prüfungen vorhanden für aktuelles Prüfungsfach<br />
 		<s:a action="modulSelection">Zurück zum Modulauswahl</s:a>
