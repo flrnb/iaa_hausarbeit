@@ -266,7 +266,7 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	private String getMsg(String code) {
-		return messageSource.getMessage(code, new Object[] {}, Locale.getDefault());
+		return getMsg(code, new Object[] {});
 	}
 
 	private String getMsg(String code, Object... args) {
