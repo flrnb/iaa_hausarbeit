@@ -57,7 +57,7 @@
 				</tr>
 			</s:iterator>
 		</table>
-		<s:submit value="Speichern" />
+		<s:submit value="Ändern" />
 	</form>
 </s:if>
 <s:else>

@@ -7,5 +7,5 @@
 <s:form action="save" namespace="/manipel" method="post">
 	<s:select list="manipel" name="selectedManipel" label="Manipel wählen"
 		headerKey="-1" headerValue="--- Select ---" />
-	<s:submit value="Ändern"></s:submit>
+	<s:submit value="Auswählen"></s:submit>
 </s:form>

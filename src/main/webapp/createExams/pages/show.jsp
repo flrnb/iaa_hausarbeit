@@ -17,8 +17,6 @@
 			<%-- <sx:autocompleter name="formPruefungsfach" autoComplete="false"
 		forceValidOption="true" label="Prüfungsfach" list="pruefungsfaecher"
 		listKey="id" listValue="titel" preload="true" /> --%>
-			<!-- 	<br /> -->
-
 		</tr>
 		<tr>
 			<td align="center" valign="top" colspan="2"><s:fielderror
@@ -30,7 +28,6 @@
 			<%-- <sx:autocompleter name="formDozent" autoComplete="false"
 		forceValidOption="true" label="Dozent" list="dozenten" listKey="id"
 		emptyOption="true" preload="true" /> --%>
-			<!-- 	<br /> -->
 		</tr>
 		<tr>
 			<td><sx:datetimepicker name="formDate"
@@ -38,7 +35,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td><s:submit /></td>
+			<td><s:submit value="Anlegen" /></td>
 		</tr>
 	</table>
 </s:form>
