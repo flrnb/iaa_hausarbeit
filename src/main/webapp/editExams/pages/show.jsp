@@ -42,9 +42,9 @@
 								cssClass="changeNote notenInputField"
 								cssErrorClass="fieldErrorCls" theme="simple"
 								value="%{#current.note}%{pruefungsleistungHasErgaenzungspruefung(#current)}"
-								disabled="%{!isWriteable(#current.id)}" /> <a
+								disabled="%{!isWriteable(#current.id)}" /> <s:if test="%{isWriteable(#current.id)}"><a
 							href="<s:url action="delete"/>?pruefungsfach=<s:property value="%{getSelectedPruefungsfach().getId()}"/>&deleteId=<s:property value="%{#current.id}"/>"
-							class="linkButton" title="Eintrag löschen">X</a> <s:fielderror
+							class="linkButton" title="Eintrag löschen">X</a></s:if> <s:fielderror
 								theme="iaa">
 								<s:param>pruefungenBeans[${stat.index}].pruefungsleistungen[${stat1.index}].note</s:param>
 							</s:fielderror></td>
