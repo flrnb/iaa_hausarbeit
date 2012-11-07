@@ -93,12 +93,11 @@ public class PruefungServiceImpl implements PruefungService {
 		Optional<Pruefungsleistung> optleistung = getLetzterVersuch(pruefung.getPruefungsfach(), student);
 		Versuch nextVersuch = null;
 		if (optleistung.isPresent()) {
-			Pruefungsleistung leistung = optleistung.get();
-			if (!pruefungsleistungStrategie.isWeitererVersuchZulaessig(leistung))
-				throw new IllegalPruefungsleistungException(student, getMsg(ZU_OFT));
-			if (pruefung.getDatum().before(leistung.getPruefung().getDatum()))
-				throw new IllegalPruefungsleistungException(student, getMsg(PRUEFUNG_ZUKUNFT));
-			nextVersuch = leistung.getVersuch().next().get();
+			Pruefungsleistung letzterVersuch = optleistung.get();
+			Optional<String> error = pruefungsleistungStrategie.pruefeVersuchZulaessig(letzterVersuch, pruefung);
+			if (error.isPresent())
+				throw new IllegalPruefungsleistungException(student, getMsg(error.get(), letzterVersuch.getNote()));
+			nextVersuch = letzterVersuch.getVersuch().next().get();
 		} else {
 			nextVersuch = Versuch.Eins;
 		}
@@ -270,6 +269,10 @@ public class PruefungServiceImpl implements PruefungService {
 		return messageSource.getMessage(code, new Object[] {}, Locale.getDefault());
 	}
 
+	private String getMsg(String code, Object... args) {
+		return messageSource.getMessage(code, args, Locale.getDefault());
+	}
+
 	public void setPruefungDAO(PruefungDAO pruefungDAO) {
 		this.pruefungDAO = pruefungDAO;
 	}
@@ -298,12 +301,8 @@ public class PruefungServiceImpl implements PruefungService {
 		this.pruefungsleistungStrategie = pruefungsleistungStrategie;
 	}
 
-	private static final String ZU_OFT = "pruefung.zuOft";
-
 	private static final String NICHT_EDITIERBAR = "pruefung.nichtEditierbar";
 
 	private static final String KEINE_ERGAENZUNGSPRUEFUNG = "pruefung.keineErgaenzung";
-
-	private static final String PRUEFUNG_ZUKUNFT = "pruefung.zukunftVorhanden";
 
 }

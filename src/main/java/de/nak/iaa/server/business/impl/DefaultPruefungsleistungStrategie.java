@@ -1,7 +1,10 @@
 package de.nak.iaa.server.business.impl;
 
+import com.google.common.base.Optional;
+
 import de.nak.iaa.server.business.PruefungsleistungStrategie;
 import de.nak.iaa.server.entity.ErgaenzungsPruefung;
+import de.nak.iaa.server.entity.Pruefung;
 import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.server.fachwert.Versuch;
@@ -35,9 +38,15 @@ public class DefaultPruefungsleistungStrategie implements PruefungsleistungStrat
 	}
 
 	@Override
-	public boolean isWeitererVersuchZulaessig(Pruefungsleistung leistung) {
-		Versuch versuch = leistung.getVersuch();
-		return !isBestanden(leistung) && versuch.next().isPresent();
+	public Optional<String> pruefeVersuchZulaessig(Pruefungsleistung letzterVersuch, Pruefung pruefung) {
+		Versuch versuch = letzterVersuch.getVersuch();
+		if (isBestanden(letzterVersuch) || !versuch.next().isPresent())
+			return Optional.of(ZU_OFT);
+		if (letzterVersuch.getPruefung().equals(pruefung))
+			return Optional.of(SCHON_VORHANDEN);
+		if (pruefung.getDatum().before(letzterVersuch.getPruefung().getDatum()))
+			return Optional.of(PRUEFUNG_ZUKUNFT);
+		return Optional.absent();
 	}
 
 	@Override
@@ -48,5 +57,11 @@ public class DefaultPruefungsleistungStrategie implements PruefungsleistungStrat
 		else
 			return ergPruefung.getNote();
 	}
+
+	private static final String ZU_OFT = "pruefung.zuOft";
+
+	private static final String PRUEFUNG_ZUKUNFT = "pruefung.zukunftVorhanden";
+
+	private static final String SCHON_VORHANDEN = "pruefung.schonVorhanden";
 
 }

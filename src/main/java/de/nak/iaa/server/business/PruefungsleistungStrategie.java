@@ -1,5 +1,8 @@
 package de.nak.iaa.server.business;
 
+import com.google.common.base.Optional;
+
+import de.nak.iaa.server.entity.Pruefung;
 import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.fachwert.Note;
 
@@ -15,7 +18,7 @@ public interface PruefungsleistungStrategie {
 
 	Note getAktuelleNote(Pruefungsleistung leistung);
 
-	boolean isWeitererVersuchZulaessig(Pruefungsleistung leistung);
+	Optional<String> pruefeVersuchZulaessig(Pruefungsleistung letzterVersuch, Pruefung pruefung);
 
 	boolean isBestanden(Pruefungsleistung leistung);
 
