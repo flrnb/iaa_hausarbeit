@@ -40,6 +40,7 @@ public class StudentPersistenceTest extends TransactionalApplicationContextAware
 		assertThat(countAfter, is(equalTo(countBefore + 1)));
 	}
 
+	@Test
 	public void testFindStudentByManipel() {
 		Manipel anderesManipel = new Manipel(2006, Studienrichtung.WInf);
 		anderesManipel = manipelDAO.makePersistent(anderesManipel);
