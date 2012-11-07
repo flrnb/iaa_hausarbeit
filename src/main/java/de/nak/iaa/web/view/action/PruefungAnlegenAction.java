@@ -9,7 +9,6 @@ import com.opensymphony.xwork2.Preparable;
 import de.nak.iaa.server.business.DozentService;
 import de.nak.iaa.server.entity.Dozent;
 import de.nak.iaa.server.entity.Pruefungsfach;
-import de.nak.iaa.web.util.DataHelper;
 import de.nak.iaa.web.util.MessageKey;
 
 public class PruefungAnlegenAction extends AbstractAction implements Preparable {
@@ -52,7 +51,7 @@ public class PruefungAnlegenAction extends AbstractAction implements Preparable 
 			hasError = true;
 		} else {
 			if (getFormDate().getTime() < 1104559200) { // Datum vor 1.1.2005
-				getFormDate().setTime(1104559200);
+				getFormDate().setTime((new Date()).getTime());
 				addFieldError("formDate", getMsg(MessageKey.ERR_UNGUELTIGES_DATUM));
 				hasError = true;
 			}
@@ -92,12 +91,8 @@ public class PruefungAnlegenAction extends AbstractAction implements Preparable 
 	public String save() {
 		if (!validateForm()) {
 			getPruefungService().addPruefung(
-					getPruefungService().getPruefungsfachById(
-							Long.valueOf(DataHelper.stringArrayToString(getParameters().get("formPruefungsfachKey"))))
-							.get(),
-					getFormDate(),
-					getDozentService().getDozentById(
-							Long.valueOf(DataHelper.stringArrayToString(getParameters().get("formDozentKey")))).get());
+					getPruefungService().getPruefungsfachById(Long.valueOf(getFormPruefungsfach())).get(),
+					getFormDate(), getDozentService().getDozentById(Long.valueOf(getFormDozent())).get());
 
 			return Action.SUCCESS;
 		}
