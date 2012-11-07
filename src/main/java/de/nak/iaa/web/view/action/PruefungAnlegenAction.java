@@ -50,12 +50,18 @@ public class PruefungAnlegenAction extends AbstractAction implements Preparable 
 		if (getFormDate() == null) {
 			addFieldError("formDate", getMsg(MessageKey.ERR_EMP_DATUM));
 			hasError = true;
+		} else {
+			if (getFormDate().getTime() < 1104559200) { // Datum vor 1.1.2005
+				getFormDate().setTime(1104559200);
+				addFieldError("formDate", getMsg(MessageKey.ERR_UNGUELTIGES_DATUM));
+				hasError = true;
+			}
 		}
-		if (getFormDozent() == null || getFormDozent().equals("")) {
+		if (getFormDozent() == null || getFormDozent().equals("") || getFormDozent().equals("-1")) {
 			addFieldError("formDozent", getMsg(MessageKey.ERR_EMP_DOZENT));
 			hasError = true;
 		}
-		if (getFormPruefungsfach() == null || getFormPruefungsfach().equals("")) {
+		if (getFormPruefungsfach() == null || getFormPruefungsfach().equals("") || getFormPruefungsfach().equals("-1")) {
 			addFieldError("formPruefungsfach", getMsg(MessageKey.ERR_EMP_PRUEFUNGSFACH));
 			hasError = true;
 		}
