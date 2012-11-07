@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
 
+import com.google.common.base.Optional;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.Preparable;
 
@@ -32,6 +33,18 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 	public void prepare() throws Exception {
 		setPruefungsfaecher(getPruefungService().getAllPruefungsfaecher(getSelectedManipel()));
 		setStudenten(getStudentService().getAllStudenten(getSelectedManipel()));
+	}
+
+	/**
+	 * Hilfsmethode für die View (jsp) um zu prüfen, ob eine Prüfungsleistung eine Ergänzungsprüfung
+	 * hat<br>
+	 * Gib in dem Fall den auszugebenen String zurück
+	 * 
+	 * @param leistung
+	 * @return
+	 */
+	public String pruefungsleistungHasErgaenzungspruefung(Pruefungsleistung leistung) {
+		return (leistung.getErgaenzungsPruefung() != null) ? " > " + leistung.getErgaenzungsPruefung().getNote() : "";
 	}
 
 	/**
@@ -70,14 +83,35 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 
 		if (!validateForm()) {
 			// TODO prüfe ob die parameter leer sind bzw nutze die optional methode "isPresent()"
-			setSelectedPruefungsfach(getPruefungService().getPruefungsfachById(
-					Long.valueOf(DataHelper.stringArrayToString(getParameters().get("formPruefungsfachKey")))).get());
+			Optional<Pruefungsfach> fach = getPruefungService()
+					.getPruefungsfachById(
+							Long.valueOf(DataHelper
+									.stringArrayToString(getParameters().get(
+											"formPruefungsfachKey"))));
 
-			setSelectedStudent(getStudentService().getStudentById(
-					Long.valueOf(DataHelper.stringArrayToString(getParameters().get("formStudentKey")))).get());
+			if (fach.isPresent()) {
+				setSelectedPruefungsfach(fach.get());
+			} else {
+				addActionError("Prüfungsfach nicht bekannt");
+				return Action.INPUT;
+			}
+
+			// also hier
+			Optional<Student> student = getStudentService().getStudentById(
+					Long.valueOf(DataHelper.stringArrayToString(getParameters()
+							.get("formStudentKey"))));
+
+			if (student.isPresent()) {
+				setSelectedStudent(student.get());
+			} else {
+				addActionError("Student nicht bekannt");
+				return Action.INPUT;
+			}
 
 			setHistory(getPruefungService().getPruefungsleistungHistorie(getSelectedStudent(),
 					getSelectedPruefungsfach()));
+
+			System.out.println(getHistory().size());
 
 			return Action.SUCCESS;
 		}
