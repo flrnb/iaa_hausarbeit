@@ -1,13 +1,13 @@
 package de.nak.iaa.server.dao.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.hibernate.envers.AuditReader;
 import org.hibernate.envers.AuditReaderFactory;
 import org.hibernate.envers.DefaultRevisionEntity;
+import org.hibernate.envers.RevisionType;
 import org.hibernate.envers.query.AuditEntity;
 import org.hibernate.envers.query.AuditQuery;
 import org.springframework.stereotype.Repository;
@@ -74,35 +74,8 @@ public class PruefungsleistungDAOImpl extends
 				}));
 	}
 
-	/**
-	 * Sucht für eine Prüfungsleistung alle alten Revisionen raus mit deren
-	 * Änderungsdatum.
-	 */
 	@Override
-	public Map<Pruefungsleistung, Date> getAltePruefungsleistungen(Long id) {
-		AuditReader auditReader = AuditReaderFactory.get(getSession());
-		AuditQuery query = auditReader.createQuery()
-				.forRevisionsOfEntity(Pruefungsleistung.class, false, true)
-				.add(AuditEntity.id().eq(id));
-		/*
-		 * siehe Methodenkommentar
-		 * org.hibernate.envers.query.AuditQueryCreator.forRevisionsOfEntity
-		 * (Class<?>, boolean, boolean) bzgl. des Object Arrays usw.
-		 */
-		@SuppressWarnings("unchecked")
-		List<Object[]> result = query.getResultList();
-		Map<Pruefungsleistung, Date> ergebnis = new HashMap<Pruefungsleistung, Date>();
-		for (Object[] objects : result) {
-			Pruefungsleistung pl = (Pruefungsleistung) objects[0];
-			DefaultRevisionEntity revEntity = (DefaultRevisionEntity) objects[1];
-			ergebnis.put(pl, new Date(revEntity.getTimestamp()));
-		}
-		return ergebnis;
-
-	}
-
-	@Override
-	public Map<Date, Pruefungsleistung> getAltePruefungsleistungenFuerStudentFachUndVersuch(
+	public List<AlteRevisionPruefungsleistungContainer> getAltePruefungsleistungen(
 			Student student, Pruefungsfach fach, Versuch versuch) {
 		AuditReader auditReader = AuditReaderFactory.get(getSession());
 		AuditQuery query = auditReader.createQuery()
@@ -111,15 +84,43 @@ public class PruefungsleistungDAOImpl extends
 				.add(AuditEntity.property("versuch").eq(versuch));
 		@SuppressWarnings("unchecked")
 		List<Object[]> result = query.getResultList();
-		Map<Date, Pruefungsleistung> ergebnis = new HashMap<Date, Pruefungsleistung>();
+		ArrayList<AlteRevisionPruefungsleistungContainer> ergebnis = new ArrayList<AlteRevisionPruefungsleistungContainer>();
 		for (Object[] objects : result) {
 			Pruefungsleistung pl = (Pruefungsleistung) objects[0];
 			DefaultRevisionEntity revEntity = (DefaultRevisionEntity) objects[1];
+			RevisionType revType = (RevisionType) objects[2];
 			if (pl.getPruefung().getPruefungsfach().equals(fach)) {
-				ergebnis.put(new Date(revEntity.getTimestamp()), pl);
+				ergebnis.add(new AlteRevisionPruefungsleistungContainer(pl,
+						revEntity.getRevisionDate(), revType
+								.equals(RevisionType.DEL)));
 			}
 		}
 		return ergebnis;
+	}
 
+	public static class AlteRevisionPruefungsleistungContainer {
+
+		private final Pruefungsleistung pruefungsleistung;
+		private final boolean istGeloescht;
+		private final Date revisionsDatum;
+
+		public AlteRevisionPruefungsleistungContainer(Pruefungsleistung pl,
+				Date revisionsDatum, boolean istGeloescht) {
+			this.pruefungsleistung = pl;
+			this.revisionsDatum = revisionsDatum;
+			this.istGeloescht = istGeloescht;
+		}
+
+		public Pruefungsleistung getPruefungsleistung() {
+			return pruefungsleistung;
+		}
+
+		public boolean isIstGeloescht() {
+			return istGeloescht;
+		}
+
+		public Date getRevisionsDatum() {
+			return revisionsDatum;
+		}
 	}
 }

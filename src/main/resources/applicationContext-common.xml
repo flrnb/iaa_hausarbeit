@@ -92,6 +92,7 @@
 				<entry key="pre-collection-update" value-ref="envers" />
 			</map>
 		</property>
+		<property name="org.hibernate.envers.store_data_at_delete" value="true"/>
 	</bean>
 	<!-- Envers Info -->
 	<bean id="envers" class="org.hibernate.envers.event.AuditEventListener" />
