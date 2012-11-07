@@ -6,11 +6,11 @@
 
 <tiles-definitions>
 	<definition name="mainLayout" template="/templates/main.jsp">
-		<put-attribute name="title" value="NoDaBa" />
+		<put-attribute name="title" value="NAK Prüfungsverwaltung" />
 		<put-attribute name="header" value="/pages/header.jsp" />
 	</definition>
 	<definition name="mainMenu" extends="mainLayout">
-		<put-attribute name="title" value="NoDaBa - Hauptmenü"></put-attribute>
+		<put-attribute name="title" value="NAK Prüfungsverwaltung - Hauptmenü"></put-attribute>
 		<put-attribute name="content" value="/pages/hauptmenue.jsp" />
 	</definition>
 
@@ -25,83 +25,83 @@
 
 
 	<definition name="showChangeManipel" extends="mainLayout">
-		<put-attribute name="title" value="NoDaBa - Manipel ändern"></put-attribute>
+		<put-attribute name="title" value="NAK Prüfungsverwaltung - Manipel ändern"></put-attribute>
 		<put-attribute name="content" value="/manipel/pages/show.jsp" />
 	</definition>
 
 	<definition name="noManipelSelectedError" extends="mainLayout">
 		<put-attribute name="title"
-			value="NoDaBa - Manipel muss ausgewählt sein!"></put-attribute>
+			value="NAK Prüfungsverwaltung - Manipel muss ausgewählt sein!"></put-attribute>
 		<put-attribute name="content" value="/manipel/pages/noSelectedError.jsp" />
 	</definition>
 
 	<definition name="saveOralExams" extends="mainLayout">
 		<put-attribute name="title"
-			value="NoDaBa - Mündliche Prüfungen speichern"></put-attribute>
+			value="NAK Prüfungsverwaltung - Mündliche Prüfungen speichern"></put-attribute>
 		<put-attribute name="content" value="/oralExams/pages/save.jsp" />
 	</definition>
 	<definition name="showOralExams" extends="mainLayout">
 		<put-attribute name="title"
-			value="NoDaBa - Mündliche Prüfungen eintragen"></put-attribute>
+			value="NAK Prüfungsverwaltung - Mündliche Prüfungen eintragen"></put-attribute>
 		<put-attribute name="content" value="/oralExams/pages/show.jsp" />
 	</definition>
 
 	<definition name="saveWrittenExams" extends="mainLayout">
 		<put-attribute name="title"
-			value="NoDaBa - Schriftliche Prüfungen speichern"></put-attribute>
+			value="NAK Prüfungsverwaltung - Schriftliche Prüfungen speichern"></put-attribute>
 		<put-attribute name="content" value="/writtenExams/pages/save.jsp" />
 	</definition>
 	<definition name="showWrittenExams" extends="mainLayout">
 		<put-attribute name="title"
-			value="NoDaBa - Schriftliche Prüfungen eintragen"></put-attribute>
+			value="NAK Prüfungsverwaltung - Schriftliche Prüfungen eintragen"></put-attribute>
 		<put-attribute name="content" value="/writtenExams/pages/show.jsp" />
 	</definition>
 
 	<definition name="saveEditExams" extends="mainLayout">
 		<put-attribute name="title"
-			value="NoDaBa - Schriftliche Prüfungen speichern"></put-attribute>
+			value="NAK Prüfungsverwaltung - Schriftliche Prüfungen speichern"></put-attribute>
 		<put-attribute name="content" value="/editExams/pages/save.jsp" />
 	</definition>
 	<definition name="showEditExams" extends="mainLayout">
 		<put-attribute name="title"
-			value="NoDaBa - Schriftliche Prüfungen ändern"></put-attribute>
+			value="NAK Prüfungsverwaltung - Schriftliche Prüfungen ändern"></put-attribute>
 		<put-attribute name="content" value="/editExams/pages/show.jsp" />
 	</definition>
 
 	<definition name="showOverview" extends="mainLayout">
-		<put-attribute name="title" value="NoDaBa - Übersicht"></put-attribute>
+		<put-attribute name="title" value="NAK Prüfungsverwaltung - Übersicht"></put-attribute>
 		<put-attribute name="content" value="/overview/pages/show.jsp"></put-attribute>
 	</definition>
 
 	<definition name="showPruefungAnlegen" extends="mainLayout">
-		<put-attribute name="title" value="NoDaBa - Prüfung anlegen"></put-attribute>
+		<put-attribute name="title" value="NAK Prüfungsverwaltung - Prüfung anlegen"></put-attribute>
 		<put-attribute name="content" value="/createExams/pages/show.jsp"></put-attribute>
 	</definition>
 
 	<definition name="savePruefungAnlegen" extends="mainLayout">
 		<put-attribute name="title"
-			value="NoDaBa - Prüfung anlegen erfolgreich"></put-attribute>
+			value="NAK Prüfungsverwaltung - Prüfung anlegen erfolgreich"></put-attribute>
 		<put-attribute name="content" value="/createExams/pages/save.jsp"></put-attribute>
 	</definition>
 
 
 	<definition name="showHistory" extends="mainLayout">
-		<put-attribute name="title" value="NoDaBa - Historie anzeigen"></put-attribute>
+		<put-attribute name="title" value="NAK Prüfungsverwaltung - Historie anzeigen"></put-attribute>
 		<put-attribute name="content" value="/history/pages/show.jsp"></put-attribute>
 	</definition>
 	<definition name="historySelect" extends="mainLayout">
-		<put-attribute name="title" value="NoDaBa - Historie anzeigen"></put-attribute>
+		<put-attribute name="title" value="NAK Prüfungsverwaltung - Historie anzeigen"></put-attribute>
 		<put-attribute name="content" value="/history/pages/select.jsp"></put-attribute>
 	</definition>
 	
 	
 	<definition name="errorPage" extends="mainLayout">
-		<put-attribute name="title" value="NoDaBa - Fehler aufgetreten!"></put-attribute>
+		<put-attribute name="title" value="NAK Prüfungsverwaltung - Fehler aufgetreten!"></put-attribute>
 		<put-attribute name="content" value="/error/pages/show.jsp"></put-attribute>
 	</definition>
 	
 	<definition name="unknownError" extends="mainLayout">
-		<put-attribute name="title" value="NoDaBa - Fehler aufgetreten!"></put-attribute>
+		<put-attribute name="title" value="NAK Prüfungsverwaltung - Fehler aufgetreten!"></put-attribute>
 		<put-attribute name="content" value="/error/pages/default.jsp"></put-attribute>
 	</definition>
 </tiles-definitions>
