@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 
+import com.google.common.collect.Ordering;
 import com.opensymphony.xwork2.Action;
 
 import de.nak.iaa.server.entity.Manipel;
@@ -62,6 +63,8 @@ public class ModulAuswahlAction extends AbstractFormAction {
 		}
 
 		setPruefungen(getPruefungService().getAllPruefungen(getSelectedPruefungsfach()));
+		setPruefungen(Ordering.natural().immutableSortedCopy(getPruefungen()));
+
 		return Action.SUCCESS;
 	}
 
