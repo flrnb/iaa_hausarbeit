@@ -5,10 +5,10 @@ import java.util.Date;
 import de.nak.iaa.server.entity.Pruefungsleistung;
 
 /**
+ * Ein Eintrag aus der Historie einer Prüfungsleistung
+ * 
  * @author Ronny Bräunlich
  * @version 07.11.2012
- * 
- *          Ein Eintrag aus der Historie einer Prüfungsleistung
  */
 public class PruefungsleistungHistoryEntry {
 
