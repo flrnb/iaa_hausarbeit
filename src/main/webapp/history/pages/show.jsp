@@ -2,8 +2,6 @@
 	language="java"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<s:set var="" value="" scope="request"></s:set>
-
 <tr>
 	<s:iterator value="history" var="versuch">
 		<th><s:property value="%{#versuch.key.getInt()}" />. Versuch</th>

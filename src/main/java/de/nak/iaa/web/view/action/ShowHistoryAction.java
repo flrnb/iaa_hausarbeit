@@ -83,11 +83,8 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 
 		if (!validateForm()) {
 			// TODO prüfe ob die parameter leer sind bzw nutze die optional methode "isPresent()"
-			Optional<Pruefungsfach> fach = getPruefungService()
-					.getPruefungsfachById(
-							Long.valueOf(DataHelper
-									.stringArrayToString(getParameters().get(
-											"formPruefungsfachKey"))));
+			Optional<Pruefungsfach> fach = getPruefungService().getPruefungsfachById(
+					Long.valueOf(DataHelper.stringArrayToString(getParameters().get("formPruefungsfachKey"))));
 
 			if (fach.isPresent()) {
 				setSelectedPruefungsfach(fach.get());
@@ -98,8 +95,7 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 
 			// also hier
 			Optional<Student> student = getStudentService().getStudentById(
-					Long.valueOf(DataHelper.stringArrayToString(getParameters()
-							.get("formStudentKey"))));
+					Long.valueOf(DataHelper.stringArrayToString(getParameters().get("formStudentKey"))));
 
 			if (student.isPresent()) {
 				setSelectedStudent(student.get());
@@ -108,15 +104,22 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 				return Action.INPUT;
 			}
 
+			if (fach.isPresent()) {
+				setSelectedPruefungsfach(fach.get());
+			} else {
+				addActionError("Prüfungsfach nicht bekannt");
+				return Action.INPUT;
+			}
+
+			// hier füllt er die history. du musst also im endeffekt nur die
+			// tabelle füllen
 			setHistory(getPruefungService().getPruefungsleistungHistorie(getSelectedStudent(),
 					getSelectedPruefungsfach()));
 
 			System.out.println(getHistory().size());
-
-			return Action.SUCCESS;
 		}
 
-		return Action.INPUT;
+		return Action.SUCCESS;
 	}
 
 	public List<Pruefungsfach> getPruefungsfaecher() {
