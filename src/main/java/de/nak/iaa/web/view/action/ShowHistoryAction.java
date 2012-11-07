@@ -115,8 +115,6 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 			// tabelle füllen
 			setHistory(getPruefungService().getPruefungsleistungHistorie(getSelectedStudent(),
 					getSelectedPruefungsfach()));
-
-			System.out.println(getHistory().size());
 		}
 
 		return Action.SUCCESS;
