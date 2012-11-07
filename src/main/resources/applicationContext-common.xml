@@ -79,6 +79,7 @@
 				<prop key="hibernate.connection.useUnicode">true</prop>
 				<prop key="hibernate.connection.characterEncoding">UTF-8</prop>
             	<prop key="hibernate.connection.charSet">UTF-8</prop> 
+				<prop key="org.hibernate.envers.store_data_at_delete">true</prop>
 			</props>
 		</property>
 		<!-- Properties fuer Envers (Versionierung) -->
@@ -92,7 +93,6 @@
 				<entry key="pre-collection-update" value-ref="envers" />
 			</map>
 		</property>
-		<property name="org.hibernate.envers.store_data_at_delete" value="true"/>
 	</bean>
 	<!-- Envers Info -->
 	<bean id="envers" class="org.hibernate.envers.event.AuditEventListener" />
