@@ -39,9 +39,8 @@
 
 	<filter-mapping>
 		<filter-name>staticContentFilter</filter-name>
-		<url-pattern>/css/*</url-pattern>
-		<url-pattern>/img/*</url-pattern>
-		<url-pattern>/js/*</url-pattern>
+		<url-pattern>/styles/*</url-pattern>
+		<url-pattern>/scipts/*</url-pattern>
 	</filter-mapping>
 
 	<filter-mapping>
