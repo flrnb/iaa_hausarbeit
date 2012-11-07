@@ -150,6 +150,7 @@ public class PruefungServiceImplTest {
 		assertThat(service.getPruefungsfachById(fach2.getId()).get(), is(equalTo(fach2)));
 	}
 
+	@Test
 	public void testGetPruefungsfachByIdNotPresent() {
 		assertFalse(service.getPruefungsfachById(1000L).isPresent());
 	}
@@ -171,6 +172,7 @@ public class PruefungServiceImplTest {
 		assertThat(service.getPruefungById(pruefung.getId()).get(), is(equalTo(pruefung)));
 	}
 
+	@Test
 	public void testGetPruefungByIdNotPresent() {
 		assertFalse(service.getPruefungById(1000L).isPresent());
 	}
