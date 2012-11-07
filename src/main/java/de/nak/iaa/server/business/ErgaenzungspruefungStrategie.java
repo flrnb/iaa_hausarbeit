@@ -11,8 +11,20 @@ import de.nak.iaa.server.fachwert.Note;
  */
 public interface ErgaenzungspruefungStrategie {
 
+	/**
+	 * @param pruefungsleistung
+	 * @return true, falls zu der übergebenen Prüfungsleistung eine
+	 *         Ergänzungsprüfung zulässig ist
+	 */
 	boolean isErgaenzungsPruefungZulaessig(Pruefungsleistung pruefungsleistung);
 
+	/**
+	 * ermittelt für eine in der Ergänzungsprüfung erreichte Prozentzahl die zu
+	 * vergebende Note
+	 * 
+	 * @param prozent
+	 * @return Note
+	 */
 	Note getNoteErgaenzungspruefung(int prozent);
 
 }
