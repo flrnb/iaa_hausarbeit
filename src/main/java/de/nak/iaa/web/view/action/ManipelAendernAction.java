@@ -49,12 +49,12 @@ public class ManipelAendernAction extends AbstractAction implements Preparable {
 	 */
 	public String show() {
 		// Wechsle nur zur "show" action, wenn noch kein manipel ausgewählt war
-		// sonst zurück auf die startseite, damit keine falschen daten angezeigt
-		// werden
+		// sonst auf die hier spezifizierte seite
 		if (ServletActionContext.getRequest().getHeader("referer") == null && getSelectedManipel() == null) {
 			setRefererUrl("show");
 		} else {
-			setRefererUrl(ServletActionContext.getRequest().getHeader("referer"));
+			// setRefererUrl(ServletActionContext.getRequest().getHeader("referer"));
+			setRefererUrl("/");
 		}
 		if (getSession().containsKey("selectedManipel") && getSession().get("selectedManipel") != null)
 			selectedManipel = getSession().get("selectedManipel").toString();
