@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.nak</groupId>
-	<artifactId>iaa</artifactId>
+	<artifactId>notenverwaltung</artifactId>
 	<packaging>war</packaging>
 	<version>1.0</version>
 	<properties>
@@ -154,7 +154,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>iaa-1.0.${project.packaging}</finalName>
+		<finalName>notenverwaltung</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
@@ -162,6 +162,13 @@
 			</resource>
 		</resources>
 		<plugins>
+		    <plugin>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <packagingExcludes>WEB-INF/web.xml</packagingExcludes>
+                </configuration>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>

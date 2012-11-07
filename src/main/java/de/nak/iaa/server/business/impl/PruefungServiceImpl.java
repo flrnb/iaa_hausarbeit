@@ -16,6 +16,8 @@ import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSortedMap;
+import com.google.common.collect.ImmutableSortedMap.Builder;
 import com.google.common.collect.Iterables;
 
 import de.nak.iaa.server.business.ErgaenzungspruefungStrategie;
@@ -220,8 +222,14 @@ public class PruefungServiceImpl implements PruefungService {
 	@Override
 	public Map<Versuch, SortedMap<Date, Pruefungsleistung>> getPruefungsleistungHistorie(Student student,
 			Pruefungsfach fach) {
-		// TODO Auto-generated method stub
-		return null;
+		Map<Versuch, SortedMap<Date, Pruefungsleistung>> result = new HashMap<Versuch, SortedMap<Date, Pruefungsleistung>>();
+		for (Versuch versuch : Versuch.values()) {
+			Map<Date, Pruefungsleistung> alteLeistungen = pruefungsleistungDAO
+					.getAltePruefungsleistungenFuerStudentFachUndVersuch(student, fach, versuch);
+			Builder<Date, Pruefungsleistung> builder = ImmutableSortedMap.naturalOrder();
+			result.put(versuch, builder.putAll(alteLeistungen).build());
+		}
+		return result;
 	}
 
 	/**

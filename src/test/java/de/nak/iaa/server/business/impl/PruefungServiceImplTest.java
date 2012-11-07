@@ -46,7 +46,7 @@ import de.nak.iaa.server.fachwert.Versuch;
  * JUnit-Test für Implementierung von {@link PruefungService}
  * 
  * @author Florian Borchert
- * @version 06.11.2012
+ * @version 07.11.2012
  */
 public class PruefungServiceImplTest {
 
@@ -372,10 +372,10 @@ public class PruefungServiceImplTest {
 		Pruefung pruefung2 = new Pruefung(THE_DAY_AFTER_TOMORROW, fach1, dozent);
 		Pruefung pruefung3 = new Pruefung(THE_DAY_AFTER_TOMORROW, fach2, dozent);
 
-		Pruefungsleistung leistung1 = service.addPruefungsleistung(pruefung1, student1, Note.Fuenf);
-		Pruefungsleistung leistung2 = service.addPruefungsleistung(pruefung1, student2, Note.Fuenf);
-		Pruefungsleistung leistung3 = service.addPruefungsleistung(pruefung2, student2, Note.Fuenf);
-		Pruefungsleistung leistung4 = service.addPruefungsleistung(pruefung3, student3, Note.Fuenf);
+		service.addPruefungsleistung(pruefung1, student1, Note.Fuenf);
+		service.addPruefungsleistung(pruefung1, student2, Note.Fuenf);
+		service.addPruefungsleistung(pruefung2, student2, Note.Fuenf);
+		service.addPruefungsleistung(pruefung3, student3, Note.Fuenf);
 
 		Map<Student, Date> studenten = service.getAllErgaenzungsPruefungsStudenten(man1, fach1);
 
@@ -383,23 +383,16 @@ public class PruefungServiceImplTest {
 		assertThat(studenten.get(student1), is(equalTo(TODAY)));
 		assertThat(studenten.get(student2), is(equalTo(THE_DAY_AFTER_TOMORROW)));
 
-		// assertTrue(service.isErgaenzungsPruefungZulaessig(leistung1));
-		// assertFalse(service.isErgaenzungsPruefungZulaessig(leistung2));
-		// assertTrue(service.isErgaenzungsPruefungZulaessig(leistung3));
-		// assertTrue(service.isErgaenzungsPruefungZulaessig(leistung4));
 	}
 
 	@Test
 	public void testErgaenzungsPruefungSchonVorhandenBestanden() throws IllegalPruefungsleistungException {
 		Pruefung pruefung1 = new Pruefung(TODAY, fach1, dozent);
 
-		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung1, student1, Note.Fuenf);
-
-		// assertTrue(service.isErgaenzungsPruefungZulaessig(leistung));
+		service.addPruefungsleistung(pruefung1, student1, Note.Fuenf);
 
 		service.addErgaenzungsPruefung(student1, fach1, TOMORROW, 80);
 
-		// assertFalse(service.isErgaenzungsPruefungZulaessig(leistung));
 		assertThat(service.getAllErgaenzungsPruefungsStudenten(man1, fach1).size(), is(0));
 	}
 
@@ -407,13 +400,10 @@ public class PruefungServiceImplTest {
 	public void testErgaenzungsPruefungSchonVorhandenNichtBestanden() throws IllegalPruefungsleistungException {
 		Pruefung pruefung1 = new Pruefung(TODAY, fach1, dozent);
 
-		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung1, student1, Note.Fuenf);
-
-		// assertTrue(service.isErgaenzungsPruefungZulaessig(leistung));
+		service.addPruefungsleistung(pruefung1, student1, Note.Fuenf);
 
 		service.addErgaenzungsPruefung(student1, fach1, TOMORROW, 60);
 
-		// assertFalse(service.isErgaenzungsPruefungZulaessig(leistung));
 		assertThat(service.getAllErgaenzungsPruefungsStudenten(man1, fach1).size(), is(0));
 	}
 
@@ -421,9 +411,8 @@ public class PruefungServiceImplTest {
 	public void testErgaenzungsPruefungSowiesoBestanden() throws IllegalPruefungsleistungException {
 		Pruefung pruefung1 = new Pruefung(TODAY, fach1, dozent);
 
-		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung1, student1, Note.Drei);
+		service.addPruefungsleistung(pruefung1, student1, Note.Drei);
 
-		// assertFalse(service.isErgaenzungsPruefungZulaessig(leistung));
 		assertThat(service.getAllErgaenzungsPruefungsStudenten(man1, fach1).size(), is(0));
 	}
 
@@ -464,9 +453,8 @@ public class PruefungServiceImplTest {
 	public void testAddErgaenzungspruefungNichtZulaessig() throws IllegalPruefungsleistungException {
 		Pruefung pruefung1 = new Pruefung(TODAY, fach1, dozent);
 
-		Pruefungsleistung leistung = service.addPruefungsleistung(pruefung1, student1, Note.Drei);
+		service.addPruefungsleistung(pruefung1, student1, Note.Drei);
 
-		// assertFalse(service.isErgaenzungsPruefungZulaessig(leistung));
 		service.addErgaenzungsPruefung(student1, fach1, TODAY, 80);
 	}
 
