@@ -2,7 +2,7 @@ package de.nak.iaa.server.dao;
 
 import java.util.List;
 
-import de.nak.iaa.server.dao.impl.PruefungsleistungDAOImpl.AlteRevisionPruefungsleistungContainer;
+import de.nak.iaa.server.business.PruefungsleistungHistoryEntry;
 import de.nak.iaa.server.entity.ErgaenzungsPruefung;
 import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.server.entity.Pruefungsleistung;
@@ -26,6 +26,6 @@ public interface PruefungsleistungDAO extends
 	List<Pruefungsleistung> getVersuchFallsVorhanden(Student student,
 			Pruefungsfach pruefungsfach, Versuch versuch);
 
-	List<AlteRevisionPruefungsleistungContainer> getAltePruefungsleistungen(
+	List<PruefungsleistungHistoryEntry> getAltePruefungsleistungen(
 			Student student, Pruefungsfach fach, Versuch versuch);
 }

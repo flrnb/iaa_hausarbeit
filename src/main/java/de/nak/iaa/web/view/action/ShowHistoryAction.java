@@ -113,7 +113,7 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 
 			// hier füllt er die history. du musst also im endeffekt nur die
 			// tabelle füllen
-			setHistory(getPruefungService().getPruefungsleistungHistorie(getSelectedStudent(),
+			setHistory(getPruefungService().getDeprecatedPruefungsleistungHistorie(getSelectedStudent(),
 					getSelectedPruefungsfach()));
 		}
 

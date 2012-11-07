@@ -1,11 +1,13 @@
 package de.nak.iaa.server.business.impl;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.SortedSet;
 
 import org.javatuples.Triplet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,7 @@ import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSortedMap;
-import com.google.common.collect.ImmutableSortedMap.Builder;
+import com.google.common.collect.ImmutableSortedSet;
 import com.google.common.collect.Iterables;
 
 import de.nak.iaa.server.business.ErgaenzungspruefungStrategie;
@@ -25,6 +26,7 @@ import de.nak.iaa.server.business.IllegalUpdateException;
 import de.nak.iaa.server.business.IllegalUpdateException.IllegalPruefungsleistungException;
 import de.nak.iaa.server.business.PruefungService;
 import de.nak.iaa.server.business.PruefungsleistungAenderung;
+import de.nak.iaa.server.business.PruefungsleistungHistoryEntry;
 import de.nak.iaa.server.business.PruefungsleistungStrategie;
 import de.nak.iaa.server.business.StudentService;
 import de.nak.iaa.server.dao.PruefungDAO;
@@ -220,14 +222,26 @@ public class PruefungServiceImpl implements PruefungService {
 	}
 
 	@Override
-	public Map<Versuch, SortedMap<Date, Pruefungsleistung>> getPruefungsleistungHistorie(Student student,
+	@Deprecated
+	public Map<Versuch, SortedMap<Date, Pruefungsleistung>> getDeprecatedPruefungsleistungHistorie(Student student,
 			Pruefungsfach fach) {
-		Map<Versuch, SortedMap<Date, Pruefungsleistung>> result = new HashMap<Versuch, SortedMap<Date, Pruefungsleistung>>();
+		return null;
+	}
+
+	public Map<Versuch, SortedSet<PruefungsleistungHistoryEntry>> getPruefungsleistungHistorie(Student student,
+			Pruefungsfach fach) {
+		Map<Versuch, SortedSet<PruefungsleistungHistoryEntry>> result = new HashMap<Versuch, SortedSet<PruefungsleistungHistoryEntry>>();
 		for (Versuch versuch : Versuch.values()) {
-			Map<Date, Pruefungsleistung> alteLeistungen = pruefungsleistungDAO
-					.getAltePruefungsleistungenFuerStudentFachUndVersuch(student, fach, versuch);
-			Builder<Date, Pruefungsleistung> builder = ImmutableSortedMap.naturalOrder();
-			result.put(versuch, builder.putAll(alteLeistungen).build());
+			List<PruefungsleistungHistoryEntry> alteLeistungen = pruefungsleistungDAO.getAltePruefungsleistungen(
+					student, fach, versuch);
+			SortedSet<PruefungsleistungHistoryEntry> sorted = ImmutableSortedSet
+					.orderedBy(new Comparator<PruefungsleistungHistoryEntry>() {
+						@Override
+						public int compare(PruefungsleistungHistoryEntry e1, PruefungsleistungHistoryEntry e2) {
+							return e1.getGueltigVon().compareTo(e2.getGueltigVon());
+						}
+					}).addAll(alteLeistungen).build();
+			result.put(versuch, sorted);
 		}
 		return result;
 	}

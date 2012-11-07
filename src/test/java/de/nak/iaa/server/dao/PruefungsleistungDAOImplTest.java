@@ -14,7 +14,7 @@ import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.support.TransactionCallback;
 
 import de.nak.iaa.ApplicationContextAwareTest;
-import de.nak.iaa.server.dao.impl.PruefungsleistungDAOImpl.AlteRevisionPruefungsleistungContainer;
+import de.nak.iaa.server.business.PruefungsleistungHistoryEntry;
 import de.nak.iaa.server.entity.Dozent;
 import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Pruefung;
@@ -74,7 +74,7 @@ public class PruefungsleistungDAOImplTest extends ApplicationContextAwareTest {
 		Pruefungsleistung pl = new Pruefungsleistung(versuch, pruefung,
 				Note.Drei, student);
 		makePersistentInTransaction(pl, pruefungsleistungDAO);
-		List<AlteRevisionPruefungsleistungContainer> altePruefungsleistungen = pruefungsleistungDAO
+		List<PruefungsleistungHistoryEntry> altePruefungsleistungen = pruefungsleistungDAO
 				.getAltePruefungsleistungen(student, pruefungsfach, versuch);
 		assertThat(altePruefungsleistungen.size(), is(equalTo(1)));
 		altePruefungsleistungen = pruefungsleistungDAO
@@ -94,7 +94,7 @@ public class PruefungsleistungDAOImplTest extends ApplicationContextAwareTest {
 		Pruefungsleistung pl2 = new Pruefungsleistung(versuch, pruefung2,
 				Note.DreiDrei, student);
 		makePersistentInTransaction(pl2, pruefungsleistungDAO);
-		List<AlteRevisionPruefungsleistungContainer> altePruefungsleistungen = pruefungsleistungDAO
+		List<PruefungsleistungHistoryEntry> altePruefungsleistungen = pruefungsleistungDAO
 				.getAltePruefungsleistungen(student, pruefungsfach, versuch);
 		assertThat(altePruefungsleistungen.size(), is(equalTo(2)));
 	}

@@ -10,10 +10,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
+import java.util.SortedSet;
 
 import org.javatuples.Triplet;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,6 +22,7 @@ import de.nak.iaa.server.business.IllegalUpdateException.IllegalPruefungsleistun
 import de.nak.iaa.server.business.PruefungService;
 import de.nak.iaa.server.business.PruefungsleistungAenderung.Delete;
 import de.nak.iaa.server.business.PruefungsleistungAenderung.Update;
+import de.nak.iaa.server.business.PruefungsleistungHistoryEntry;
 import de.nak.iaa.server.dao.DozentDAO;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
@@ -164,7 +164,7 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 
 	@Test
 	public void testGetPruefungsleistungHistorieEmpty() {
-		Map<Versuch, SortedMap<Date, Pruefungsleistung>> pruefungsleistungHistorie = service
+		Map<Versuch, SortedSet<PruefungsleistungHistoryEntry>> pruefungsleistungHistorie = service
 				.getPruefungsleistungHistorie(student, fach);
 		assertTrue(pruefungsleistungHistorie.get(Versuch.Eins).isEmpty());
 		assertTrue(pruefungsleistungHistorie.get(Versuch.Zwei).isEmpty());
@@ -186,7 +186,7 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 		leistungen.add(new Triplet<Pruefung, Student, Note>(pruefung3, student, Note.Fuenf));
 		service.addPruefungsleistungen(leistungen);
 
-		Map<Versuch, SortedMap<Date, Pruefungsleistung>> pruefungsleistungHistorie = service
+		Map<Versuch, SortedSet<PruefungsleistungHistoryEntry>> pruefungsleistungHistorie = service
 				.getPruefungsleistungHistorie(student, fach);
 		assertThat(pruefungsleistungHistorie.get(Versuch.Eins).size(), is(1));
 		assertThat(pruefungsleistungHistorie.get(Versuch.Zwei).size(), is(1));
@@ -205,14 +205,13 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 
 		service.updatePruefungsleistungen(Arrays.asList(new Update(leistung.getId(), Note.Vier)));
 
-		Map<Versuch, SortedMap<Date, Pruefungsleistung>> pruefungsleistungHistorie = service
+		Map<Versuch, SortedSet<PruefungsleistungHistoryEntry>> pruefungsleistungHistorie = service
 				.getPruefungsleistungHistorie(student, fach);
 		assertThat(pruefungsleistungHistorie.get(Versuch.Eins).size(), is(2));
 		assertThat(pruefungsleistungHistorie.get(Versuch.Zwei).size(), is(0));
 		assertThat(pruefungsleistungHistorie.get(Versuch.Drei).size(), is(0));
 	}
 
-	@Ignore
 	@Test
 	public void testGetPruefungsleistungHistorieGeloescht() throws IllegalUpdateException {
 		List<Triplet<Pruefung, Student, Note>> leistungen = new ArrayList<Triplet<Pruefung, Student, Note>>();
@@ -225,9 +224,11 @@ public class PruefungServiceImplPersistenceTest extends ApplicationContextAwareT
 
 		service.updatePruefungsleistungen(Arrays.asList(new Delete(leistung.getId())));
 
-		Map<Versuch, SortedMap<Date, Pruefungsleistung>> pruefungsleistungHistorie = service
+		Map<Versuch, SortedSet<PruefungsleistungHistoryEntry>> pruefungsleistungHistorie = service
 				.getPruefungsleistungHistorie(student, fach);
 		assertThat(pruefungsleistungHistorie.get(Versuch.Eins).size(), is(2));
+		assertFalse(pruefungsleistungHistorie.get(Versuch.Eins).first().isGeloescht());
+		assertTrue(pruefungsleistungHistorie.get(Versuch.Eins).last().isGeloescht());
 		assertThat(pruefungsleistungHistorie.get(Versuch.Zwei).size(), is(0));
 		assertThat(pruefungsleistungHistorie.get(Versuch.Drei).size(), is(0));
 	}

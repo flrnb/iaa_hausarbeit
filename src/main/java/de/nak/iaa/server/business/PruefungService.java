@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.SortedMap;
+import java.util.SortedSet;
 
 import org.javatuples.Triplet;
 
@@ -139,6 +140,10 @@ public interface PruefungService {
 	 */
 	ErgaenzungsPruefung addErgaenzungsPruefung(Student student, Pruefungsfach fach, Date datum, int prozent);
 
+	@Deprecated
+	Map<Versuch, SortedMap<Date, Pruefungsleistung>> getDeprecatedPruefungsleistungHistorie(Student student,
+			Pruefungsfach fach);
+
 	/**
 	 * ermittelt die Historie der Prüfungsleistungen für einen Studenten und ein
 	 * Prüfungsfach
@@ -147,7 +152,9 @@ public interface PruefungService {
 	 * @param fach
 	 * @return für jeden Versuch alle jemals erfassten Prüfungsleistungen, nach
 	 *         ihrem Datum sortiert
+	 * @see PruefungsleistungHistoryEntry
 	 */
-	Map<Versuch, SortedMap<Date, Pruefungsleistung>> getPruefungsleistungHistorie(Student student, Pruefungsfach fach);
+	Map<Versuch, SortedSet<PruefungsleistungHistoryEntry>> getPruefungsleistungHistorie(Student student,
+			Pruefungsfach fach);
 
 }

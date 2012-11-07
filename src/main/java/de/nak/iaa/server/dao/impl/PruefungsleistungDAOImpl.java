@@ -1,7 +1,6 @@
 package de.nak.iaa.server.dao.impl;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.hibernate.envers.AuditReader;
@@ -16,6 +15,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.ImmutableList;
 
+import de.nak.iaa.server.business.PruefungsleistungHistoryEntry;
 import de.nak.iaa.server.dao.PruefungsleistungDAO;
 import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.server.entity.Pruefungsleistung;
@@ -75,7 +75,7 @@ public class PruefungsleistungDAOImpl extends
 	}
 
 	@Override
-	public List<AlteRevisionPruefungsleistungContainer> getAltePruefungsleistungen(
+	public List<PruefungsleistungHistoryEntry> getAltePruefungsleistungen(
 			Student student, Pruefungsfach fach, Versuch versuch) {
 		AuditReader auditReader = AuditReaderFactory.get(getSession());
 		AuditQuery query = auditReader.createQuery()
@@ -84,43 +84,17 @@ public class PruefungsleistungDAOImpl extends
 				.add(AuditEntity.property("versuch").eq(versuch));
 		@SuppressWarnings("unchecked")
 		List<Object[]> result = query.getResultList();
-		ArrayList<AlteRevisionPruefungsleistungContainer> ergebnis = new ArrayList<AlteRevisionPruefungsleistungContainer>();
+		ArrayList<PruefungsleistungHistoryEntry> ergebnis = new ArrayList<PruefungsleistungHistoryEntry>();
 		for (Object[] objects : result) {
 			Pruefungsleistung pl = (Pruefungsleistung) objects[0];
 			DefaultRevisionEntity revEntity = (DefaultRevisionEntity) objects[1];
 			RevisionType revType = (RevisionType) objects[2];
 			if (pl.getPruefung().getPruefungsfach().equals(fach)) {
-				ergebnis.add(new AlteRevisionPruefungsleistungContainer(pl,
+				ergebnis.add(new PruefungsleistungHistoryEntry(pl,
 						revEntity.getRevisionDate(), revType
 								.equals(RevisionType.DEL)));
 			}
 		}
 		return ergebnis;
-	}
-
-	public static class AlteRevisionPruefungsleistungContainer {
-
-		private final Pruefungsleistung pruefungsleistung;
-		private final boolean istGeloescht;
-		private final Date revisionsDatum;
-
-		public AlteRevisionPruefungsleistungContainer(Pruefungsleistung pl,
-				Date revisionsDatum, boolean istGeloescht) {
-			this.pruefungsleistung = pl;
-			this.revisionsDatum = revisionsDatum;
-			this.istGeloescht = istGeloescht;
-		}
-
-		public Pruefungsleistung getPruefungsleistung() {
-			return pruefungsleistung;
-		}
-
-		public boolean isIstGeloescht() {
-			return istGeloescht;
-		}
-
-		public Date getRevisionsDatum() {
-			return revisionsDatum;
-		}
 	}
 }
