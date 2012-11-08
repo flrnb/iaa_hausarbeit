@@ -1,7 +1,7 @@
 package de.nak.iaa.server.fachwert;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Enumeration für Noten. Alle Werte besitzen auch die entsprechende Zahl als
@@ -16,44 +16,30 @@ public enum Note {
 			5.0), Sechs(6.0);
 
 	private Double note;
-	private static final Map<Double, Note> lookup = new HashMap<Double, Note>();
-
-	static {
-		for (Note n : Note.values())
-			lookup.put(n.getNote(), n);
-	}
 
 	public static Note get(String note) {
-		return lookup.get(Double.valueOf(note));
+		List<Note> noten = Arrays.asList(Note.values());
+		for (Note noteEnum : noten) {
+			if (noteEnum.getNote().equals(Double.valueOf(note))) {
+				return noteEnum;
+			}
+		}
+		return null;
 	}
 
 	Note(Double note) {
 		this.note = note;
 	}
 
-	/**
-	 * Hole eine Note zu einem String
-	 * 
-	 * @author Christopher Biel <christopher.biel89@gmail.com>
-	 * @param note
-	 * @return
-	 */
 	public static Note getNote(String note) {
 		if (note.matches("[123456][.][037]") || note.contains("."))
-			return lookup.get(Double.valueOf(note));
+			return get(note);
 		else
-			return lookup.get(Double.valueOf(note + ".0"));
+			return get(note + ".0");
 	}
 
-	/**
-	 * Prüfe of eine Note valide ist
-	 * 
-	 * @author Christopher Biel <christopher.biel89@gmail.com>
-	 * @param note
-	 * @return
-	 */
 	public static boolean isValid(String note) {
-		return (Note.getNote(note) == null) ? false : true;
+		return (getNote(note) == null) ? false : true;
 	}
 
 	public Double getNote() {
