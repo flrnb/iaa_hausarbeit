@@ -13,8 +13,8 @@ import de.nak.iaa.server.entity.Dozent;
 /**
  * Implementierung für {@link DozentService}
  * 
- * @author Florian Borchert
- * @version 06.11.2012
+ * @author Ibrahim Karagac
+ * @version 08.11.2012
  */
 public class DozentServiceImpl implements DozentService {
 

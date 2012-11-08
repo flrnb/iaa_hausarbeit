@@ -9,7 +9,7 @@ import de.nak.iaa.server.entity.Dozent;
 /**
  * Service für Dozentenbezogene Funktionen
  * 
- * @author Florian Borchert
+ * @author Ibrahim Karagac
  * @version 06.11.2012
  */
 public interface DozentService {
