@@ -67,5 +67,4 @@ public class ErgaenzungsPruefung {
 	public void setDatum(Date datum) {
 		this.datum = datum;
 	}
-
 }

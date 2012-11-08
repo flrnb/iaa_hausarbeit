@@ -87,12 +87,14 @@ public class PruefungsleistungDAOImpl extends
 		ArrayList<PruefungsleistungHistoryEntry> ergebnis = new ArrayList<PruefungsleistungHistoryEntry>();
 		for (Object[] objects : result) {
 			Pruefungsleistung pl = (Pruefungsleistung) objects[0];
+			// Workaround!!! https://hibernate.onjira.com/browse/HHH-3552
+			if (pl.getErgaenzungsPruefung() != null)
+				pl.getErgaenzungsPruefung().getId();
 			DefaultRevisionEntity revEntity = (DefaultRevisionEntity) objects[1];
 			RevisionType revType = (RevisionType) objects[2];
 			if (pl.getPruefung().getPruefungsfach().equals(fach)) {
-				ergebnis.add(new PruefungsleistungHistoryEntry(pl,
-						revEntity.getRevisionDate(), revType
-								.equals(RevisionType.DEL)));
+				ergebnis.add(new PruefungsleistungHistoryEntry(pl, revEntity
+						.getRevisionDate(), revType.equals(RevisionType.DEL)));
 			}
 		}
 		return ergebnis;
