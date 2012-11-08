@@ -2,6 +2,7 @@ package de.nak.iaa.server.business.impl;
 
 import java.util.Comparator;
 import java.util.Date;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -228,9 +229,11 @@ public class PruefungServiceImpl implements PruefungService {
 		return null;
 	}
 
+	@Override
 	public Map<Versuch, SortedSet<PruefungsleistungHistoryEntry>> getPruefungsleistungHistorie(Student student,
 			Pruefungsfach fach) {
-		Map<Versuch, SortedSet<PruefungsleistungHistoryEntry>> result = new HashMap<Versuch, SortedSet<PruefungsleistungHistoryEntry>>();
+		Map<Versuch, SortedSet<PruefungsleistungHistoryEntry>> result = new EnumMap<Versuch, SortedSet<PruefungsleistungHistoryEntry>>(
+				Versuch.class);
 		for (Versuch versuch : Versuch.values()) {
 			List<PruefungsleistungHistoryEntry> alteLeistungen = pruefungsleistungDAO.getAltePruefungsleistungen(
 					student, fach, versuch);
