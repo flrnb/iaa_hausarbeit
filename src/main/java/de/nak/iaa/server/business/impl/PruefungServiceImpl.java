@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-import java.util.SortedMap;
 import java.util.SortedSet;
 
 import org.javatuples.Triplet;
@@ -220,13 +219,6 @@ public class PruefungServiceImpl implements PruefungService {
 		letzterVersuch.get().setErgaenzungsPruefung(ergaenzungsPruefung);
 		pruefungsleistungDAO.makePersistent(letzterVersuch.get());
 		return ergaenzungsPruefung;
-	}
-
-	@Override
-	@Deprecated
-	public Map<Versuch, SortedMap<Date, Pruefungsleistung>> getDeprecatedPruefungsleistungHistorie(Student student,
-			Pruefungsfach fach) {
-		return null;
 	}
 
 	@Override

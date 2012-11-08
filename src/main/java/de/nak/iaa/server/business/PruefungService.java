@@ -3,7 +3,6 @@ package de.nak.iaa.server.business;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 import java.util.SortedSet;
 
 import org.javatuples.Triplet;
@@ -139,10 +138,6 @@ public interface PruefungService {
 	 *         zulässig ist
 	 */
 	ErgaenzungsPruefung addErgaenzungsPruefung(Student student, Pruefungsfach fach, Date datum, int prozent);
-
-	@Deprecated
-	Map<Versuch, SortedMap<Date, Pruefungsleistung>> getDeprecatedPruefungsleistungHistorie(Student student,
-			Pruefungsfach fach);
 
 	/**
 	 * ermittelt die Historie der Prüfungsleistungen für einen Studenten und ein
