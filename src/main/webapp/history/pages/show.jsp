@@ -23,18 +23,17 @@
 						<s:iterator value="#versuch.value" var="leistug">
 							<li><s:if test="isGeloescht()">
 				Storniert am
-							<s:date name="getGueltigVon()" format="dd.MM.yyyy" />
+							<s:date name="getGueltigVon()" format="dd.MM.yyyy hh:mm" />
 
 								</s:if> <s:elseif
 									test="getPruefungsleistung().getErgaenzungsPruefung() != null">
-								Ergänzungsprüfung eingetragen am <s:date
-										name="getPruefungsleistung().getErgaenzungsPruefung().getDatum()"
-										format="dd.MM.yyyy" />
+								Ergänzungsprüfung eingetragen am <s:date name="getGueltigVon()"
+										format="dd.MM.yyyy hh:mm" />
 									mit Note <s:property
 										value="getPruefungsleistung().getErgaenzungsPruefung().getNote()" />
 								</s:elseif> <s:else>
 				Geändert am
-		<s:date name="getGueltigVon()" format="dd.MM.yyyy" />
+		<s:date name="getGueltigVon()" format="dd.MM.yyyy hh:mm" />
 		auf Note
 		<s:property value="getPruefungsleistung().getNote()" />
 								</s:else></li>
