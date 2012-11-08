@@ -5,7 +5,7 @@
 <h3>Manipel ändern</h3>
 Aktuell ausgewählt:
 
-<s:if test="selectedManipel == null || selectedManipel == \"-1\"">
+<s:if test="selectedManipel == null">
 	<i>keiner Ausgewählt</i>
 </s:if>
 <s:else>
