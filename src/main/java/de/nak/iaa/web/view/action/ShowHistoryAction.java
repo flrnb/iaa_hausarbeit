@@ -90,11 +90,6 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 
 			setHistory(getPruefungService().getPruefungsleistungHistorie(getSelectedStudent(),
 					getSelectedPruefungsfach()));
-
-			// for (PruefungsleistungHistoryEntry e : getHistory().get(Versuch.Eins)) {
-			// System.out.println(e.getPruefungsleistung());
-			// System.out.println(e.getPruefungsleistung().getErgaenzungsPruefung() != null);
-			// }
 		} else {
 			return Action.INPUT;
 		}
