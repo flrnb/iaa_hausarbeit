@@ -6,8 +6,11 @@
 <s:actionerror/>
 
 <s:form action="show" method="post">
-	<sx:autocompleter list="pruefungsfaecher" listValue="titel"  label="Prüfungsfach wählen" listKey="id" name="formPruefungsfach" autoComplete="false" forceValidOption="true"/>
+	
+	<s:actionmessage cssClass="actionMessage" theme="simple"/>
+
+	<sx:autocompleter list="pruefungsfaecher" listValue="titel"  label="Prüfungsfach wählen" listKey="id" name="formPruefungsfach" autoComplete="true" forceValidOption="true" value=""/>
 	<br />
-	<sx:autocompleter list="studenten" listKey="id" label="Studenten wählen" name="formStudent" autoComplete="false" forceValidOption="true"/>
+	<sx:autocompleter list="studenten" listKey="id" label="Studenten wählen" name="formStudent" autoComplete="true" forceValidOption="true" value=""/>
 	<s:submit/>
 </s:form>
