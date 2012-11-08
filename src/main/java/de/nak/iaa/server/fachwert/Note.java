@@ -17,7 +17,7 @@ public enum Note {
 
 	private Double note;
 
-	public static Note get(String note) {
+	private static Note get(String note) {
 		List<Note> noten = Arrays.asList(Note.values());
 		for (Note noteEnum : noten) {
 			if (noteEnum.getNote().equals(Double.valueOf(note))) {
@@ -32,10 +32,12 @@ public enum Note {
 	}
 
 	public static Note getNote(String note) {
-		if (note.matches("[123456][.][037]") || note.contains("."))
+		if (note.matches("[123456][.][037]"))
 			return get(note);
-		else
+		else if (note.matches("[1-6]"))
 			return get(note + ".0");
+		else
+			return null;
 	}
 
 	public static boolean isValid(String note) {
