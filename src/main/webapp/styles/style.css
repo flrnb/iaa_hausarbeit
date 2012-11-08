@@ -90,10 +90,6 @@
 }
 
 @media print , screen {
-	.uebersichtHeader {
-		font-weight: bold;
-		font-size: medium;
-	}
 	.protokollTable td.protokollField {
 		padding: 2px;
 	}

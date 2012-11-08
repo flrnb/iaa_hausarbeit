@@ -10,7 +10,6 @@ import com.opensymphony.xwork2.Preparable;
 
 import de.nak.iaa.server.business.PruefungsleistungHistoryEntry;
 import de.nak.iaa.server.entity.Pruefungsfach;
-import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Versuch;
 import de.nak.iaa.web.util.DataHelper;
@@ -35,18 +34,6 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 	}
 
 	/**
-	 * Hilfsmethode für die View (jsp) um zu prüfen, ob eine Prüfungsleistung eine Ergänzungsprüfung
-	 * hat<br>
-	 * Gib in dem Fall den auszugebenen String zurück
-	 * 
-	 * @param leistung
-	 * @return
-	 */
-	public boolean pruefungsleistungHasErgaenzungspruefung(Pruefungsleistung leistung) {
-		return (leistung.getErgaenzungsPruefung() != null);
-	}
-
-	/**
 	 * Validiere die Eingabedaten und gebe zurück, ob ein Fehler aufgetreten ist <br>
 	 * Fügt bei einem Problem, dem Feld einen FieldError hinzu
 	 * 
@@ -55,14 +42,10 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 	private boolean validateForm() {
 		boolean hasError = false;
 		if (getFormStudent() == null || getFormStudent().equals("")) {
-			// addFieldError("formStudent", getMsg(MessageKey.ERR_EMP_STUDENT));
-			// hasError = true;
 			addActionMessage("Beide Felder müssen ausgewählt sein!");
 			return true;
 		}
 		if (getFormPruefungsfach() == null || getFormPruefungsfach().equals("")) {
-			// addFieldError("formPruefungsfach", getMsg(MessageKey.ERR_EMP_PRUEFUNGSFACH));
-			// hasError = true;
 			addActionMessage("Beide Felder müssen ausgewählt sein!");
 			return true;
 		}
@@ -85,7 +68,6 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 		}
 
 		if (!validateForm()) {
-			// TODO prüfe ob die parameter leer sind bzw nutze die optional methode "isPresent()"
 			Optional<Pruefungsfach> fach = getPruefungService().getPruefungsfachById(
 					Long.valueOf(DataHelper.stringArrayToString(getParameters().get("formPruefungsfachKey"))));
 
@@ -96,7 +78,6 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 				return Action.INPUT;
 			}
 
-			// also hier
 			Optional<Student> student = getStudentService().getStudentById(
 					Long.valueOf(DataHelper.stringArrayToString(getParameters().get("formStudentKey"))));
 
@@ -107,12 +88,14 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 				return Action.INPUT;
 			}
 
-			// hier füllt er die history. du musst also im endeffekt nur die
-			// tabelle füllen
 			setHistory(getPruefungService().getPruefungsleistungHistorie(getSelectedStudent(),
 					getSelectedPruefungsfach()));
+
+			// for (PruefungsleistungHistoryEntry e : getHistory().get(Versuch.Eins)) {
+			// System.out.println(e.getPruefungsleistung());
+			// System.out.println(e.getPruefungsleistung().getErgaenzungsPruefung() != null);
+			// }
 		} else {
-			System.out.println(getActionErrors().size());
 			return Action.INPUT;
 		}
 
