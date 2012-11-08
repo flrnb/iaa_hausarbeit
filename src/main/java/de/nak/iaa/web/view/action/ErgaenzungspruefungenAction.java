@@ -62,6 +62,11 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 					if (!p.getDatum().before(p.getErgDatum())) {
 						addFieldError("pruefungenBeans[" + i + "].ergDatum", getMsg(MessageKey.ERR_ZU_FRUEH));
 					}
+					if (p.getErgDatum().getTime() < 1104559200) { // Datum vor 1.1.2005
+						p.setErgDatum(null);
+						addFieldError("pruefungenBeans[" + i + "].ergDatum", getMsg(MessageKey.ERR_UNGUELTIGES_DATUM));
+					}
+
 				}
 			}
 			i++;
