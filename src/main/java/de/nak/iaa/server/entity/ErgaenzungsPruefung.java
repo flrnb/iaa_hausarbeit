@@ -1,6 +1,5 @@
 package de.nak.iaa.server.entity;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -68,11 +67,4 @@ public class ErgaenzungsPruefung {
 	public void setDatum(Date datum) {
 		this.datum = datum;
 	}
-
-	@Override
-	public String toString() {
-		return "Ergänzungsprüfung vom " + new SimpleDateFormat().format(datum)
-				+ " mit Note " + note;
-	}
-
 }
