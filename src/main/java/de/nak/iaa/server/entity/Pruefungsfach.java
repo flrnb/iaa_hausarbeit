@@ -24,8 +24,8 @@ public class Pruefungsfach {
 	private String titel;
 	private String beschreibung;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "MANIPEL_ID")
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
+	@JoinColumn(name = "MANIPEL_ID", nullable = false)
 	private Manipel manipel;
 
 	@Id

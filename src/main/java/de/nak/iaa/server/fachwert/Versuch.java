@@ -2,6 +2,12 @@ package de.nak.iaa.server.fachwert;
 
 import com.google.common.base.Optional;
 
+/**
+ * Enumeration für Versuche.
+ * 
+ * @author Ronny Bräunlich
+ * 
+ */
 public enum Versuch {
 	Eins(1), Zwei(2), Drei(3);
 
@@ -15,6 +21,11 @@ public enum Versuch {
 		return intDarstellung;
 	}
 
+	/**
+	 * Liefert den folgenden Versuch, falls vorhanden. Falls das Objekt schon
+	 * der 3. Versuch ist, ist das Optional-Objekt leer.
+	 * 
+	 */
 	public Optional<Versuch> next() {
 		switch (this) {
 		case Eins:

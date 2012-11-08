@@ -3,7 +3,7 @@ package de.nak.iaa.server.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
@@ -14,8 +14,8 @@ public class Student extends Person implements Comparable<Student> {
 	@Column(name = "MATRIKEL_NR")
 	private int matrikelNr;
 
-	@OneToOne
-	@JoinColumn(nullable = false, name = "MANIPEL_ID")
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "MANIPEL_ID", nullable = false)
 	private Manipel manipel;
 
 	public Student() {
