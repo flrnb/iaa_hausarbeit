@@ -36,7 +36,7 @@ public class Pruefungsleistung {
 	@Enumerated(EnumType.STRING)
 	private Versuch versuch;
 
-	@OneToOne(optional = true, cascade = CascadeType.ALL)
+	@OneToOne(optional = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "ERGAENZUNGSPRUEFUNG_ID")
 	private ErgaenzungsPruefung ergaenzungsPruefung;
 
