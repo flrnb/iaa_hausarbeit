@@ -86,4 +86,8 @@ public abstract class Person {
 	public String toString() {
 		return getVorname() + " " + getName();
 	}
+
+	public String getFullname() {
+		return toString();
+	}
 }

@@ -1,20 +1,19 @@
 package de.nak.iaa.web.view.action;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
+import java.util.SortedSet;
 
 import com.google.common.base.Optional;
 import com.opensymphony.xwork2.Action;
 import com.opensymphony.xwork2.Preparable;
 
+import de.nak.iaa.server.business.PruefungsleistungHistoryEntry;
 import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Versuch;
 import de.nak.iaa.web.util.DataHelper;
-import de.nak.iaa.web.util.MessageKey;
 
 public class ShowHistoryAction extends AbstractAction implements Preparable {
 
@@ -27,7 +26,7 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 	private Student selectedStudent;
 	private Pruefungsfach selectedPruefungsfach;
 
-	private Map<Versuch, SortedMap<Date, Pruefungsleistung>> history;
+	private Map<Versuch, SortedSet<PruefungsleistungHistoryEntry>> history;
 
 	@Override
 	public void prepare() throws Exception {
@@ -43,8 +42,8 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 	 * @param leistung
 	 * @return
 	 */
-	public String pruefungsleistungHasErgaenzungspruefung(Pruefungsleistung leistung) {
-		return (leistung.getErgaenzungsPruefung() != null) ? " > " + leistung.getErgaenzungsPruefung().getNote() : "";
+	public boolean pruefungsleistungHasErgaenzungspruefung(Pruefungsleistung leistung) {
+		return (leistung.getErgaenzungsPruefung() != null);
 	}
 
 	/**
@@ -56,12 +55,16 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 	private boolean validateForm() {
 		boolean hasError = false;
 		if (getFormStudent() == null || getFormStudent().equals("")) {
-			addFieldError("formDozent", getMsg(MessageKey.ERR_EMP_STUDENT));
-			hasError = true;
+			// addFieldError("formStudent", getMsg(MessageKey.ERR_EMP_STUDENT));
+			// hasError = true;
+			addActionMessage("Beide Felder müssen ausgewählt sein!");
+			return true;
 		}
 		if (getFormPruefungsfach() == null || getFormPruefungsfach().equals("")) {
-			addFieldError("formPruefungsfach", getMsg(MessageKey.ERR_EMP_PRUEFUNGSFACH));
-			hasError = true;
+			// addFieldError("formPruefungsfach", getMsg(MessageKey.ERR_EMP_PRUEFUNGSFACH));
+			// hasError = true;
+			addActionMessage("Beide Felder müssen ausgewählt sein!");
+			return true;
 		}
 		return hasError;
 	}
@@ -104,17 +107,13 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 				return Action.INPUT;
 			}
 
-			if (fach.isPresent()) {
-				setSelectedPruefungsfach(fach.get());
-			} else {
-				addActionError("Prüfungsfach nicht bekannt");
-				return Action.INPUT;
-			}
-
 			// hier füllt er die history. du musst also im endeffekt nur die
 			// tabelle füllen
-			setHistory(getPruefungService().getDeprecatedPruefungsleistungHistorie(getSelectedStudent(),
+			setHistory(getPruefungService().getPruefungsleistungHistorie(getSelectedStudent(),
 					getSelectedPruefungsfach()));
+		} else {
+			System.out.println(getActionErrors().size());
+			return Action.INPUT;
 		}
 
 		return Action.SUCCESS;
@@ -168,11 +167,11 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 		this.formPruefungsfach = formPruefungsfach;
 	}
 
-	public Map<Versuch, SortedMap<Date, Pruefungsleistung>> getHistory() {
+	public Map<Versuch, SortedSet<PruefungsleistungHistoryEntry>> getHistory() {
 		return history;
 	}
 
-	public void setHistory(Map<Versuch, SortedMap<Date, Pruefungsleistung>> history) {
+	public void setHistory(Map<Versuch, SortedSet<PruefungsleistungHistoryEntry>> history) {
 		this.history = history;
 	}
 

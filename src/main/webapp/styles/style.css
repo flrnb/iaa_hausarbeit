@@ -41,10 +41,22 @@
 	}
 	.errorMessage {
 		font-size: small;
+		color: red;
 	}
 	.fieldErrorCls {
 		border: 1px solid red;
 		background-color: #fdd;
+	}
+	.actionMessage {
+		font-size: small;
+		color: red;
+		list-style: none !important;
+	}
+	.actionMessgage li {
+		display: block !important;
+		list-style: none !important;
+		font-size: small;
+		color: red;
 	}
 
 	/* Toggle Panel Css Start */
@@ -78,6 +90,10 @@
 }
 
 @media print , screen {
+	.uebersichtHeader {
+		font-weight: bold;
+		font-size: medium;
+	}
 	.protokollTable td.protokollField {
 		padding: 2px;
 	}

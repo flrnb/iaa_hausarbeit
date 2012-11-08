@@ -51,7 +51,7 @@ public class PruefungAnlegenAction extends AbstractAction implements Preparable 
 			hasError = true;
 		} else {
 			if (getFormDate().getTime() < 1104559200) { // Datum vor 1.1.2005
-				getFormDate().setTime((new Date()).getTime());
+				setFormDate(null);
 				addFieldError("formDate", getMsg(MessageKey.ERR_UNGUELTIGES_DATUM));
 				hasError = true;
 			}
