@@ -2,71 +2,55 @@
 	language="java"%>
 <%@ taglib prefix="s" uri="/struts-tags"%>
 
-<s:iterator value="history" var="versuch" status="colState">
-	<tr>
-		<td class="uebersichtHeader">Versuch <s:property value="%{#versuch.key.toInt()}" /></td>
-	</tr>
-	<tr>
-		<td>
-			<table style="border: 1px dotted gray;" cellspacing="2">
-				<s:if test="#versuch.value.size() > 0">
+<h3>
+	Historie von
+	<s:property value="%{getSelectedStudent().getFullname()}" />
+	(
+	<s:property value="%{getSelectedManipel()}" />
+	)<br /> Fach:
+	<s:property value="%{getSelectedPruefungsfach()}" />
+</h3>
+<table>
+	<s:iterator value="history" var="versuch" status="colState">
+		<tr>
+			<td style="font-weight: bold; font-size: medium;">Versuch <s:property
+					value="%{#versuch.key.toInt()}" /></td>
+		</tr>
+		<tr>
+			<td>
+				<ol style="border: 1px dotted gray; padding-left: 20px;">
+					<s:if test="#versuch.value.size() > 0">
+						<s:iterator value="#versuch.value" var="leistug">
+							<li><s:if test="isGeloescht()">
+				Storniert am
+							<s:date name="getGueltigVon()" format="dd.MM.yyyy" />
 
-					<s:iterator value="#versuch.value" var="leistug">
-						<tr>
-							<td><s:if test="isGeloescht()">
-				Storniert am</td>
-							<td><s:date name="getGueltigVon()" format="dd.MM.yyyy" /></td>
-							<td></td>
-							<td>
-				</s:if>
-				<s:else>
-				Geändert am</td>
-					<td><s:date name="getGueltigVon()" format="dd.MM.yyyy" /></td>
-					<td>auf Note</td>
-					<td><s:property value="getPruefungsleistung().getNote()" />
-				</s:else>
-				</td>
-				</tr>
-				<s:if test="pruefungsleistungHasErgaenzungspruefung(#leistung)">
-						<tr><td>Ergänzungsprüfung eingetragen am <s:property
-								value="getPruefungsleistung().getErgaenzungsPruefung().getDatum()" />
-							mit Note <s:property
-								value="getPruefungsleistung().getErgaenzungsPruefung().getNote()" />
-						</td></tr>
+								</s:if> <s:elseif
+									test="getPruefungsleistung().getErgaenzungsPruefung() != null">
+								Ergänzungsprüfung eingetragen am <s:date
+										name="getPruefungsleistung().getErgaenzungsPruefung().getDatum()"
+										format="dd.MM.yyyy" />
+									mit Note <s:property
+										value="getPruefungsleistung().getErgaenzungsPruefung().getNote()" />
+								</s:elseif> <s:else>
+				Geändert am
+		<s:date name="getGueltigVon()" format="dd.MM.yyyy" />
+		auf Note
+		<s:property value="getPruefungsleistung().getNote()" />
+								</s:else></li>
+						</s:iterator>
 					</s:if>
-				
-				</s:iterator>
+					<s:else>
+						<li style="list-style: none;">Keine Eintragungen für diesen
+							Versuch</li>
+					</s:else>
+				</ol> <s:if test="#versuch.key.toInt() != 3">
+					<hr />
 				</s:if>
-				<s:else>
-					<tr>
-						<td>Keine Eintragungen für diesen Versuch</td>
-					</tr>
-				</s:else>
-			</table> <s:if test="#versuch.key.toInt() != 3">
-				<tr>
-					<td><hr /></td>
-				</tr>
-			</s:if> <%-- <ol>
-				<s:iterator value="#versuch.value" var="leistug" status="stat">
-					<li><s:if test="isGeloescht()">
-				Storniert am <s:date name="getGueltigVon()" format="dd.MM.yyyy" />
-						</s:if> <s:else>
-				Geändert am <s:date name="getGueltigVon()" format="dd.MM.yyyy" /> auf Note <s:property
-								value="getPruefungsleistung().getNote()" />
-						</s:else></li>
-					<s:if test="pruefungsleistungHasErgaenzungspruefung(#leistung)">
-						<li>Ergänzungsprüfung eingetragen am <s:property
-								value="getPruefungsleistung().getErgaenzungsPruefung().getDatum()" />
-							mit Note <s:property
-								value="getPruefungsleistung().getErgaenzungsPruefung().getNote()" />
-						</li>
-					</s:if>
-				</s:iterator>
-			</ol> --%>
-		</td>
-	</tr>
-</s:iterator>
-
+			</td>
+		</tr>
+	</s:iterator>
+</table>
 
 <%-- Ibos altes
 <table>
