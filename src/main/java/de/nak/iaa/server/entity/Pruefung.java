@@ -14,8 +14,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * Entity für eine Prüfung. Eine Prüfung wird von einem Prüfer an einem bestimmten Datum festgelegt
- * und in einem entsprechenden Prüfungsfach abgelegt.
+ * Entity für eine Prüfung. Eine Prüfung wird von einem Prüfer an einem
+ * bestimmten Datum festgelegt und in einem entsprechenden Prüfungsfach
+ * abgelegt.
  * 
  * @author Ronny Bräunlich
  * 
@@ -29,11 +30,11 @@ public class Pruefung implements Comparable<Pruefung> {
 	@Temporal(TemporalType.DATE)
 	private Date datum;
 
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.EAGER, optional = false)
 	@JoinColumn(name = "PRUEFUNGSFACH_ID", nullable = false)
 	private Pruefungsfach pruefungsfach;
 
-	@ManyToOne
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "DOZENT_ID", nullable = false)
 	private Dozent pruefer;
 
@@ -90,7 +91,8 @@ public class Pruefung implements Comparable<Pruefung> {
 		int result = 1;
 		result = prime * result + ((datum == null) ? 0 : datum.hashCode());
 		result = prime * result + ((pruefer == null) ? 0 : pruefer.hashCode());
-		result = prime * result + ((pruefungsfach == null) ? 0 : pruefungsfach.hashCode());
+		result = prime * result
+				+ ((pruefungsfach == null) ? 0 : pruefungsfach.hashCode());
 		return result;
 	}
 
