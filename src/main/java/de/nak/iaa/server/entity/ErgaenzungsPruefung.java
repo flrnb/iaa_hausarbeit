@@ -41,7 +41,7 @@ public class ErgaenzungsPruefung {
 	public ErgaenzungsPruefung(Note note, Date datum) {
 		super();
 		this.note = note;
-		this.datum = datum;
+		this.datum = (Date) datum.clone();
 	}
 
 	public Long getId() {
@@ -61,10 +61,10 @@ public class ErgaenzungsPruefung {
 	}
 
 	public Date getDatum() {
-		return datum;
+		return (Date) datum.clone();
 	}
 
 	public void setDatum(Date datum) {
-		this.datum = datum;
+		this.datum = (Date) datum.clone();
 	}
 }
