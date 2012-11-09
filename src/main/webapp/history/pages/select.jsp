@@ -4,6 +4,8 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 
+<h3>Historie anzeigen</h3>
+
 <s:actionerror/>
 
 <s:form action="show" method="post">
@@ -13,5 +15,5 @@
 	<sx:autocompleter list="pruefungsfaecher" listValue="titel"  label="Prüfungsfach wählen" listKey="id" name="formPruefungsfach" autoComplete="true" forceValidOption="true" value=""/>
 	<br />
 	<sx:autocompleter list="studenten" listKey="id" label="Studenten wählen" name="formStudent" autoComplete="true" forceValidOption="true" value=""/>
-	<s:submit/>
+	<s:submit value="Anzeigen"/>
 </s:form>
