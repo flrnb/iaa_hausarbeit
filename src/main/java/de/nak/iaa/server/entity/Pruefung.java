@@ -43,7 +43,7 @@ public class Pruefung implements Comparable<Pruefung> {
 
 	public Pruefung(Date datum, Pruefungsfach pruefungsfach, Dozent pruefer) {
 		super();
-		this.datum = datum;
+		this.datum = (Date) datum.clone();
 		this.pruefungsfach = pruefungsfach;
 		this.pruefer = pruefer;
 	}
@@ -57,11 +57,11 @@ public class Pruefung implements Comparable<Pruefung> {
 	}
 
 	public Date getDatum() {
-		return datum;
+		return (Date) datum.clone();
 	}
 
 	public void setDatum(Date datum) {
-		this.datum = datum;
+		this.datum = (Date) datum.clone();
 	}
 
 	public Pruefungsfach getPruefungsfach() {
