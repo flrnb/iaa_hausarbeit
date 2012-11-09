@@ -50,22 +50,3 @@
 		</tr>
 	</s:iterator>
 </table>
-
-<%-- Ibos altes
-<table>
-
-	<s:iterator value="history" var="versuch">
-		<tr>
-			<th><s:property value="%{#versuch.key.toInt()}" /></th>
-		</tr>
-		<s:iterator value="versuch.value" var="pruefung">
-			<tr>
-				<td><s:property value="%{#pruefung.value.getPruefungsfach()}" /></td>
-			</tr>
-		</s:iterator>
-	</s:iterator>
-
-
-
-</table>
---%>
