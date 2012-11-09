@@ -14,7 +14,7 @@ import de.nak.iaa.web.util.DataHelper;
 /**
  * Aktionklasse, die die Auswahl des Manipels steuert
  * 
- * @author Christopher Biel <christopher.biel89@gmail.com>
+ * @author Christopher Biel
  */
 public class ManipelAendernAction extends AbstractAction implements Preparable {
 

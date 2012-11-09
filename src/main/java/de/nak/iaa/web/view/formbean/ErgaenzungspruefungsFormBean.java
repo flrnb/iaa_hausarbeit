@@ -8,7 +8,7 @@ import de.nak.iaa.server.entity.Student;
  * FormBean, die einerseits Daten für das Erfassen von Ergänzungsprüfungen bereitstellt aber auch
  * zur Auswertung der Eingaben verwendet wird
  * 
- * @author Christopher Biel <christopher.biel89@gmail.com>
+ * @author Christopher Biel
  */
 public class ErgaenzungspruefungsFormBean extends AbstractFormBean {
 

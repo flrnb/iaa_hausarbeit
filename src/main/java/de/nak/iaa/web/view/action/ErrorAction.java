@@ -6,6 +6,12 @@ import com.opensymphony.xwork2.Action;
 
 import de.nak.iaa.web.util.DataHelper;
 
+/**
+ * Action zur Steuerung der Fehlermeldungen, die hauptsächlich aus Exceptions resultieren
+ * 
+ * @author Christopher Biel
+ * 
+ */
 public class ErrorAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
@@ -16,6 +22,11 @@ public class ErrorAction extends AbstractAction {
 
 	private String errorMessage;
 
+	/**
+	 * Zeigt die Fehlermeldung basierend auf dem übergebenen errorCode an
+	 * 
+	 * @return
+	 */
 	public String show() {
 		if (getParameters().containsKey("errorCode")) {
 			if (Arrays.asList(errorCodes).contains(

@@ -4,6 +4,7 @@
  * 
  * @param button
  * @return void
+ * @author Christopher Biel
  */
 function togglePanel(button) {
 	$(button).parents('table').find('td.c-content').toggleClass(

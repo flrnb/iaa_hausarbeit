@@ -5,7 +5,7 @@
 		"http://struts.apache.org/dtds/struts-2.1.dtd">
 
 <struts>
-	<constant name="struts.devMode" value="true" />
+	<constant name="struts.devMode" value="false" />
 	<constant name="struts.ui.theme" value="iaa" />
 	<constant name="struts.ui.templateDir" value="template" />
 

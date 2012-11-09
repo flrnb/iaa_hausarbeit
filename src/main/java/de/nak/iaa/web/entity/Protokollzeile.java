@@ -3,7 +3,7 @@ package de.nak.iaa.web.entity;
 /**
  * Repräsentiert eine Zeile des Protokolls zur besseren Verwendung im Frontend (JSP)
  * 
- * @author Christopher Biel <christopher.biel89@gmail.com>
+ * @author Christopher Biel
  */
 public class Protokollzeile {
 

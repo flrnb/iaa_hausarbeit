@@ -9,7 +9,7 @@ import de.nak.iaa.server.entity.Student;
  * FormBean für das Ändern von Prüfungsleistungen<br>
  * Stellt Daten für das Formular bereit und hilft bei der Auswertung
  * 
- * @author Christopher Biel <christopher.biel89@gmail.com>
+ * @author Christopher Biel
  */
 public class PruefungsleistungAendernFormBean extends AbstractFormBean {
 

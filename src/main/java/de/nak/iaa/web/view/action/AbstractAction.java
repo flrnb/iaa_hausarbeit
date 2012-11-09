@@ -18,7 +18,7 @@ import de.nak.iaa.server.entity.Manipel;
  * Abstrakte Action. Implementiert um Schicht zwischen ActionSupport und eigenen Actions zu
  * ermöglichen. Bietet funktionalitäten an, die in jeder Action in dieser Anwendung benötigt werden
  * 
- * @author Christopher Biel <christopher.biel89@gmail.com>
+ * @author Christopher Biel
  */
 public abstract class AbstractAction extends ActionSupport implements SessionAware, ParameterAware {
 

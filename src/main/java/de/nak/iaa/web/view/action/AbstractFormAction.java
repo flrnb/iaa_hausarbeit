@@ -14,7 +14,7 @@ import de.nak.iaa.web.util.DataHelper;
  * Technologien wie Mixins oder Traits wäre der Inhalt dieser Klasse besser umgesetzt gewesen. Diese
  * Technologien sind in Java aber nicht ohne weiteres vorhanden.)
  * 
- * @author Christopher Biel <christopher.biel89@gmail.com>
+ * @author Christopher Biel
  */
 public abstract class AbstractFormAction extends AbstractAction implements Preparable {
 

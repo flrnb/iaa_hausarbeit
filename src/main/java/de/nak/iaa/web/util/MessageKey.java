@@ -3,7 +3,7 @@ package de.nak.iaa.web.util;
 /**
  * Keine "wirkliche" Klasse. Hält nur die Messagekeys
  * 
- * @author Christopher Biel <christopher.biel89@gmail.com>
+ * @author Christopher Biel
  */
 public class MessageKey {
 

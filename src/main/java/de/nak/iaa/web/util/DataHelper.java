@@ -5,7 +5,7 @@ import org.apache.commons.lang.xwork.StringUtils;
 /**
  * Statische Klasse zum Auslagern von häufig genutzen Operationen auf den Daten
  * 
- * @author Christopher Biel <christopher.biel89@gmail.com>
+ * @author Christopher Biel
  */
 public class DataHelper {
 

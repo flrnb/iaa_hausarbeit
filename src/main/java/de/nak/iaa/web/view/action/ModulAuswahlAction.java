@@ -16,7 +16,7 @@ import de.nak.iaa.server.entity.Pruefungsfach;
  * 
  * Das speichern der gewählten Werte erfolgt über die Parentklasse "AbstractFormAction"
  * 
- * @author Christopher Biel <christopher.biel89@gmail.com>
+ * @author Christopher Biel
  */
 public class ModulAuswahlAction extends AbstractFormAction {
 

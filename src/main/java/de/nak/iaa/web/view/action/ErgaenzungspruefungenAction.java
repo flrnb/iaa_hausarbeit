@@ -15,7 +15,7 @@ import de.nak.iaa.web.view.formbean.ErgaenzungspruefungsFormBean;
 /**
  * Actionklasse, die für die Verarbeitung (Anzeige, Änderung) von Ergänzungsprüfungen zuständig ist
  * 
- * @author Christopher Biel <christopher.biel89@gmail.com>
+ * @author Christopher Biel
  */
 public class ErgaenzungspruefungenAction extends AbstractFormAction {
 

@@ -10,7 +10,7 @@ import de.nak.iaa.web.util.DataHelper;
 /**
  * Konverterklasse um Note<->String nach einer Formulareingabe umwandeln zu können
  * 
- * @author Christopher Biel <christopher.biel89@gmail.com>
+ * @author Christopher Biel
  */
 public class StringNoteConverter extends StrutsTypeConverter {
 

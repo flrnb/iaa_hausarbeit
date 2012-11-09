@@ -6,7 +6,7 @@ import de.nak.iaa.server.entity.Student;
  * FormBean für das Formular zum Erfassen neuer Prüfungsleistungen<br>
  * Stellt Daten für das Formular bereit und hilft bei der Auswertung
  * 
- * @author Christopher Biel <christopher.biel89@gmail.com>
+ * @author Christopher Biel
  */
 public class PruefungsleistungFormBean extends AbstractFormBean {
 

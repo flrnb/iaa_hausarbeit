@@ -14,6 +14,12 @@ import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Versuch;
 import de.nak.iaa.web.util.DataHelper;
 
+/**
+ * Action zur Anzeige der History eines Studenten und einem Prüfungsfach
+ * 
+ * @author Christopher Biel
+ * @author Ibrahim Karagac
+ */
 public class ShowHistoryAction extends AbstractAction implements Preparable {
 
 	private static final long serialVersionUID = 1L;
@@ -52,6 +58,11 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 		return hasError;
 	}
 
+	/**
+	 * Zeigt die Auswahlmaske an
+	 * 
+	 * @return
+	 */
 	public String select() {
 		if (isManipelNotSelected()) {
 			setTargetUrl(getRequestUrl());
@@ -61,6 +72,11 @@ public class ShowHistoryAction extends AbstractAction implements Preparable {
 		return Action.SUCCESS;
 	}
 
+	/**
+	 * Zeigt die Historie für die in select() ausgewählten Optionen
+	 * 
+	 * @return
+	 */
 	public String show() {
 		if (isManipelNotSelected()) {
 			setTargetUrl("../history/select");
