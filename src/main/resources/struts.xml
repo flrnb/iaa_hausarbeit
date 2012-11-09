@@ -30,10 +30,10 @@
 				<param name="errorCode">${occuredErrorCode}</param>
 			</result>
 		</global-results>
-		<!-- <global-exception-mappings>
+		<global-exception-mappings>
 			<exception-mapping exception="java.lang.Exception"
 				result="exception" />
-		</global-exception-mappings> -->
+		</global-exception-mappings>
 	</package>
 
 	<package name="manipelSelection" extends="exceptionsBase">
