@@ -53,7 +53,7 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 		int i = 0;
 		for (ErgaenzungspruefungsFormBean p : pruefungenBeans) {
 			if (p.getErgDatum() != null || !p.getResultPercent().isEmpty()) {
-				if (!p.getResultPercent().matches("^((100)|(\\d{1,2}))$")) {
+				if (!p.getResultPercent().matches("^((100)|(\\d{1,2}))$") || p.getResultPercent().equals("")) {
 					addFieldError("pruefungenBeans[" + i + "].resultPercent", getMsg(MessageKey.ERR_KEIN_PROZENT));
 				}
 				if (p.getErgDatum() == null) {
