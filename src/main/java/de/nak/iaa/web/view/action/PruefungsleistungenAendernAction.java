@@ -14,6 +14,12 @@ import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.web.util.DataHelper;
 import de.nak.iaa.web.view.formbean.PruefungsleistungAendernFormBean;
 
+/**
+ * Action zum Ändern und Löschen von Prüfungsleistungen
+ * 
+ * @author Christopher Biel
+ * 
+ */
 public class PruefungsleistungenAendernAction extends AbstractFormAction {
 
 	private static final long serialVersionUID = 1L;

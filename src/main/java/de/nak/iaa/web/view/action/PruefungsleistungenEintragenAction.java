@@ -22,6 +22,12 @@ import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.web.entity.Protokollzeile;
 import de.nak.iaa.web.view.formbean.PruefungsleistungFormBean;
 
+/**
+ * Action zum Anlegen neuer Prüfungsleistungen
+ * 
+ * @author Christopher Biel
+ * 
+ */
 public class PruefungsleistungenEintragenAction extends AbstractFormAction {
 
 	private static final long serialVersionUID = 1L;

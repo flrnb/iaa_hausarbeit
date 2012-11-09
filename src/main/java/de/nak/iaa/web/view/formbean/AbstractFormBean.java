@@ -6,7 +6,7 @@ import de.nak.iaa.server.entity.Student;
  * Abstrakte FormBean um diese vergleichbar zu machen und überall den zugehörigen Studenten zur
  * Verfügung zu haben
  * 
- * @author Christopher Biel
+ * @author Ibrahim Karagac
  */
 public abstract class AbstractFormBean implements Comparable<AbstractFormBean> {
 

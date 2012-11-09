@@ -11,6 +11,12 @@ import de.nak.iaa.server.entity.Dozent;
 import de.nak.iaa.server.entity.Pruefungsfach;
 import de.nak.iaa.web.util.MessageKey;
 
+/**
+ * Action zum Anlegen von Prüfung(-sterminen)
+ * 
+ * @author Christopher Biel
+ * 
+ */
 public class PruefungAnlegenAction extends AbstractAction implements Preparable {
 
 	private static final long serialVersionUID = 1L;
