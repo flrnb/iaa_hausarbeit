@@ -9,6 +9,12 @@ import de.nak.iaa.server.dao.PruefungsfachDAO;
 import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Pruefungsfach;
 
+/**
+ * Implementierung von {@link PruefungsfachDAO}.
+ * 
+ * @author Ronny Bräunlich
+ * 
+ */
 @Repository
 public class PruefungsfachDAOImpl extends
 		GenericHibernateDAOImpl<Pruefungsfach, Long> implements

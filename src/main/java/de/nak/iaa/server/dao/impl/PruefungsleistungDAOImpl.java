@@ -22,6 +22,13 @@ import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Versuch;
 
+/**
+ * Implementierung von {@link PruefungsleistungDAO}. Diese Klasse benutzt Envers
+ * direkt.
+ * 
+ * @author Ronny Bräunlich
+ * 
+ */
 @Repository
 public class PruefungsleistungDAOImpl extends
 		GenericHibernateDAOImpl<Pruefungsleistung, Long> implements
