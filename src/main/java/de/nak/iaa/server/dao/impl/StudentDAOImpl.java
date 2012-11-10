@@ -9,6 +9,12 @@ import de.nak.iaa.server.dao.StudentDAO;
 import de.nak.iaa.server.entity.Manipel;
 import de.nak.iaa.server.entity.Student;
 
+/**
+ * 
+ * @author Ibrahim Karagac
+ * 
+ */
+
 @Repository
 public class StudentDAOImpl extends GenericHibernateDAOImpl<Student, Long>
 		implements StudentDAO {

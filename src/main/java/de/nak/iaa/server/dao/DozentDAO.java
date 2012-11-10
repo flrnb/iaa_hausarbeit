@@ -5,7 +5,7 @@ import de.nak.iaa.server.entity.Dozent;
 /**
  * Interface für ein DAO, welches sich um {@link Dozent} kümmert.
  * 
- * @author Ronny Bräunlich
+ * @author Ibrahim Karagac
  * 
  */
 public interface DozentDAO extends GenericDAO<Dozent, Long> {

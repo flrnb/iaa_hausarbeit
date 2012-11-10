@@ -8,7 +8,7 @@ import de.nak.iaa.server.entity.Student;
 /**
  * Interface für ein DAO, welches sich um {@link Student} kümmert.
  * 
- * @author Ronny Bräunlich
+ * @author Ibrahim Karagac
  * 
  */
 public interface StudentDAO extends GenericDAO<Student, Long> {
