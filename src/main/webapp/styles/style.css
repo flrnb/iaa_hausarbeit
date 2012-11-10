@@ -25,6 +25,11 @@
 	.notenTabelle td,th {
 		padding: 4px;
 	}
+	
+	.notenTabelle td.deleted input {
+		text-decoration: line-through;
+	}
+	
 	td .editorField {
 		test-align: left !important;
 	}

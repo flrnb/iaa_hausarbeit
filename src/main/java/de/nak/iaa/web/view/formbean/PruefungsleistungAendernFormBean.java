@@ -15,6 +15,8 @@ public class PruefungsleistungAendernFormBean extends AbstractFormBean {
 
 	private List<Pruefungsleistung> pruefungsleistungen;
 
+	private boolean isDelete = false;
+
 	public PruefungsleistungAendernFormBean() {
 	}
 
@@ -30,6 +32,14 @@ public class PruefungsleistungAendernFormBean extends AbstractFormBean {
 
 	public void setPruefungsleistungen(List<Pruefungsleistung> pruefungsleistungen) {
 		this.pruefungsleistungen = pruefungsleistungen;
+	}
+
+	public boolean isDelete() {
+		return isDelete;
+	}
+
+	public void setDelete(boolean isDelete) {
+		this.isDelete = isDelete;
 	}
 
 }

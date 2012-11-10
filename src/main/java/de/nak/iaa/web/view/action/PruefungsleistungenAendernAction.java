@@ -50,7 +50,8 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 	}
 
 	/**
-	 * Hilfsmethode für die View (jsp) um zu prüfen, ob eine Prüfungsleistung editierbar ist
+	 * Hilfsmethode für die View (jsp) um zu prüfen, ob eine Prüfungsleistung
+	 * editierbar ist
 	 * 
 	 * @param id
 	 * @return
@@ -60,8 +61,8 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 	}
 
 	/**
-	 * Hilfsmethode für die View (jsp) um zu prüfen, ob eine Prüfungsleistung eine Ergänzungsprüfung
-	 * hat<br>
+	 * Hilfsmethode für die View (jsp) um zu prüfen, ob eine Prüfungsleistung
+	 * eine Ergänzungsprüfung hat<br>
 	 * Gib in dem Fall den auszugebenen String zurück
 	 * 
 	 * @param leistung
@@ -72,7 +73,8 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 	}
 
 	/**
-	 * Validiere die Eingabedaten für die Zeilen, wo mindestens eines der Felder gefüllt ist<br>
+	 * Validiere die Eingabedaten für die Zeilen, wo mindestens eines der Felder
+	 * gefüllt ist<br>
 	 * Fügt bei einem Problem, dem Feld einen FieldError hinzu
 	 */
 	private void validateForm() {
@@ -130,7 +132,10 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 			for (PruefungsleistungAendernFormBean p : pruefungenBeans) {
 				for (Pruefungsleistung pl : p.getPruefungsleistungen()) {
 					if (getPruefungService().isPruefungsleistungEditable(pl.getId())) {
-						aenderungen.add(new PruefungsleistungAenderung.Update(pl.getId(), pl.getNote()));
+						if (p.isDelete())
+							aenderungen.add(new PruefungsleistungAenderung.Delete(pl.getId()));
+						else
+							aenderungen.add(new PruefungsleistungAenderung.Update(pl.getId(), pl.getNote()));
 					}
 				}
 			}
@@ -139,7 +144,7 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 				try {
 					getPruefungService().updatePruefungsleistungen(aenderungen);
 				} catch (IllegalUpdateException e) {
-					// TODO hier muss iwie ne fehlerseite hin
+					return EXCEPTION_OCCURED;
 				}
 			}
 			return Action.SUCCESS;
@@ -147,7 +152,8 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 	}
 
 	/**
-	 * Lösche eine Prüfungsleistung, die per deleteId als Parameter übergeben wird
+	 * Lösche eine Prüfungsleistung, die per deleteId als Parameter übergeben
+	 * wird
 	 * 
 	 * @return
 	 */

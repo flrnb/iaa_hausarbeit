@@ -27,26 +27,31 @@
 			<s:iterator value="pruefungenBeans" var="pruefung" status="stat">
 				<s:hidden name="pruefungenBeans[%{#stat.index}].student.matrikelNr"
 					value="%{#pruefung.student.matrikelNr}" />
+				<s:hidden name="pruefungenBeans[%{#stat.index}].delete"
+					value="%{#pruefung.delete}" id="delete_%{#stat.index}"/>
 				<tr>
 					<td><s:property value="%{#pruefung.student.matrikelNr}" /></td>
 					<td><s:property value="%{#pruefung.student.vorname}" /> <s:property
 							value="%{#pruefung.student.name}" /></td>
-
+					
 					<%-- <s:iterator begin="0" end="2" step="1" var="current"> --%>
 					<s:iterator value="pruefungsleistungen" var="current"
 						status="stat1">
 						<s:hidden
 							name="pruefungenBeans[%{#stat.index}].pruefungsleistungen[%{#stat1.index}].id"
 							value="%{#current.id}"></s:hidden>
-						<td class="editorField"><s:textfield
+						<td class="editorField"
+						id="<s:if test='%{isWriteable(#current.id)}'>editable_<s:property value='%{#stat.index}'/></s:if>"
+						><s:textfield
 								name="pruefungenBeans[%{#stat.index}].pruefungsleistungen[%{#stat1.index}].note"
 								cssClass="changeNote notenInputField"
 								cssErrorClass="fieldErrorCls" theme="simple"
 								value="%{#current.note}%{pruefungsleistungHasErgaenzungspruefung(#current)}"
-								disabled="%{!isWriteable(#current.id)}" /> <s:if test="%{isWriteable(#current.id)}"><a
-							href="<s:url action="delete"/>?pruefungsfach=<s:property value="%{getSelectedPruefungsfach().getId()}"/>&deleteId=<s:property value="%{#current.id}"/>"
-							class="linkButton" title="Eintrag löschen">X</a></s:if> <s:fielderror
-								theme="iaa">
+								disabled="%{!isWriteable(#current.id)}" /> <s:if test="%{isWriteable(#current.id)}">
+								<a onclick="setDeleted('<s:property value='%{#stat.index}'/>')"
+								class="linkButton" title="Eintrag löschen">X</a></s:if> <s:fielderror
+								theme="iaa"
+								>
 								<s:param>pruefungenBeans[${stat.index}].pruefungsleistungen[${stat1.index}].note</s:param>
 							</s:fielderror></td>
 					</s:iterator>
@@ -60,6 +65,15 @@
 		</table>
 		<s:submit value="Ändern" />
 	</form>
+	<script>
+		function setDeleted(index) {
+			var td_id = "#editable_" + index
+			var hiddenfield_id = "#delete_" + index
+			$(td_id).addClass("deleted");
+			$(td_id + " > input").attr("disabled", "disabled")
+			$(hiddenfield_id).val(true);
+		}
+	</script>
 </s:if>
 <s:else>
 	<h4>Es gibt keine Studenten mit einer Note in diesem Fach!</h4>
