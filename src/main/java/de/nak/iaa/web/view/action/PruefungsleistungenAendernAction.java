@@ -11,7 +11,6 @@ import de.nak.iaa.server.business.PruefungsleistungAenderung;
 import de.nak.iaa.server.entity.Pruefungsleistung;
 import de.nak.iaa.server.entity.Student;
 import de.nak.iaa.server.fachwert.Note;
-import de.nak.iaa.web.util.DataHelper;
 import de.nak.iaa.web.view.formbean.PruefungsleistungAendernFormBean;
 
 /**
@@ -149,30 +148,6 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 			}
 			return Action.SUCCESS;
 		}
-	}
-
-	/**
-	 * Lösche eine Prüfungsleistung, die per deleteId als Parameter übergeben
-	 * wird
-	 * 
-	 * @return
-	 */
-	public String delete() {
-		if (getParameters().containsKey("deleteId")
-				&& !DataHelper.stringArrayToString(getParameters().get("deleteId")).isEmpty()) {
-			List<PruefungsleistungAenderung> aenderungen = new ArrayList<PruefungsleistungAenderung>();
-			aenderungen.add(new PruefungsleistungAenderung.Delete(Long.valueOf(DataHelper
-					.stringArrayToString(getParameters().get("deleteId")))));
-			try {
-				getPruefungService().updatePruefungsleistungen(aenderungen);
-			} catch (IllegalUpdateException e) {
-				return EXCEPTION_OCCURED;
-			}
-		} else {
-			setOccuredErrorCode(ErrorAction.KEINE_ID_UEBERGEBEN);
-			return SPECIFIC_EXCEPTION_OCCURED;
-		}
-		return Action.SUCCESS;
 	}
 
 	/* Actions Ende */
