@@ -49,8 +49,7 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 	}
 
 	/**
-	 * Hilfsmethode für die View (jsp) um zu prüfen, ob eine Prüfungsleistung
-	 * editierbar ist
+	 * Hilfsmethode für die View (jsp) um zu prüfen, ob eine Prüfungsleistung editierbar ist
 	 * 
 	 * @param id
 	 * @return
@@ -60,8 +59,8 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 	}
 
 	/**
-	 * Hilfsmethode für die View (jsp) um zu prüfen, ob eine Prüfungsleistung
-	 * eine Ergänzungsprüfung hat<br>
+	 * Hilfsmethode für die View (jsp) um zu prüfen, ob eine Prüfungsleistung eine Ergänzungsprüfung
+	 * hat<br>
 	 * Gib in dem Fall den auszugebenen String zurück
 	 * 
 	 * @param leistung
@@ -72,8 +71,7 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 	}
 
 	/**
-	 * Validiere die Eingabedaten für die Zeilen, wo mindestens eines der Felder
-	 * gefüllt ist<br>
+	 * Validiere die Eingabedaten für die Zeilen, wo mindestens eines der Felder gefüllt ist<br>
 	 * Fügt bei einem Problem, dem Feld einen FieldError hinzu
 	 */
 	private void validateForm() {
@@ -143,7 +141,8 @@ public class PruefungsleistungenAendernAction extends AbstractFormAction {
 				try {
 					getPruefungService().updatePruefungsleistungen(aenderungen);
 				} catch (IllegalUpdateException e) {
-					return EXCEPTION_OCCURED;
+					setOccuredErrorCode(3);
+					return SPECIFIC_EXCEPTION_OCCURED;
 				}
 			}
 			return Action.SUCCESS;
