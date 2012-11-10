@@ -48,7 +48,7 @@
 								cssErrorClass="fieldErrorCls" theme="simple"
 								value="%{#current.note}%{pruefungsleistungHasErgaenzungspruefung(#current)}"
 								disabled="%{!isWriteable(#current.id)}" /> <s:if test="%{isWriteable(#current.id)}">
-								<a onclick="setDeleted('<s:property value='%{#stat.index}'/>')"
+								<a onclick="toggleDeleted('<s:property value='%{#stat.index}'/>')"
 								class="linkButton" title="Eintrag löschen">X</a></s:if> <s:fielderror
 								theme="iaa"
 								>
@@ -65,15 +65,6 @@
 		</table>
 		<s:submit value="Ändern" />
 	</form>
-	<script>
-		function setDeleted(index) {
-			var td_id = "#editable_" + index
-			var hiddenfield_id = "#delete_" + index
-			$(td_id).addClass("deleted");
-			$(td_id + " > input").attr("disabled", "disabled")
-			$(hiddenfield_id).val(true);
-		}
-	</script>
 </s:if>
 <s:else>
 	<h4>Es gibt keine Studenten mit einer Note in diesem Fach!</h4>

@@ -17,7 +17,7 @@
 			<td width="100%"><s:property value="#ergebnis.key" /></td>
 			<td align="right">
 				<button id="toggleButton" class="toggleButton"
-					onclick="javascript:togglePanel(this)">Toggle</button>
+					onclick="javascript:togglePanel(this)">Ausklappen</button>
 			</td>
 		</tr>
 		<tr>
