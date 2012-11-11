@@ -5,17 +5,17 @@
 
 
 <s:if test="pruefungsfaecher == null">
-	<h4>
+	<h3>
 		Keine Module gepflegt für aktuellen Manipel<br />
 		<s:a action="" namespace="/">Zurück zum Hauptmenü</s:a>
-	</h4>
+	</h3>
 </s:if>
 <s:else>
-	<h4>
+	<h3>
 		Modul auswahlen (Manipel "
 		<s:property value="%{getSelectedManipel().toString()}" />
 		")
-	</h4>
+	</h3>
 	<s:iterator value="pruefungsfaecher" var="pruefungsfach">
 		<a
 			href="

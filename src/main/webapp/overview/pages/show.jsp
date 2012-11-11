@@ -4,11 +4,11 @@
 <%@ taglib prefix="sx" uri="/struts-dojo-tags"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
-<h4>
+<h3>
 	Übersicht (Manipel
 	<s:property value="getSelectedManipel()" />
 	)
-</h4>
+</h3>
 
 <s:iterator value="ergebnisse" var="ergebnis">
 

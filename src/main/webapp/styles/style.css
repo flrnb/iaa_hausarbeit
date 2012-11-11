@@ -74,7 +74,6 @@
 	label, .label, .tdLabel {
 		font-size: 12px;
 		font-style: italic;
-	
 	}
 	.notenTabelle {
 		font-size: 12px;
@@ -154,6 +153,9 @@
 		margin-left: 10px;
 		margin-top: 143px;
 		float: left;
+	}
+	td, div, a {
+		font-size: 12px;
 	}
 	.menu td {
 		margin: 0px;
