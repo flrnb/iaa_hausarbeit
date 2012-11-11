@@ -5,18 +5,20 @@
 		"http://struts.apache.org/dtds/struts-2.1.dtd">
 
 <struts>
-	<constant name="struts.devMode" value="false" />
+	<constant name="struts.devMode" value="true" />
 	<constant name="struts.ui.theme" value="iaa" />
 	<constant name="struts.ui.templateDir" value="template" />
 
 	<package name="default" extends="tiles-default" namespace="/">
+		<default-action-ref name="" />
 		<action name="" class="de.nak.iaa.web.view.action.ShowMainMenuAction">
 			<result type="tiles">mainMenu</result>
 		</action>
 	</package>
 
 	<package name="error" extends="exceptionsBase" namespace="/error">
-		<action name="show" class="de.nak.iaa.web.view.action.ErrorAction" method="show">
+		<action name="show" class="de.nak.iaa.web.view.action.ErrorAction"
+			method="show">
 			<result name="success" type="tiles">errorPage</result>
 		</action>
 	</package>
