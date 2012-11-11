@@ -2,7 +2,7 @@
 /* Author: Ibrahim Karagac, Christopher Biel */
 @media screen { /* Anordnung der Webseite */
 	body {
-		font-family: Verdana, Arial, Helvetica, sans-serif;
+		font-family: Verdana, Arial, Helvetica, sans-serif;		
 		font-weight: normal;
 		background-image: url(../images/hintergrund.png);
 	}
@@ -71,11 +71,10 @@
 		height: 28px;
 		background-repeat: no-repeat;
 	}
-	.label {
+	label, .label, .tdLabel {
 		font-size: 12px;
-	}
-	.tdLabel {
-		font-size: 12px;
+		font-style: italic;
+	
 	}
 	.notenTabelle {
 		font-size: 12px;
