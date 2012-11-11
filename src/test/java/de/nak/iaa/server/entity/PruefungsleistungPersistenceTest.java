@@ -23,6 +23,11 @@ import de.nak.iaa.server.fachwert.Note;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 import de.nak.iaa.server.fachwert.Versuch;
 
+/**
+ * 
+ * @author Ronny Bräunlich
+ * 
+ */
 public class PruefungsleistungPersistenceTest extends
 		TransactionalApplicationContextAwareTest {
 

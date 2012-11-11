@@ -14,6 +14,11 @@ import de.nak.iaa.TransactionalApplicationContextAwareTest;
 import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 
+/**
+ * 
+ * @author Ronny Bräunlich
+ * 
+ */
 public class ManipelPersistenceTest extends
 		TransactionalApplicationContextAwareTest {
 

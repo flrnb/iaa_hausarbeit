@@ -18,7 +18,13 @@ import de.nak.iaa.server.dao.PruefungDAO;
 import de.nak.iaa.server.dao.PruefungsfachDAO;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 
-public class PruefungPersistenceTest extends TransactionalApplicationContextAwareTest {
+/**
+ * 
+ * @author Ronny Bräunlich
+ * 
+ */
+public class PruefungPersistenceTest extends
+		TransactionalApplicationContextAwareTest {
 
 	@Resource
 	private PruefungDAO pruefungDAO;
@@ -41,9 +47,11 @@ public class PruefungPersistenceTest extends TransactionalApplicationContextAwar
 	public void testPersist() {
 		Manipel manipel = manipelDAO.findAll().get(0);
 		Pruefungsfach pruefungsfach = pruefungsfachDAO
-				.makePersistent(new Pruefungsfach("Fach", "Beschreibung", manipel));
+				.makePersistent(new Pruefungsfach("Fach", "Beschreibung",
+						manipel));
 		int countBefore = pruefungDAO.findAll().size();
-		Pruefung pruefung = new Pruefung(new Date(), pruefungsfach, dozentDAO.findAll().get(0));
+		Pruefung pruefung = new Pruefung(new Date(), pruefungsfach, dozentDAO
+				.findAll().get(0));
 		pruefungDAO.makePersistent(pruefung);
 		int countAfter = pruefungDAO.findAll().size();
 		assertThat(countBefore + 1, is(equalTo(countAfter)));

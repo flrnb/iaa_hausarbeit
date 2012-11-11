@@ -11,7 +11,13 @@ import org.junit.Test;
 import de.nak.iaa.TransactionalApplicationContextAwareTest;
 import de.nak.iaa.server.dao.DozentDAO;
 
-public class DozentPersistenceTest extends TransactionalApplicationContextAwareTest {
+/**
+ * 
+ * @author Ibrahim Karagac
+ * 
+ */
+public class DozentPersistenceTest extends
+		TransactionalApplicationContextAwareTest {
 
 	@Resource
 	private DozentDAO dozentDAO;
