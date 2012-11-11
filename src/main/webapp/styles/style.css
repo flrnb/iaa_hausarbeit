@@ -11,25 +11,25 @@
 		font-family: Verdana, Arial, Helvetica, sans-serif;
 		font-size: 12px !important;
 		font-weight: normal;
-		background-image: url(/grafics/hintergrund.png);
+		background-image: url(/iaa/images/hintergrund.png);
 	}
 	#header {
 		width: 720px;
 		height: 180px;
-		background-image: url(/grafics/hintergrund.png);
+		background-image: url(/iaa/images/hintergrund.png);
 		margin: auto;
 		/* float: left; */
 	}
 	#hauptmenue_button {
 		width: 105px;
-		background-image: url(/grafics/hauptmenue_button.png);
+		background-image: url(/iaa/images/hauptmenue_button.png);
 		height: 37px;
 		margin-top: 143px;
 		float: left;
 	}
 	#manipel_button {
 		width: 144px;
-		background-image: url(/grafics/manipel_button.png);
+		background-image: url(/iaa/images/manipel_button.png);
 		height: 37px;
 		margin-left: 10px;
 		margin-top: 143px;
@@ -38,21 +38,21 @@
 	#kasten_titel {
 		width: 719px;
 		height: 64px;
-		background-image: url(/grafics/kasten_titel.png);
+		background-image: url(/iaa/images/kasten_titel.png);
 		margin-top: 15px;
 		float: left;
 	}
 	#kasten_inhalt {
 		width: 719px;
 		height: auto;
-		background-image: url(/grafics/inhalt.png);
+		background-image: url(/iaa/images/inhalt.png);
 		background-repeat: repeat-y;
 		float: left;
 	}
 	#kasten_boden {
 		width: 719px;
 		height: 78px;
-		background-image: url(/grafics/kasten_boden.png);
+		background-image: url(/iaa/images/kasten_boden.png);
 		float: left;
 	}
 	#inhalt {
@@ -65,7 +65,7 @@
 	#hautpmenueschrift {
 		width: 215px;
 		height: 50px;
-		background-image: url(/grafics/hauptmenue.png);
+		background-image: url(/iaa/images/hauptmenue.png);
 	}
 	#navileiste {
 		width: 400px;
@@ -73,83 +73,83 @@
 		float: left;
 	}
 	#link_pruefungAnlegen {
-		background-image: url(/grafics/peintragen.png);
+		background-image: url(/iaa/images/peintragen.png);
 		width: 215px;
 		height: 28px;
 		background-repeat: no-repeat;
 		float: left;
 	}
 	#link_writtenExams {
-		background-image: url(/grafics/leistung_eintr.png);
+		background-image: url(/iaa/images/leistung_eintr.png);
 		width: 215px;
 		height: 32px;
 		float: left;
 		margin-right: 5px;
 	}
 	#link_oralExams {
-		background-image: url(/grafics/ergaenzungs.png);
+		background-image: url(/iaa/images/ergaenzungs.png);
 		width: 215px;
 		height: 31px;
 		float: left;
 	}
 	#link_editExams {
-		background-image: url(/grafics/paendern.png);
+		background-image: url(/iaa/images/paendern.png);
 		width: 215px;
 		height: 30px;
 		float: left;
 	}
 	#link_overview {
-		background-image: url(/grafics/uebersicht.png);
+		background-image: url(/iaa/images/uebersicht.png);
 		width: 215px;
 		height: 30px;
 		float: left;
 	}
 	#link_history {
-		background-image: url(/grafics/historie.png);
+		background-image: url(/iaa/images/historie.png);
 		width: 215px;
 		height: 31px;
 		float: left;
 	}
 	#link_pruefungAnlegen:hover {
-		background-image: url(/grafics/peintragen_blau.png);
+		background-image: url(/iaa/images/peintragen_blau.png);
 		width: 215px;
 		height: 28px;
 	}
 	#link_writtenExams:hover {
-		background-image: url(/grafics/leistung_eintr_blau.png);
+		background-image: url(/iaa/images/leistung_eintr_blau.png);
 		width: 215px;
 		height: 32px;
 	}
 	#link_oralExams:hover {
-		background-image: url(/grafics/ergaenzungs_blau.png);
+		background-image: url(/iaa/images/ergaenzungs_blau.png);
 		width: 215px;
 		height: 31px;
 	}
 	#link_editExams:hover {
-		background-image: url(/grafics/paendern_blau.png);
+		background-image: url(/iaa/images/paendern_blau.png);
 		width: 215px;
 		height: 30px;
 	}
 	#link_overview:hover {
-		background-image: url(/grafics/uebersicht_blau.png);
+		background-image: url(/iaa/images/uebersicht_blau.png);
 		width: 215px;
 		height: 30px;
 	}
 	#link_history:hover {
-		background-image: url(/grafics/historie_blau.png);
+		background-image: url(/iaa/images/historie_blau.png);
 		width: 215px;
 		height: 31px;
 	}
 	#hauptmenue_button:hover {
 		width: 105px;
-		background-image: url(/grafics/hauptmenue_button_blau.png);
+		background-image: url(/iaa/images/hauptmenue_button_blau.png);
 		height: 37px;
 		margin-top: 143px;
 		float: left;
 	}
 	#manipel_button:hover {
 		width: 144px;
-		background-image: url(/grafics/manipel_button_blau.png);
+		background-image: url(/iaa/images/manipel_button_blau.png);
 		height: 37px;
 		margin-left: 10px;
 		margin-top: 143px;
