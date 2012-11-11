@@ -16,6 +16,12 @@ import de.nak.iaa.server.dao.ManipelDAO;
 import de.nak.iaa.server.dao.StudentDAO;
 import de.nak.iaa.server.fachwert.Studienrichtung;
 
+/**
+ * 
+ * @author Ibrahim Karagac
+ *
+ */
+
 public class StudentPersistenceTest extends TransactionalApplicationContextAwareTest {
 
 	@Resource
