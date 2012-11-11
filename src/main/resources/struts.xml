@@ -10,6 +10,7 @@
 	<constant name="struts.ui.templateDir" value="template" />
 
 	<package name="default" extends="tiles-default" namespace="/">
+		<default-action-ref name="" />
 		<action name="" class="de.nak.iaa.web.view.action.ShowMainMenuAction">
 			<result type="tiles">mainMenu</result>
 		</action>
@@ -22,6 +23,7 @@
 	</package>
 
 	<package name="exceptionsBase" extends="tiles-default">
+	<default-action-ref name="/show" />
 		<global-results>
 			<result type="tiles" name="exception">unknownError</result>
 			<result type="redirectAction" name="specException">
