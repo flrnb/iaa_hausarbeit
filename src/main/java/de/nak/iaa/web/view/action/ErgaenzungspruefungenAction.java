@@ -75,8 +75,9 @@ public class ErgaenzungspruefungenAction extends AbstractFormAction {
 
 	private void speichereFormulardaten() {
 		for (ErgaenzungspruefungsFormBean p : pruefungenBeans) {
-			getPruefungService().addErgaenzungsPruefung(p.getStudent(), getSelectedPruefungsfach(), p.getErgDatum(),
-					Integer.valueOf(p.getResultPercent()));
+			if (p.getErgDatum() != null && !p.getResultPercent().isEmpty())
+				getPruefungService().addErgaenzungsPruefung(p.getStudent(), getSelectedPruefungsfach(),
+						p.getErgDatum(), Integer.valueOf(p.getResultPercent()));
 		}
 	}
 
