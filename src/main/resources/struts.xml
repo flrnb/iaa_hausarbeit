@@ -24,6 +24,7 @@
 	</package>
 
 	<package name="exceptionsBase" extends="tiles-default">
+		<default-action-ref name="show"></default-action-ref>
 		<global-results>
 			<result type="tiles" name="exception">unknownError</result>
 			<result type="redirectAction" name="specException">
